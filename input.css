@@ -1,0 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Compatibility entry point. Production builds use assets/css/input.css. */
+.dir-ltr { direction: ltr; unicode-bidi: embed; }

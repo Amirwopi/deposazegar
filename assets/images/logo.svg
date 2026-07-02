@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="460" height="120" viewBox="0 0 460 120" role="img" aria-labelledby="title desc">
+  <title id="title">دپو سازگار</title>
+  <desc id="desc">نشان دپو سازگار با نماد فضای نگهداری</desc>
+  <rect width="460" height="120" rx="24" fill="#0f2742"/>
+  <g transform="translate(352 14)">
+    <rect width="92" height="92" rx="24" fill="#f59e0b"/>
+    <path d="M20 38 46 23l26 15v34L46 87 20 72Z" fill="none" stroke="#0f2742" stroke-width="6" stroke-linejoin="round"/>
+    <path d="m20 38 26 15 26-15M46 53v34" fill="none" stroke="#0f2742" stroke-width="6" stroke-linejoin="round"/>
+  </g>
+  <text x="330" y="62" text-anchor="end" fill="#ffffff" font-family="Vazirmatn, Tahoma, sans-serif" font-size="44" font-weight="900">دپو سازگار</text>
+  <text x="330" y="91" text-anchor="end" fill="#bfdbfe" font-family="Vazirmatn, Tahoma, sans-serif" font-size="17" font-weight="700">فضای مطمئن برای وسایل شما</text>
+</svg>

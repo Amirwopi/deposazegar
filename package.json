@@ -1,0 +1,29 @@
+{
+  "name": "deposazegar.ir",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "node scripts/clean.js",
+    "build:css": "tailwindcss -i ./assets/css/input.css -o ./public_html_ready/assets/css/style.css --minify",
+    "build:pages": "node scripts/generate-pages.js",
+    "copy:assets": "node scripts/copy-assets.js",
+    "test": "node scripts/seo-audit.js",
+    "assets": "node scripts/process-assets.js",
+    "build": "npm run clean && npm run build:css && npm run build:pages && npm run copy:assets && npm run test && node scripts/build-complete.js",
+    "dev": "npx tailwindcss -i ./assets/css/input.css -o ./assets/css/style.css --watch",
+    "generate": "npm run build:pages",
+    "start": "serve public_html_ready"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "autoprefixer": "^10.5.2",
+    "postcss": "^8.5.16",
+    "serve": "^14.2.6",
+    "sharp": "^0.34.3",
+    "tailwindcss": "^3.4.1"
+  }
+}
