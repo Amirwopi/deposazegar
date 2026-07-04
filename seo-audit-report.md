@@ -1,6 +1,6 @@
 # گزارش ممیزی SEO دپو سازگار
 
-تاریخ اجرا: 2026-07-02
+تاریخ اجرا: 2026-07-04
 
 وضعیت کلی: **پاس**
 
@@ -11,33 +11,34 @@
 - Schemaهای الزامی: Organization، LocalBusiness، WebSite، Service، FAQPage، BreadcrumbList
 - تصاویر: WebP با JPG fallback و ابعاد ذاتی کنترل‌شده
 - شماره‌های تماس: ۹ شماره در Schema، CTA، صفحه تماس و فوتر
-- واتساپ: `https://wa.me/989102567906`
+- تماس: پنل کشویی شامل هر ۹ شماره و بدون لینک واتساپ
+- نظر کاربران: فرم واقعی PHP با تأیید مدیر و ذخیره امن
 
 ## شاخص‌های هر صفحه
 
 | صفحه | واژه فارسی | طول توضیح متا | H1 | H2 | FAQ | لینک داخلی یکتا |
 |---|---:|---:|---:|---:|---:|---:|
-| index.html | 1051 | 144 | 1 | 10 | 5 | 15 |
-| ejare-anbar-tehran.html | 1010 | 149 | 1 | 7 | 5 | 6 |
-| ejare-anbar-containeri-tehran.html | 1026 | 141 | 1 | 7 | 5 | 6 |
-| depo-lavazem-khaneh.html | 1013 | 154 | 1 | 7 | 5 | 6 |
-| ejare-container-10-foot.html | 1005 | 144 | 1 | 7 | 5 | 5 |
-| ejare-container-15-foot.html | 1009 | 148 | 1 | 7 | 5 | 5 |
-| ejare-container-20-foot.html | 1012 | 150 | 1 | 7 | 5 | 5 |
-| ejare-container-30-foot.html | 1017 | 151 | 1 | 7 | 5 | 5 |
-| ejare-container-40-foot.html | 996 | 142 | 1 | 7 | 5 | 5 |
-| ejare-anbar-gharb-tehran.html | 994 | 153 | 1 | 7 | 5 | 5 |
-| ejare-anbar-shargh-tehran.html | 994 | 149 | 1 | 7 | 5 | 5 |
-| ejare-anbar-shomal-tehran.html | 994 | 150 | 1 | 7 | 5 | 5 |
-| ejare-anbar-markaz-tehran.html | 992 | 151 | 1 | 7 | 5 | 5 |
-| ejare-anbar-jonoub-tehran.html | 992 | 150 | 1 | 7 | 5 | 5 |
-| ejare-anbar-karaj.html | 1017 | 146 | 1 | 7 | 5 | 5 |
-| ejare-anbar-6-metri.html | 974 | 142 | 1 | 7 | 5 | 5 |
-| ejare-anbar-10-metri.html | 976 | 145 | 1 | 7 | 5 | 5 |
-| ejare-anbar-12-metri.html | 1007 | 155 | 1 | 7 | 5 | 5 |
-| ejare-anbar-20-metri.html | 986 | 140 | 1 | 7 | 5 | 5 |
-| about.html | 862 | 151 | 1 | 7 | 5 | 5 |
-| contact.html | 1073 | 151 | 1 | 8 | 5 | 8 |
+| index.html | 1213 | 146 | 1 | 11 | 5 | 17 |
+| ejare-anbar-tehran.html | 1025 | 149 | 1 | 7 | 5 | 6 |
+| ejare-anbar-containeri-tehran.html | 1041 | 141 | 1 | 7 | 5 | 6 |
+| depo-lavazem-khaneh.html | 1028 | 154 | 1 | 7 | 5 | 6 |
+| ejare-container-10-foot.html | 1041 | 147 | 1 | 7 | 5 | 5 |
+| ejare-container-15-foot.html | 1044 | 151 | 1 | 7 | 5 | 5 |
+| ejare-container-20-foot.html | 1047 | 150 | 1 | 7 | 5 | 5 |
+| ejare-container-30-foot.html | 1032 | 151 | 1 | 7 | 5 | 5 |
+| ejare-container-40-foot.html | 1033 | 151 | 1 | 7 | 5 | 5 |
+| ejare-anbar-gharb-tehran.html | 1009 | 153 | 1 | 7 | 5 | 5 |
+| ejare-anbar-shargh-tehran.html | 1009 | 149 | 1 | 7 | 5 | 5 |
+| ejare-anbar-shomal-tehran.html | 1009 | 150 | 1 | 7 | 5 | 5 |
+| ejare-anbar-markaz-tehran.html | 1007 | 151 | 1 | 7 | 5 | 5 |
+| ejare-anbar-jonoub-tehran.html | 1007 | 150 | 1 | 7 | 5 | 5 |
+| ejare-anbar-karaj.html | 1035 | 148 | 1 | 7 | 5 | 5 |
+| ejare-anbar-6-metri.html | 989 | 142 | 1 | 7 | 5 | 5 |
+| ejare-anbar-10-metri.html | 991 | 145 | 1 | 7 | 5 | 5 |
+| ejare-anbar-12-metri.html | 1022 | 155 | 1 | 7 | 5 | 5 |
+| ejare-anbar-20-metri.html | 1001 | 140 | 1 | 7 | 5 | 5 |
+| about.html | 874 | 143 | 1 | 7 | 5 | 6 |
+| contact.html | 1094 | 142 | 1 | 8 | 5 | 9 |
 
 ## کنترل‌های انجام‌شده
 
@@ -51,7 +52,7 @@
 - نبود لینک داخلی شکسته یا ارجاع به تصویر واترمارک‌دار
 - WebP/JPG، ابعاد واقعی، OG image و Apple Touch Icon
 - 21 URL canonical، lastmod و priority منطقی در Sitemap
-- شعب غرب، جنوب و شرق تهران و پوشش کرج در محتوا و Schema
+- شعب غرب، جنوب و شرق استان تهران و پوشش استان البرز در محتوا و Schema
 
 ## اطلاعاتی که باید از مالک کسب‌وکار دریافت شود
 

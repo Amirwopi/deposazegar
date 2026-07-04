@@ -49,9 +49,29 @@ async function processAssets() {
   await ogBase.clone().jpeg({ quality: 88, progressive: true }).toFile(path.join(imagesDir, 'og-cover.jpg'));
   await ogBase.clone().webp({ quality: 84, effort: 5 }).toFile(path.join(imagesDir, 'og-cover.webp'));
 
-  await sharp(path.join(imagesDir, 'favicon.svg'), { density: 288 })
+  const faviconPng = await sharp(path.join(imagesDir, 'favicon.svg'), { density: 384 })
+    .resize(96, 96)
+    .png({ compressionLevel: 9 })
+    .toBuffer();
+  fs.writeFileSync(path.join(imagesDir, 'favicon-96.png'), faviconPng);
+
+  const icoHeader = Buffer.alloc(22);
+  icoHeader.writeUInt16LE(0, 0);
+  icoHeader.writeUInt16LE(1, 2);
+  icoHeader.writeUInt16LE(1, 4);
+  icoHeader.writeUInt8(96, 6);
+  icoHeader.writeUInt8(96, 7);
+  icoHeader.writeUInt8(0, 8);
+  icoHeader.writeUInt8(0, 9);
+  icoHeader.writeUInt16LE(1, 10);
+  icoHeader.writeUInt16LE(32, 12);
+  icoHeader.writeUInt32LE(faviconPng.length, 14);
+  icoHeader.writeUInt32LE(22, 18);
+  fs.writeFileSync(path.join(imagesDir, 'favicon.ico'), Buffer.concat([icoHeader, faviconPng]));
+
+  await sharp(path.join(imagesDir, 'favicon.svg'), { density: 384 })
     .resize(180, 180)
-    .png({ compressionLevel: 9, palette: true })
+    .png({ compressionLevel: 9 })
     .toFile(path.join(imagesDir, 'apple-touch-icon.png'));
 
   const results = [];
@@ -61,7 +81,7 @@ async function processAssets() {
     results.push(`${filename}.webp: ${webp} bytes (${Math.round((1 - webp / jpg) * 100)}% smaller)`);
   }
   console.log(results.join('\n'));
-  console.log('Created og-cover.jpg, og-cover.webp and apple-touch-icon.png.');
+  console.log('Created social images, favicon.ico, favicon-96.png and apple-touch-icon.png.');
 }
 
 module.exports = processAssets;

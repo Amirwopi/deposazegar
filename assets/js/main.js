@@ -103,4 +103,111 @@ document.addEventListener('DOMContentLoaded', () => {
       mobileButton?.focus();
     }
   });
+
+  const commentForm = document.querySelector('[data-comment-form]');
+  const commentList = document.querySelector('[data-comment-list]');
+  const commentEmpty = document.querySelector('[data-comment-empty]');
+  const commentStatus = document.querySelector('[data-comment-status]');
+  const commentMessage = commentForm?.querySelector('[name="message"]');
+  const commentCounter = document.querySelector('[data-comment-counter]');
+
+  const setCommentStatus = (message, state = '') => {
+    if (!commentStatus) return;
+    commentStatus.textContent = message;
+    commentStatus.dataset.state = state;
+  };
+
+  const createCommentCard = (comment) => {
+    const article = document.createElement('article');
+    article.className = 'visitor-comment';
+
+    const header = document.createElement('header');
+    const avatar = document.createElement('span');
+    avatar.className = 'visitor-comment-avatar';
+    avatar.setAttribute('aria-hidden', 'true');
+    avatar.textContent = (comment.name || 'م').trim().slice(0, 1);
+
+    const identity = document.createElement('div');
+    const name = document.createElement('strong');
+    name.textContent = comment.name;
+    const meta = document.createElement('span');
+    meta.textContent = comment.city || 'بازدیدکننده سایت';
+    identity.append(name, meta);
+    header.append(avatar, identity);
+
+    const message = document.createElement('p');
+    message.textContent = comment.message;
+    article.append(header, message);
+    return article;
+  };
+
+  const loadComments = async () => {
+    if (!commentList || !commentForm) return;
+    try {
+      const response = await fetch(commentForm.action, {
+        headers: { Accept: 'application/json' },
+        cache: 'no-store'
+      });
+      if (!response.ok) throw new Error('comments-unavailable');
+      const payload = await response.json();
+      const comments = Array.isArray(payload.comments) ? payload.comments : [];
+      commentList.replaceChildren(...comments.map(createCommentCard));
+      if (commentEmpty) commentEmpty.hidden = comments.length > 0;
+    } catch {
+      if (commentEmpty) {
+        commentEmpty.hidden = false;
+        commentEmpty.textContent = 'نظرهای تأییدشده پس از فعال شدن سرویس روی هاست نمایش داده می‌شوند.';
+      }
+    }
+  };
+
+  if (commentForm) {
+    const startedAt = commentForm.querySelector('[name="startedAt"]');
+    if (startedAt) startedAt.value = String(Date.now());
+
+    const updateCounter = () => {
+      if (commentCounter && commentMessage) commentCounter.textContent = `${commentMessage.value.length} / ۶۰۰`;
+    };
+    commentMessage?.addEventListener('input', updateCounter);
+    updateCounter();
+
+    commentForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!commentForm.reportValidity()) return;
+
+      const submitButton = commentForm.querySelector('button[type="submit"]');
+      const formData = new FormData(commentForm);
+      const payload = Object.fromEntries(formData.entries());
+      payload.consent = formData.has('consent');
+
+      submitButton?.setAttribute('disabled', '');
+      commentForm.setAttribute('aria-busy', 'true');
+      setCommentStatus('در حال ثبت نظر شما…');
+
+      try {
+        const response = await fetch(commentForm.action, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.message || 'ثبت نظر انجام نشد.');
+
+        commentForm.reset();
+        if (startedAt) startedAt.value = String(Date.now());
+        updateCounter();
+        setCommentStatus(result.message || 'نظر شما دریافت شد و پس از بررسی منتشر می‌شود.', 'success');
+      } catch (error) {
+        setCommentStatus(error.message || 'ارتباط برقرار نشد؛ لطفاً دوباره تلاش کنید.', 'error');
+      } finally {
+        submitButton?.removeAttribute('disabled');
+        commentForm.removeAttribute('aria-busy');
+      }
+    });
+
+    loadComments();
+  }
 });

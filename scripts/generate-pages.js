@@ -26,7 +26,7 @@ const branchGroups = [
   {
     key: 'west',
     title: 'شعب غرب تهران',
-    description: 'پوشش مسیرهای غرب تهران و ورودی‌های ارتباطی تهران و کرج',
+    description: 'پوشش مسیرهای غرب استان تهران و ورودی‌های ارتباطی استان البرز',
     branches: ['تهرانسر', 'چیتگر', 'چهارراه ایران‌خودرو', 'اتوبان لشگری', 'احمدآباد مستوفی'],
     more: 'و دیگر شعب غرب تهران…'
   },
@@ -51,7 +51,9 @@ const branchLocations = branchGroups.flatMap((group) =>
     group: group.title
   }))
 );
-const servedCities = [
+const servedAreas = [
+  { '@type': 'AdministrativeArea', name: 'استان تهران' },
+  { '@type': 'AdministrativeArea', name: 'استان البرز' },
   { '@type': 'City', name: 'تهران' },
   { '@type': 'City', name: 'کرج' }
 ];
@@ -97,6 +99,9 @@ const phoneLinks = (className = '') => phones.map(([raw, display]) =>
   `<a href="tel:${raw}" class="phone-link dir-ltr ${className}">${display}</a>`
 ).join('');
 
+const phoneSheetButton = (label, className = 'btn btn-primary', ariaLabel = label) =>
+  `<button class="${className}" type="button" data-sheet-open="phone-sheet" aria-haspopup="dialog" aria-controls="phone-sheet" aria-expanded="false" aria-label="${escapeHtml(ariaLabel)}">${escapeHtml(label)}</button>`;
+
 const branchCards = (className = '') => `<div class="branch-groups ${className}">
   ${branchGroups.map((group) => `<article class="branch-group branch-group-${group.key}">
     <div class="branch-group-heading">
@@ -126,7 +131,7 @@ const bottomSheets = () => `
 <section id="locations-sheet" class="bottom-sheet locations-sheet" role="dialog" aria-modal="true" aria-labelledby="locations-sheet-title" hidden>
   <div class="sheet-handle" aria-hidden="true"></div>
   <div class="sheet-header">
-    <div><span class="eyebrow">تهران و کرج</span><h2 id="locations-sheet-title">شعب و محدوده‌های دپو سازگار</h2></div>
+    <div><span class="eyebrow">استان تهران و استان البرز</span><h2 id="locations-sheet-title">شعب و محدوده‌های دپو سازگار</h2></div>
     <button class="sheet-close" type="button" data-sheet-close aria-label="بستن پنل لوکیشن‌ها">
       <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
     </button>
@@ -187,7 +192,7 @@ const getFaqs = (page) => {
       ['از کدام شماره می‌توان تماس گرفت؟', 'تمام شماره‌های ثابت و همراه معتبر در همین صفحه، بخش تماس نهایی و فوتر درج شده‌اند؛ می‌توانید از هرکدام که پاسخ‌گو است استفاده کنید.'],
       ['آیا قیمت تلفنی قطعی است؟', 'تا زمانی که حجم، فضای مشخص و شرایط قرارداد روشن نشده باشد، عدد تلفنی برآورد است. قیمت نهایی را همراه با مدت و خدمات جانبی مکتوب کنید.'],
       ['چطور برای بازدید هماهنگ کنیم؟', 'پس از گفت‌وگوی اولیه، گزینه موجود و زمان مناسب را با کارشناس قطعی کنید. محل دقیق، نام پاسخ‌گو و مواردی را که می‌خواهید بررسی کنید همراه داشته باشید.'],
-      ['آیا می‌توان در واتساپ فهرست وسایل را فرستاد؟', 'برای شروع می‌توانید از لینک واتساپ همین صفحه استفاده کنید. از ارسال مدارک هویتی یا اطلاعات حساس خودداری کنید و جزئیات قرارداد را رسمی ثبت کنید.']
+      ['چطور فهرست وسایل را برای مشاوره آماده کنیم؟', 'نام اقلام بزرگ، تعداد تقریبی کارتن‌ها، محله مبدأ و مدت نگهداری را یادداشت کنید و هنگام تماس برای کارشناس بخوانید. از اعلام اطلاعات هویتی غیرضروری خودداری کنید.']
     ];
   }
 
@@ -228,8 +233,8 @@ const midCta = (page, title) => `<aside class="mid-cta" aria-label="مشاوره
     <p>${escapeHtml(getCtaCopy(page))}</p>
   </div>
   <div class="mid-cta-actions">
-    <a class="btn btn-primary" href="tel:02188988459">تماس برای انتخاب متراژ</a>
-    <a class="btn btn-whatsapp" href="https://wa.me/989102567906" target="_blank" rel="noopener noreferrer" aria-label="مشاوره در واتساپ برای ${escapeHtml(page.h1)}">واتساپ دپو سازگار</a>
+    ${phoneSheetButton('دریافت همه شماره‌ها', 'btn btn-primary', `نمایش همه شماره‌ها برای ${page.h1}`)}
+    <a class="btn btn-secondary" href="contact.html">راهنمای پیش از تماس</a>
   </div>
 </aside>`;
 
@@ -238,11 +243,16 @@ const finalCta = (page) => `<section class="final-cta" aria-labelledby="final-ct
     <div>
       <span class="eyebrow eyebrow-light">یک تماس تا برآورد اولیه</span>
       <h2 id="final-cta-title">برای ${escapeHtml(page.h1)} راهنمایی می‌خواهید؟</h2>
-      <p>${escapeHtml(getCtaCopy(page))} همه خطوط زیر برای مشاوره و هماهنگی در دسترس‌اند.</p>
-      <a class="final-whatsapp" href="https://wa.me/989102567906" target="_blank" rel="noopener noreferrer" aria-label="گفت‌وگو با دپو سازگار در واتساپ">گفت‌وگو در واتساپ با ۰۹۱۰۲۵۶۷۹۰۶</a>
+      <p>${escapeHtml(getCtaCopy(page))} ۹ خط ثابت و همراه برای مشاوره و هماهنگی در دسترس است.</p>
+      <div class="final-cta-actions">
+        ${phoneSheetButton('نمایش همه شماره‌های تماس', 'btn btn-primary', 'باز کردن فهرست ۹ شماره تماس دپو سازگار')}
+        <a class="btn btn-on-dark" href="contact.html">مشاهده صفحه تماس</a>
+      </div>
     </div>
-    <div class="cta-phone-grid" aria-label="شماره‌های تماس دپو سازگار">
-      ${phoneLinks('phone-link-light')}
+    <div class="final-cta-signal" aria-label="مزیت تماس با دپو سازگار">
+      <strong>۹</strong>
+      <span>خط پاسخ‌گویی ثابت و همراه</span>
+      <small>اگر یک خط مشغول بود، از پنل تماس شماره بعدی را انتخاب کنید.</small>
     </div>
   </div>
 </section>`;
@@ -261,7 +271,7 @@ const locationContent = (page, profile) => `<section class="page-hero">
       <h1>${escapeHtml(page.h1)}</h1>
       <p class="lead">${escapeHtml(page.description)}</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="tel:02188988459">مشاوره انتخاب انبار</a>
+        ${phoneSheetButton('مشاوره انتخاب انبار', 'btn btn-primary', 'نمایش همه شماره‌ها برای مشاوره انتخاب انبار')}
         <a class="btn btn-secondary" href="#guide">مطالعه راهنمای منطقه</a>
       </div>
     </div>
@@ -310,7 +320,7 @@ const sizeContent = (page, profile) => `<section class="page-hero">
       <h1>${escapeHtml(page.h1)}</h1>
       <p class="lead">${escapeHtml(page.description)}</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="tel:02188988459">بررسی ظرفیت وسایل</a>
+        ${phoneSheetButton('بررسی ظرفیت وسایل', 'btn btn-primary', 'نمایش همه شماره‌ها برای بررسی ظرفیت وسایل')}
         <a class="btn btn-secondary" href="#guide">راهنمای انتخاب اندازه</a>
       </div>
     </div>
@@ -360,7 +370,7 @@ const serviceContent = (page, profile) => `<section class="page-hero">
       <h1>${escapeHtml(page.h1)}</h1>
       <p class="lead">${escapeHtml(page.description)}</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="tel:02188988459">دریافت مشاوره</a>
+        ${phoneSheetButton('دریافت مشاوره', 'btn btn-primary', 'نمایش همه شماره‌ها برای دریافت مشاوره')}
         <a class="btn btn-secondary" href="#guide">جزئیات خدمت</a>
       </div>
     </div>
@@ -434,8 +444,8 @@ const infoPageContent = (page, profile) => `<section class="page-hero">
       ${phones.map(([raw, display], index) => `<div><span>${index < 4 ? 'تلفن ثابت' : 'تلفن همراه'}</span><a href="tel:${raw}" class="dir-ltr">${display}</a></div>`).join('')}
     </div>
     ${page.slug === 'contact' ? `
-    <h2>شعب تهران، پوشش کرج و اطلاعات لازم هنگام تماس</h2>
-    <p>دپو سازگار در غرب، جنوب و شرق تهران شعب فعال دارد و درخواست‌های <a href="ejare-anbar-karaj.html">اجاره انبار در کرج</a> را نیز پوشش می‌دهد. برای مقایسه منطقه‌ای می‌توانید راهنمای <a href="ejare-anbar-gharb-tehran.html">غرب تهران</a>، <a href="ejare-anbar-shargh-tehran.html">شرق تهران</a> و <a href="ejare-anbar-jonoub-tehran.html">جنوب تهران</a> را بخوانید. ظرفیت و نشانی دقیق ورودی هر شعبه هنگام تماس تأیید می‌شود.</p>
+    <h2>شعب استان تهران، پوشش استان البرز و اطلاعات لازم هنگام تماس</h2>
+    <p>دپو سازگار در غرب، جنوب و شرق استان تهران شعب فعال دارد و درخواست‌های <a href="ejare-anbar-karaj.html">اجاره انبار در کرج و استان البرز</a> را نیز پوشش می‌دهد. برای مقایسه منطقه‌ای می‌توانید راهنمای <a href="ejare-anbar-gharb-tehran.html">غرب تهران</a>، <a href="ejare-anbar-shargh-tehran.html">شرق تهران</a> و <a href="ejare-anbar-jonoub-tehran.html">جنوب تهران</a> را بخوانید. ظرفیت و نشانی دقیق ورودی هر شعبه هنگام تماس تأیید می‌شود.</p>
     ${branchCards('branch-groups-contact')}
     ${detailsList([
       'نوع وسایل یا کالایی که قصد دپوی آن را دارید.',
@@ -444,7 +454,11 @@ const infoPageContent = (page, profile) => `<section class="page-hero">
       'محدوده سکونت، محل بارگیری یا مسیر دسترسی.',
       'نیاز به مشاوره بیشتر یا هماهنگی بازدید.'
     ])}
-    <p class="contact-whatsapp-copy">برای ارسال فهرست اولیه وسایل می‌توانید از <a href="https://wa.me/989102567906" target="_blank" rel="noopener noreferrer">واتساپ دپو سازگار با شماره ۰۹۱۰۲۵۶۷۹۰۶</a> استفاده کنید. اطلاعات حساس یا مدارک هویتی را در پیام عمومی ارسال نکنید.</p>
+    <div class="contact-callout">
+      <strong>برای تماس آماده‌اید؟</strong>
+      <p>فهرست اولیه وسایل را کنار دستتان بگذارید و از پنل تماس، یکی از ۹ خط پاسخ‌گویی را انتخاب کنید.</p>
+      ${phoneSheetButton('نمایش همه شماره‌ها', 'btn btn-primary', 'نمایش ۹ شماره تماس دپو سازگار')}
+    </div>
     ` : ''}
     <p>برای حفظ دقت، قیمت و ویژگی‌ها را در پیام یا قرارداد نهایی مرور کنید. اطلاعات شفاهی در تماس نخست ممکن است بر اساس برآورد حجم باشد. پیش از اعزام خودرو، نشانی دقیق، زمان تحویل، نام هماهنگ‌کننده و مبلغ‌های توافق‌شده را یک‌جا ثبت کنید.</p>
     ${relatedLinks([
@@ -462,13 +476,13 @@ const homeContent = (page) => `<section class="home-hero">
   <div class="container home-hero-content">
     <span class="eyebrow eyebrow-light">فضای اضافه، بدون اجاره ملک اضافه</span>
     <h1>${escapeHtml(page.h1)}</h1>
-    <p>دپو سازگار راهکاری ساده، اقتصادی و قابل اعتماد برای اجاره انبار، اجاره کانتینر و نگهداری وسایل منزل، جهیزیه، لوازم اداری و کالاهای کم‌حجم در تهران و کرج است.</p>
+    <p>دپو سازگار راهکاری ساده، اقتصادی و قابل اعتماد برای اجاره انبار، اجاره کانتینر و نگهداری وسایل منزل، جهیزیه، لوازم اداری و کالاهای کم‌حجم در استان تهران و استان البرز است.</p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="tel:02188988459">تماس برای مشاوره رایگان</a>
+      ${phoneSheetButton('تماس برای مشاوره رایگان', 'btn btn-primary', 'نمایش همه شماره‌ها برای مشاوره رایگان')}
       <a class="btn btn-on-dark" href="#sizes">مشاهده اندازه انبارها</a>
     </div>
     <div class="hero-trust" aria-label="اصول انتخاب">
-      <span>اجاره کوتاه‌مدت و بلندمدت</span><span>مناسب وسایل منزل و اداری</span><span>مشاوره انتخاب متراژ</span><span>دپو لوازم در تهران و کرج</span>
+      <span>اجاره کوتاه‌مدت و بلندمدت</span><span>مناسب وسایل منزل و اداری</span><span>مشاوره انتخاب متراژ</span><span>پوشش استان تهران و استان البرز</span>
     </div>
   </div>
 </section>
@@ -479,6 +493,9 @@ const homeContent = (page) => `<section class="home-hero">
     <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M7 7h7.5a3 3 0 0 1 0 6H9.5a3 3 0 0 0 0 6H17"/></svg><strong>انتخاب اقتصادی</strong><span>پرداخت برای فضای نزدیک به نیاز</span></div>
     <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12 10 17 20 7"/></svg><strong>مشاوره روشن</strong><span>مقایسه ظرفیت پیش از رزرو</span></div>
     <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-13v5l3 2"/></svg><strong>هماهنگی بازدید</strong><span>بررسی گزینه موجود پیش از حمل</span></div>
+    <div class="quick-benefit-accent"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 8 8-4 8 4-8 4Zm0 0v9l8 4 8-4V8M8 10v3m8-3v3"/></svg><strong>بسته‌بندی</strong><span>تفکیک، محافظت و برچسب‌گذاری اصولی وسایل پیش از جابه‌جایی</span></div>
+    <div class="quick-benefit-accent"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h12v10H3zM15 10h3l3 3v4h-6M7 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg><strong>حمل‌ونقل</strong><span>هماهنگی وسیله نقلیه متناسب با حجم بار و مسیر مبدأ تا انبار</span></div>
+    <div class="quick-benefit-accent"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg><strong>چیدمان</strong><span>جانمایی وسایل سنگین، کارتن‌ها و مسیر دسترسی برای استفاده بهتر از فضا</span></div>
   </div>
 </section>
 
@@ -505,10 +522,10 @@ const homeContent = (page) => `<section class="home-hero">
       <p>چهار نقطه شروع رایج را ببینید؛ اندازه نهایی پس از بررسی فهرست وسایل و ابعاد مفید انتخاب می‌شود.</p>
     </div>
     <div class="size-grid">
-      <a href="ejare-anbar-6-metri.html"><strong>۶ متر</strong><span>کارتن و وسایل محدود</span></a>
-      <a href="ejare-anbar-12-metri.html"><strong>۱۲ متر</strong><span>واحد کوچک تا متوسط</span></a>
-      <a href="ejare-container-20-foot.html"><strong>۲۰ فوت</strong><span>گزینه استاندارد و منعطف</span></a>
-      <a href="ejare-container-40-foot.html"><strong>۴۰ فوت</strong><span>بار حجیم و زون‌بندی‌شده</span></a>
+      <a href="ejare-container-10-foot.html"><strong>۱۰ فوت <small>(۶ متر)</small></strong><span>کارتن و وسایل محدود</span></a>
+      <a href="ejare-container-15-foot.html"><strong>۱۵ فوت <small>(۱۲ متر)</small></strong><span>واحد کوچک تا متوسط</span></a>
+      <a href="ejare-container-20-foot.html"><strong>۲۰ فوت <small>(۱۸ متر)</small></strong><span>گزینه استاندارد و منعطف</span></a>
+      <a href="ejare-container-40-foot.html"><strong>۴۰ فوت <small>(۲۷ متر)</small></strong><span>بار حجیم و زون‌بندی‌شده</span></a>
     </div>
   </div>
 </section>
@@ -537,7 +554,7 @@ const homeContent = (page) => `<section class="home-hero">
   <div class="container coverage-grid">
     <div class="coverage-copy">
       <span class="eyebrow">مناطق تحت پوشش</span>
-      <h2 id="coverage-title">پوشش انبار در تهران و کرج</h2>
+      <h2 id="coverage-title">پوشش انبار در استان تهران و استان البرز</h2>
       <p>ترافیک، محدودیت توقف، بافت مسکونی یا تجاری و الگوی بار در هر منطقه متفاوت است. راهنمای هر محدوده کمک می‌کند هزینه حمل و دفعات مراجعه را کنار اجاره ماهانه ببینید.</p>
       <p class="note">نشانی دقیق، ظرفیت فعال و زمان بازدید هر شعبه هنگام تماس نهایی تأیید می‌شود.</p>
     </div>
@@ -600,6 +617,55 @@ const homeContent = (page) => `<section class="home-hero">
   </div>
 </section>
 
+<section class="section comments-section" id="comments" aria-labelledby="comments-title">
+  <div class="container comments-layout">
+    <div class="comments-copy">
+      <span class="eyebrow">تجربه شما برای ما مهم است</span>
+      <h2 id="comments-title">نظر خود را درباره دپو سازگار ثبت کنید</h2>
+      <p>اگر از سایت، مشاوره یا خدمات دپو سازگار استفاده کرده‌اید، تجربه واقعی خود را بنویسید. نظرها پس از بررسی مدیر و بدون نمایش شماره تماس یا اطلاعات خصوصی منتشر می‌شوند.</p>
+      <div class="comments-principles" aria-label="اصول انتشار نظر">
+        <span>نظر واقعی و محترمانه</span>
+        <span>بدون اطلاعات شخصی</span>
+        <span>انتشار پس از بررسی</span>
+      </div>
+      <div class="comment-stream" data-comment-list aria-live="polite"></div>
+      <p class="comment-empty" data-comment-empty>هنوز نظری منتشر نشده است؛ شما می‌توانید اولین تجربه را ثبت کنید.</p>
+    </div>
+    <form class="comment-form" action="api/comments.php" method="post" data-comment-form>
+      <div class="comment-form-heading">
+        <span aria-hidden="true">“</span>
+        <div><strong>ثبت یک نظر تازه</strong><small>فیلدهای ستاره‌دار الزامی هستند.</small></div>
+      </div>
+      <div class="comment-fields">
+        <label>
+          <span>نام یا نام نمایشی *</span>
+          <input type="text" name="name" minlength="2" maxlength="60" autocomplete="name" required placeholder="مثلاً امیر">
+        </label>
+        <label>
+          <span>شهر یا محله</span>
+          <input type="text" name="city" minlength="2" maxlength="50" autocomplete="address-level2" placeholder="مثلاً تهرانسر">
+        </label>
+        <label class="comment-message-field">
+          <span>متن نظر *</span>
+          <textarea name="message" minlength="12" maxlength="600" rows="5" required placeholder="تجربه خود را شفاف و کوتاه بنویسید…"></textarea>
+          <small data-comment-counter>۰ / ۶۰۰</small>
+        </label>
+      </div>
+      <label class="comment-consent">
+        <input type="checkbox" name="consent" value="true" required>
+        <span>با انتشار عمومی این متن پس از بررسی مدیر موافقم.</span>
+      </label>
+      <label class="comment-honeypot" aria-hidden="true">
+        <span>وب‌سایت</span>
+        <input type="text" name="website" tabindex="-1" autocomplete="off">
+      </label>
+      <input type="hidden" name="startedAt" value="">
+      <button class="btn btn-primary comment-submit" type="submit">ارسال نظر برای بررسی</button>
+      <p class="comment-status" data-comment-status role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
 <section class="section gallery-section" aria-labelledby="gallery-title">
   <div class="container">
     <div class="section-heading">
@@ -640,15 +706,15 @@ const schemaGraph = (page, faqs) => {
         '@id': `${baseSiteUrl}/#organization`,
         name: 'دپو سازگار',
         url: baseSiteUrl,
-        logo: { '@type': 'ImageObject', url: `${baseSiteUrl}/assets/images/logo.svg`, width: 460, height: 120 },
+        logo: { '@type': 'ImageObject', url: `${baseSiteUrl}/assets/images/brand-mark.svg`, width: 512, height: 512 },
         telephone: phones.map(([raw]) => raw),
-        areaServed: servedCities,
-        keywords: 'اجاره انبار تهران، اجاره انبار کرج، انبار کانتینری، دپو لوازم خانه، انبار متراژی',
+        areaServed: servedAreas,
+        keywords: 'اجاره انبار استان تهران، اجاره انبار استان البرز، اجاره انبار تهران، اجاره انبار کرج، انبار کانتینری، دپو لوازم خانه',
         contactPoint: phones.map(([raw], index) => ({
           '@type': 'ContactPoint',
           telephone: raw,
           contactType: index < 4 ? 'customer service' : 'sales',
-          areaServed: ['Tehran', 'Karaj'],
+          areaServed: ['استان تهران', 'استان البرز', 'تهران', 'کرج'],
           availableLanguage: 'Persian'
         }))
       },
@@ -658,12 +724,12 @@ const schemaGraph = (page, faqs) => {
         name: 'دپو سازگار',
         url: baseSiteUrl,
         image: `${baseSiteUrl}/assets/images/og-cover.jpg`,
-        logo: `${baseSiteUrl}/assets/images/logo.svg`,
+        logo: `${baseSiteUrl}/assets/images/brand-mark.svg`,
         additionalType: 'https://schema.org/SelfStorage',
         telephone: phones.map(([raw]) => raw),
-        description: 'خدمات مشاوره و هماهنگی اجاره انبار، انبار کانتینری و دپوی لوازم در تهران و کرج',
-        areaServed: servedCities,
-        keywords: 'اجاره انبار تهران، اجاره انبار کرج، انبار کانتینری، دپو لوازم خانه، اجاره کانتینر',
+        description: 'خدمات مشاوره و هماهنگی اجاره انبار، انبار کانتینری و دپوی لوازم در استان تهران و استان البرز',
+        areaServed: servedAreas,
+        keywords: 'اجاره انبار استان تهران، اجاره انبار استان البرز، اجاره انبار تهران، اجاره انبار کرج، دپو لوازم خانه',
         department: branchLocations.map((branch) => ({
           '@type': 'SelfStorage',
           '@id': `${baseSiteUrl}/#branch-${branch.code}`,
@@ -689,8 +755,8 @@ const schemaGraph = (page, faqs) => {
         name: page.h1,
         description: page.description,
         url,
-        areaServed: servedCities,
-        keywords: `${page.h1}، اجاره انبار تهران، اجاره انبار کرج، دپو لوازم، انبار کانتینری`,
+        areaServed: servedAreas,
+        keywords: `${page.h1}، اجاره انبار استان تهران، اجاره انبار استان البرز، اجاره انبار تهران، اجاره انبار کرج، انبار کانتینری`,
         serviceType: page.type === 'location' ? 'اجاره انبار برای منطقه شهری' : 'اجاره انبار و دپوی لوازم',
         provider: { '@id': `${baseSiteUrl}/#localbusiness` }
       },
@@ -736,14 +802,16 @@ const header = (page, faqs) => {
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="کانتینرهای دپو سازگار برای اجاره انبار در تهران و کرج">
+  <meta property="og:image:alt" content="کانتینرهای دپو سازگار برای اجاره انبار در استان تهران و استان البرز">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(page.title)}">
   <meta name="twitter:description" content="${escapeHtml(page.description)}">
   <meta name="twitter:image" content="${baseSiteUrl}/assets/images/og-cover.jpg">
-  <meta name="twitter:image:alt" content="کانتینرهای دپو سازگار برای اجاره انبار در تهران و کرج">
-  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png" sizes="180x180">
+  <meta name="twitter:image:alt" content="کانتینرهای دپو سازگار برای اجاره انبار در استان تهران و استان البرز">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96">
+  <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
   <link rel="preload" href="assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/style.css">
   ${page.slug === 'index' ? '<link rel="preload" href="assets/images/container-storage-tehran.webp" as="image" type="image/webp" fetchpriority="high">' : ''}
@@ -754,14 +822,15 @@ const header = (page, faqs) => {
   <header class="site-header">
     <div class="container header-row">
       <a class="brand" href="index.html" aria-label="دپو سازگار؛ صفحه اصلی">
-        <img src="assets/images/logo.svg" width="460" height="120" alt="دپو سازگار">
+        <img src="assets/images/brand-mark.svg" width="512" height="512" alt="">
+        <span class="brand-copy"><strong>دپو سازگار</strong><small>فضای امن، انتخاب دقیق</small></span>
       </a>
       <nav class="desktop-nav" aria-label="ناوبری اصلی">
         <a href="index.html">خانه</a>
         <a href="ejare-anbar-tehran.html">اجاره انبار</a>
         <a href="ejare-anbar-containeri-tehran.html">انبار کانتینری</a>
         <a href="depo-lavazem-khaneh.html">دپو لوازم خانه</a>
-        <a href="ejare-anbar-karaj.html">کرج</a>
+        <a href="ejare-anbar-karaj.html">استان البرز</a>
         <a href="about.html">درباره ما</a>
         <a href="contact.html">تماس</a>
       </nav>
@@ -771,7 +840,7 @@ const header = (page, faqs) => {
       </button>
     </div>
     <nav id="mobile-menu" class="mobile-nav" aria-label="ناوبری موبایل" hidden>
-      <a href="index.html">خانه</a><a href="ejare-anbar-tehran.html">اجاره انبار</a><a href="ejare-anbar-containeri-tehran.html">انبار کانتینری</a><a href="depo-lavazem-khaneh.html">دپو لوازم خانه</a><a href="ejare-anbar-karaj.html">اجاره انبار کرج</a><a href="about.html">درباره ما</a><a href="contact.html">تماس با ما</a>
+      <a href="index.html">خانه</a><a href="ejare-anbar-tehran.html">اجاره انبار</a><a href="ejare-anbar-containeri-tehran.html">انبار کانتینری</a><a href="depo-lavazem-khaneh.html">دپو لوازم خانه</a><a href="ejare-anbar-karaj.html">استان البرز</a><a href="about.html">درباره ما</a><a href="contact.html">تماس با ما</a>
     </nav>
   </header>
   ${breadcrumb(page)}
@@ -781,8 +850,8 @@ const header = (page, faqs) => {
 const footer = () => `<footer class="site-footer">
   <div class="container footer-grid">
     <div class="footer-about">
-      <img src="assets/images/logo.svg" width="460" height="120" alt="دپو سازگار">
-      <p>راهنمای انتخاب و هماهنگی اجاره انبار و کانتینر برای لوازم خانه، دفتر و کالای مجاز در تهران و کرج.</p>
+      <a class="footer-brand" href="index.html" aria-label="دپو سازگار؛ صفحه اصلی"><img src="assets/images/brand-mark.svg" width="512" height="512" alt=""><span><strong>دپو سازگار</strong><small>فضای امن، انتخاب دقیق</small></span></a>
+      <p>راهنمای انتخاب و هماهنگی اجاره انبار و کانتینر برای لوازم خانه، دفتر و کالای مجاز در استان تهران و استان البرز.</p>
     </div>
     <div><h2>دسترسی سریع</h2><a href="ejare-anbar-tehran.html">اجاره انبار تهران</a><a href="depo-lavazem-khaneh.html">دپو لوازم خانه</a><a href="about.html">درباره دپو سازگار</a><a href="contact.html">تماس با ما</a></div>
     <div><h2>مناطق</h2><a href="ejare-anbar-shomal-tehran.html">شمال تهران</a><a href="ejare-anbar-shargh-tehran.html">شرق تهران</a><a href="ejare-anbar-markaz-tehran.html">مرکز تهران</a><a href="ejare-anbar-gharb-tehran.html">غرب تهران</a><a href="ejare-anbar-jonoub-tehran.html">جنوب تهران</a><a href="ejare-anbar-karaj.html">کرج و استان البرز</a></div>

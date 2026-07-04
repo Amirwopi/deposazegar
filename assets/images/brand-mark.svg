@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">نشان دپو سازگار</title>
+  <desc id="desc">ورودی انبار با مسیر طلایی</desc>
+  <defs>
+    <linearGradient id="bg" x1="64" y1="48" x2="448" y2="464" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#194b77"/>
+      <stop offset=".62" stop-color="#0f2742"/>
+      <stop offset="1" stop-color="#081b30"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="164" y1="176" x2="402" y2="404" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fbbf24"/>
+      <stop offset="1" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <rect x="24" y="24" width="464" height="464" rx="132" fill="url(#bg)"/>
+  <path d="M91 232 256 116l165 116v181H91Z" fill="#fff" fill-opacity=".055" stroke="#fff" stroke-width="26" stroke-linejoin="round"/>
+  <path d="M151 413V242h210v171" fill="#081b30" stroke="url(#accent)" stroke-width="26" stroke-linejoin="round"/>
+  <path d="M151 292h210M151 342h210" fill="none" stroke="#fff" stroke-opacity=".74" stroke-width="18"/>
+  <path d="m361 242 67 45v126h-67Z" fill="url(#accent)"/>
+  <path d="M404 75h35v35" fill="none" stroke="#fbbf24" stroke-linecap="round" stroke-width="18"/>
+</svg>

@@ -1,6 +1,6 @@
 # توسعه وب‌سایت دپو سازگار
 
-این مخزن شامل سورس و ابزار Build وب‌سایت استاتیک «دپو سازگار» است. فایل‌های قابل انتشار فقط داخل `public_html_ready/` ساخته می‌شوند.
+این مخزن شامل سورس و ابزار Build وب‌سایت «دپو سازگار» است. صفحات اصلی به‌صورت استاتیک تولید می‌شوند و ثبت نظر کاربران یک endpoint کوچک PHP دارد. فایل‌های قابل انتشار فقط داخل `public_html_ready/` ساخته می‌شوند.
 
 ## نصب
 
@@ -14,7 +14,7 @@ npm install
 npm run build
 ```
 
-Build پوشه خروجی قبلی را پاک می‌کند، CSS فشرده را می‌سازد، ۲۰ صفحه HTML و Sitemap را تولید می‌کند، دارایی‌های لازم را کپی می‌کند و در پایان artifact نهایی را تست می‌کند.
+Build پوشه خروجی قبلی را پاک می‌کند، CSS فشرده را می‌سازد، ۲۱ صفحه HTML و Sitemap را تولید می‌کند، faviconهای ریشه، endpoint نظرها و دارایی‌های لازم را کپی می‌کند و در پایان artifact نهایی را تست می‌کند.
 
 ## تست
 
@@ -35,11 +35,13 @@ npm test
 - `scripts/validate-site.js`: قواعد کامل ممیزی
 - `assets/css/input.css`: سورس CSS
 - `assets/js/main.js`: سورس JavaScript
+- `server/api/comments.php`: endpoint ثبت و دریافت نظرهای تأییدشده
+- `server/storage/.htaccess`: جلوگیری از دسترسی مستقیم به فایل نظرها
 - `public_html_ready/`: خروجی نهایی آماده هاست
 
 ## Source و Artifact
 
-پوشه‌های `data/`، `scripts/` و `assets/` سورس توسعه‌اند و به Node.js نیاز دارند. پوشه `public_html_ready/` یک سایت استاتیک مستقل شامل HTML، CSS، JS، تصاویر، فونت‌ها، Sitemap و Robots است.
+پوشه‌های `data/`، `scripts/`، `assets/` و `server/` سورس توسعه‌اند و Build محلی به Node.js نیاز دارد. خروجی `public_html_ready/` شامل HTML، CSS، JS، تصاویر، فونت‌ها، Sitemap، Robots و endpoint PHP نظرها است.
 
 > `public_html_ready/` خروجی تولیدشده است و نباید دستی ویرایش شود. تغییرات را در سورس اعمال و دوباره `npm run build` اجرا کنید.
 
@@ -51,6 +53,6 @@ npm test
 npm start
 ```
 
-همچنین می‌توان `public_html_ready/index.html` را مستقیماً در مرورگر باز کرد.
+برای دیدن صفحات می‌توان از `npm start` استفاده کرد. ثبت و نمایش نظرها فقط روی هاستی که PHP را اجرا می‌کند فعال است.
 
 راهنمای انتشار روی هاست در [README-hosting.md](README-hosting.md) قرار دارد.

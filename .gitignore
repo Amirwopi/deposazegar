@@ -2,3 +2,5 @@ node_modules
 .kilo
 .codex
 public_html_ready
+dogfood-output
+public_html_ready.zip

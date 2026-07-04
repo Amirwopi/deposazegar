@@ -118,7 +118,11 @@ async function validate() {
 
     if (!/<meta name="robots" content="index,follow,max-image-preview:large">/.test(html)) fail(file, 'missing index/follow robots meta');
     if (!/<meta property="og:image"/.test(html) || !/<meta name="twitter:card" content="summary_large_image">/.test(html)) fail(file, 'incomplete social metadata');
-    if (!/rel="icon"[^>]+favicon\.svg/.test(html) || !/rel="apple-touch-icon"[^>]+apple-touch-icon\.png/.test(html)) fail(file, 'missing favicon links');
+    if (!/rel="icon"[^>]+\/favicon\.ico/.test(html)
+      || !/rel="icon"[^>]+\/favicon-96\.png/.test(html)
+      || !/rel="apple-touch-icon"[^>]+\/apple-touch-icon\.png/.test(html)) {
+      fail(file, 'missing stable root-level favicon links');
+    }
     if (faqCount < 5) fail(file, 'fewer than five details-based FAQ items');
     if ((html.match(/<summary>/g) || []).length < 5) fail(file, 'FAQ summaries missing');
     if (/\bprose(?:-|\s|")/.test(html)) fail(file, 'typography plugin prose class remains');
@@ -126,7 +130,7 @@ async function validate() {
     if (!/class="mobile-contact-bar"/.test(html) || !/data-sheet-open="phone-sheet"/.test(html) || !/data-sheet-open="locations-sheet"/.test(html)) {
       fail(file, 'mobile contact and locations actions are missing');
     }
-    if (!/https:\/\/wa\.me\/989102567906/.test(html)) fail(file, 'WhatsApp contact link is missing');
+    if (/wa\.me|whatsapp|واتساپ/i.test(html)) fail(file, 'WhatsApp must be removed from the site');
     if (!/href="https:\/\/github\.com\/amirwopi"[^>]*>Amirwopi<\/a>/.test(html)) fail(file, 'Amirwopi copyright link is missing');
 
     for (const phone of phoneNumbers) {
@@ -151,8 +155,11 @@ async function validate() {
         if (!Array.isArray(localBusiness?.department) || localBusiness.department.length !== requiredBranchNames.length) {
           fail(file, 'LocalBusiness schema does not contain every confirmed branch');
         }
-        if (!Array.isArray(localBusiness?.areaServed) || !localBusiness.areaServed.some((area) => area.name === 'کرج')) {
-          fail(file, 'LocalBusiness schema does not include Karaj');
+        if (!Array.isArray(localBusiness?.areaServed)
+          || !localBusiness.areaServed.some((area) => area.name === 'استان تهران')
+          || !localBusiness.areaServed.some((area) => area.name === 'استان البرز')
+          || !localBusiness.areaServed.some((area) => area.name === 'کرج')) {
+          fail(file, 'LocalBusiness schema does not include Tehran Province, Alborz Province and Karaj');
         }
       } catch (error) {
         fail(file, `invalid JSON-LD: ${error.message}`);
@@ -248,6 +255,16 @@ async function validate() {
     if (!contactHtml.includes(phone)) fail('contact.html', `missing phone number ${phone}`);
   }
   const indexHtml = fs.readFileSync(path.join(rootDir, 'index.html'), 'utf8');
+  if (!/data-comment-form/.test(indexHtml)
+    || !/action="api\/comments\.php"/.test(indexHtml)
+    || !fs.existsSync(path.join(rootDir, 'api', 'comments.php'))
+    || !fs.existsSync(path.join(rootDir, 'storage', '.htaccess'))) {
+    fail('index.html', 'real moderated comments form or its server endpoint is missing');
+  }
+  for (const [feet, meters] of [['۱۰', '۶'], ['۱۵', '۱۲'], ['۲۰', '۱۸'], ['۴۰', '۲۷']]) {
+    const mappingMarkup = new RegExp(`${feet} فوت\\s*<small>\\(${meters} متر\\)<\\/small>`);
+    if (!mappingMarkup.test(indexHtml)) fail('index.html', `missing requested size mapping ${feet} foot (${meters} meter)`);
+  }
   for (const branch of requiredBranchNames) {
     if (!indexHtml.includes(branch)) fail('index.html', `missing confirmed branch ${branch}`);
     if (!contactHtml.includes(branch)) fail('contact.html', `missing confirmed branch ${branch}`);
@@ -257,6 +274,9 @@ async function validate() {
   if (socialMetadata.width !== 1200 || socialMetadata.height !== 630) fail('assets/images/og-cover.jpg', 'expected 1200×630');
   const touchMetadata = await sharp(path.join(rootDir, 'assets', 'images', 'apple-touch-icon.png')).metadata();
   if (touchMetadata.width !== 180 || touchMetadata.height !== 180) fail('assets/images/apple-touch-icon.png', 'expected 180×180');
+  const faviconMetadata = await sharp(path.join(rootDir, 'favicon-96.png')).metadata();
+  if (faviconMetadata.width !== 96 || faviconMetadata.height !== 96) fail('favicon-96.png', 'expected 96×96');
+  if (!fs.existsSync(path.join(rootDir, 'favicon.ico'))) fail('favicon.ico', 'missing root favicon');
 
   const reportStatus = errors.length ? 'نیازمند اصلاح' : 'پاس';
   const report = `# گزارش ممیزی SEO دپو سازگار
@@ -272,7 +292,8 @@ async function validate() {
 - Schemaهای الزامی: ${requiredSchemaTypes.join('، ')}
 - تصاویر: WebP با JPG fallback و ابعاد ذاتی کنترل‌شده
 - شماره‌های تماس: ۹ شماره در Schema، CTA، صفحه تماس و فوتر
-- واتساپ: \`https://wa.me/989102567906\`
+- تماس: پنل کشویی شامل هر ۹ شماره و بدون لینک واتساپ
+- نظر کاربران: فرم واقعی PHP با تأیید مدیر و ذخیره امن
 
 ## شاخص‌های هر صفحه
 
@@ -292,7 +313,7 @@ ${auditRows.map((row) => `| ${row.file} | ${row.wordCount} | ${row.descriptionLe
 - نبود لینک داخلی شکسته یا ارجاع به تصویر واترمارک‌دار
 - WebP/JPG، ابعاد واقعی، OG image و Apple Touch Icon
 - ${pages.length} URL canonical، lastmod و priority منطقی در Sitemap
-- شعب غرب، جنوب و شرق تهران و پوشش کرج در محتوا و Schema
+- شعب غرب، جنوب و شرق استان تهران و پوشش استان البرز در محتوا و Schema
 
 ## اطلاعاتی که باید از مالک کسب‌وکار دریافت شود
 

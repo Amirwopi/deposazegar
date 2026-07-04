@@ -154,11 +154,30 @@
     display: inline-flex;
     min-width: 0;
     align-items: center;
+    gap: 0.65rem;
   }
 
   .brand img {
-    width: 8.6rem;
-    height: auto;
+    width: 2.9rem;
+    height: 2.9rem;
+    flex: 0 0 auto;
+  }
+
+  .brand-copy {
+    display: grid;
+    line-height: 1.25;
+  }
+
+  .brand-copy strong {
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 900;
+  }
+
+  .brand-copy small {
+    margin-top: 0.2rem;
+    color: #b9d5e7;
+    font-size: 0.66rem;
   }
 
   .desktop-nav, .header-phone {
@@ -295,6 +314,7 @@
   .btn {
     display: inline-flex;
     min-height: 3.15rem;
+    cursor: pointer;
     align-items: center;
     justify-content: center;
     padding: 0.75rem 1.25rem;
@@ -439,6 +459,18 @@
     background: var(--paper);
   }
 
+  .quick-benefits-grid > .quick-benefit-accent {
+    grid-column: 1 / -1;
+    border-color: #1d6fa5;
+    background:
+      linear-gradient(135deg, rgb(29 111 165 / 12%), transparent 64%),
+      #eef6fb;
+  }
+
+  .quick-benefit-accent strong {
+    color: var(--forest);
+  }
+
   .quick-benefits svg {
     width: 1.75rem;
     height: 1.75rem;
@@ -551,6 +583,14 @@
     color: #fbbf24;
     font-size: 2rem;
     line-height: 1.2;
+  }
+
+  .size-grid strong small {
+    display: inline;
+    color: var(--white);
+    font-size: 0.78rem;
+    font-weight: 700;
+    opacity: 0.72;
   }
 
   .size-grid span {
@@ -1081,17 +1121,6 @@
     gap: 0.65rem;
   }
 
-  .btn-whatsapp {
-    border-color: #15803d;
-    background: #15803d;
-    color: var(--white);
-  }
-
-  .btn-whatsapp:hover {
-    border-color: #166534;
-    background: #166534;
-  }
-
   .related-box {
     margin-top: 2.5rem;
     padding-top: 1.5rem;
@@ -1159,6 +1188,270 @@
 
   .contact-directory a:hover {
     text-decoration: underline;
+  }
+
+  .contact-callout {
+    display: grid;
+    gap: 0.65rem;
+    margin-block: 1.5rem;
+    padding: 1.25rem;
+    border: 1px solid #b9d5e7;
+    border-radius: 1rem;
+    background: #eef6fb;
+  }
+
+  .contact-callout p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .contact-callout .btn {
+    justify-self: start;
+  }
+
+  .comments-section {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 12% 18%, rgb(29 111 165 / 42%), transparent 28rem),
+      linear-gradient(145deg, #081b30, #0f2742 56%, #153b61);
+    color: var(--white);
+  }
+
+  .comments-section::before {
+    position: absolute;
+    width: 24rem;
+    height: 24rem;
+    border: 1px solid rgb(255 255 255 / 9%);
+    border-radius: 50%;
+    content: "";
+    inset: -10rem auto auto -8rem;
+  }
+
+  .comments-layout {
+    position: relative;
+    display: grid;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .comments-copy h2 {
+    max-width: 38rem;
+    margin-top: 0.65rem;
+    color: var(--white);
+    font-size: clamp(2rem, 6vw, 3.8rem);
+  }
+
+  .comments-copy > p {
+    max-width: 42rem;
+    color: rgb(255 255 255 / 72%);
+  }
+
+  .comments-principles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-top: 1.3rem;
+  }
+
+  .comments-principles span {
+    padding: 0.4rem 0.7rem;
+    border: 1px solid rgb(255 255 255 / 16%);
+    border-radius: 999px;
+    background: rgb(255 255 255 / 6%);
+    color: #dbeafe;
+    font-size: 0.76rem;
+  }
+
+  .comment-stream {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .visitor-comment {
+    padding: 1rem;
+    border: 1px solid rgb(255 255 255 / 13%);
+    border-radius: 1rem;
+    background: rgb(255 255 255 / 7%);
+    backdrop-filter: blur(10px);
+  }
+
+  .visitor-comment header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .visitor-comment-avatar {
+    display: grid;
+    width: 2.6rem;
+    height: 2.6rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 0.75rem;
+    background: #f59e0b;
+    color: #081b30;
+    font-weight: 900;
+  }
+
+  .visitor-comment header div {
+    display: grid;
+  }
+
+  .visitor-comment header strong {
+    color: var(--white);
+  }
+
+  .visitor-comment header span {
+    color: #b9d5e7;
+    font-size: 0.72rem;
+  }
+
+  .visitor-comment p {
+    margin: 0.8rem 0 0;
+    color: rgb(255 255 255 / 78%);
+  }
+
+  .comment-empty {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-inline-start: 3px solid #f59e0b;
+    background: rgb(255 255 255 / 5%);
+    color: #dbeafe !important;
+    font-size: 0.88rem;
+  }
+
+  .comment-form {
+    padding: 1.25rem;
+    border: 1px solid rgb(255 255 255 / 30%);
+    border-top: 5px solid #f59e0b;
+    border-radius: 1.3rem;
+    background: var(--white);
+    box-shadow: 0 28px 70px rgb(0 0 0 / 30%);
+    color: var(--ink);
+  }
+
+  .comment-form-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 1.15rem;
+  }
+
+  .comment-form-heading > span {
+    color: #f59e0b;
+    font-family: Georgia, serif;
+    font-size: 3.5rem;
+    line-height: 0.7;
+  }
+
+  .comment-form-heading div {
+    display: grid;
+  }
+
+  .comment-form-heading strong {
+    color: var(--forest);
+    font-size: 1.1rem;
+  }
+
+  .comment-form-heading small {
+    color: var(--muted);
+  }
+
+  .comment-fields {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .comment-fields label {
+    display: grid;
+    gap: 0.35rem;
+    color: #334155;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .comment-fields input, .comment-fields textarea {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.75rem;
+    background: #f8fafc;
+    color: var(--ink);
+    font: inherit;
+    resize: vertical;
+  }
+
+  .comment-fields input:focus, .comment-fields textarea:focus {
+    border-color: var(--green);
+    outline: 3px solid rgb(29 111 165 / 14%);
+  }
+
+  .comment-message-field {
+    position: relative;
+  }
+
+  .comment-message-field small {
+    position: absolute;
+    bottom: 0.55rem;
+    inset-inline-end: 0.7rem;
+    padding-inline: 0.3rem;
+    background: #f8fafc;
+    color: #64748b;
+    font-size: 0.68rem;
+  }
+
+  .comment-consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    margin-top: 1rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+
+  .comment-consent input {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex: 0 0 auto;
+    margin-top: 0.25rem;
+    accent-color: var(--green);
+  }
+
+  .comment-honeypot {
+    position: absolute !important;
+    overflow: hidden !important;
+    width: 1px !important;
+    height: 1px !important;
+    clip: rect(0 0 0 0) !important;
+    white-space: nowrap !important;
+  }
+
+  .comment-submit {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .comment-submit:disabled {
+    cursor: wait;
+    opacity: 0.65;
+  }
+
+  .comment-status {
+    min-height: 1.6rem;
+    margin: 0.65rem 0 0;
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+
+  .comment-status[data-state="success"] {
+    color: #166534;
+  }
+
+  .comment-status[data-state="error"] {
+    color: #b91c1c;
   }
 
   .faq-list {
@@ -1237,22 +1530,38 @@
     color: rgb(255 255 255 / 76%);
   }
 
-  .final-whatsapp {
-    display: inline-flex;
-    min-height: 2.8rem;
-    align-items: center;
+  .final-cta-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-top: 1.25rem;
+  }
+
+  .final-cta-signal {
+    display: grid;
+    justify-items: center;
+    padding: 1.5rem;
+    border: 1px solid rgb(255 255 255 / 16%);
+    border-radius: 1.25rem;
+    background: rgb(255 255 255 / 7%);
+    text-align: center;
+  }
+
+  .final-cta-signal strong {
     color: #fbbf24;
+    font-size: clamp(4rem, 14vw, 7rem);
+    line-height: 1;
+  }
+
+  .final-cta-signal span {
+    color: var(--white);
     font-weight: 900;
   }
 
-  .final-whatsapp:hover {
-    text-decoration: underline;
-  }
-
-  .cta-phone-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.55rem;
+  .final-cta-signal small {
+    max-width: 18rem;
+    margin-top: 0.45rem;
+    color: rgb(255 255 255 / 62%);
   }
 
   .phone-link {
@@ -1310,9 +1619,29 @@
     color: #fbbf24;
   }
 
-  .footer-about img {
-    width: 11rem;
-    height: auto;
+  .footer-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .footer-brand img {
+    width: 3.8rem;
+    height: 3.8rem;
+  }
+
+  .footer-brand span {
+    display: grid;
+  }
+
+  .footer-brand strong {
+    color: var(--white);
+    font-size: 1.25rem;
+  }
+
+  .footer-brand small {
+    color: #b9d5e7;
+    font-size: 0.72rem;
   }
 
   .footer-about p {
@@ -1583,6 +1912,19 @@
     align-items: center;
   }
 
+  .final-cta-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .comment-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .comment-message-field {
+    grid-column: 1 / -1;
+  }
+
   .process-list {
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 1rem;
@@ -1614,10 +1956,6 @@
     height: 18rem;
   }
 
-  .cta-phone-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .footer-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1645,7 +1983,24 @@
   }
 
   .brand img {
-    width: 9.7rem;
+    width: 3.15rem;
+    height: 3.15rem;
+  }
+
+  .brand-copy strong {
+    font-size: 1.05rem;
+  }
+
+  .quick-benefits-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .quick-benefits-grid > div:not(.quick-benefit-accent) {
+    grid-column: span 3;
+  }
+
+  .quick-benefits-grid > .quick-benefit-accent {
+    grid-column: span 4;
   }
 
   .desktop-nav a {
@@ -1725,6 +2080,17 @@
 
   .page-hero-image {
     max-height: 25rem;
+  }
+
+  .comments-layout {
+    grid-template-columns: minmax(0, 1.08fr) minmax(25rem, 0.92fr);
+    gap: 5rem;
+  }
+
+  .comment-form {
+    position: sticky;
+    top: 6.5rem;
+    padding: 1.6rem;
   }
 
   .final-cta-grid {

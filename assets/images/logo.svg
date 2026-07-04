@@ -1,12 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="460" height="120" viewBox="0 0 460 120" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="144" viewBox="0 0 520 144" role="img" aria-labelledby="title desc">
   <title id="title">دپو سازگار</title>
-  <desc id="desc">نشان دپو سازگار با نماد فضای نگهداری</desc>
-  <rect width="460" height="120" rx="24" fill="#0f2742"/>
-  <g transform="translate(352 14)">
-    <rect width="92" height="92" rx="24" fill="#f59e0b"/>
-    <path d="M20 38 46 23l26 15v34L46 87 20 72Z" fill="none" stroke="#0f2742" stroke-width="6" stroke-linejoin="round"/>
-    <path d="m20 38 26 15 26-15M46 53v34" fill="none" stroke="#0f2742" stroke-width="6" stroke-linejoin="round"/>
+  <desc id="desc">نشان حرفه‌ای دپو سازگار با نماد ورودی انبار</desc>
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#153b61"/>
+      <stop offset="1" stop-color="#081b30"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fbbf24"/>
+      <stop offset="1" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <rect width="520" height="144" rx="30" fill="#081b30"/>
+  <g transform="translate(388 12)">
+    <rect width="120" height="120" rx="34" fill="url(#panel)"/>
+    <path d="M21 55 60 28l39 27v43H21Z" fill="#fff" fill-opacity=".07" stroke="#fff" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M35 98V58h50v40" fill="#081b30" stroke="url(#gold)" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M35 70h50M35 82h50" fill="none" stroke="#fff" stroke-opacity=".72" stroke-width="4"/>
+    <path d="m85 58 16 11v29H85Z" fill="url(#gold)"/>
+    <circle cx="100" cy="20" r="5" fill="#fbbf24"/>
   </g>
-  <text x="330" y="62" text-anchor="end" fill="#ffffff" font-family="Vazirmatn, Tahoma, sans-serif" font-size="44" font-weight="900">دپو سازگار</text>
-  <text x="330" y="91" text-anchor="end" fill="#bfdbfe" font-family="Vazirmatn, Tahoma, sans-serif" font-size="17" font-weight="700">فضای مطمئن برای وسایل شما</text>
+  <text x="362" y="68" text-anchor="end" fill="#fff" font-family="Tahoma, sans-serif" font-size="45" font-weight="700">دپو سازگار</text>
+  <path d="M80 88h282" stroke="#ffffff" stroke-opacity=".15"/>
+  <text x="362" y="111" text-anchor="end" fill="#b9d5e7" font-family="Tahoma, sans-serif" font-size="18">فضای امن، انتخاب دقیق</text>
 </svg>

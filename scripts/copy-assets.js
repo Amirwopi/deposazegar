@@ -43,8 +43,22 @@ async function copyAssets() {
     path.join(projectRoot, '.htaccess'),
     path.join(outputDir, '.htaccess')
   );
+  for (const favicon of ['favicon.ico', 'favicon-96.png', 'apple-touch-icon.png']) {
+    copyFile(
+      path.join(projectRoot, 'assets', 'images', favicon),
+      path.join(outputDir, favicon)
+    );
+  }
+  copyDirectory(
+    path.join(projectRoot, 'server', 'api'),
+    path.join(outputDir, 'api')
+  );
+  copyDirectory(
+    path.join(projectRoot, 'server', 'storage'),
+    path.join(outputDir, 'storage')
+  );
 
-  console.log('Copied hosting assets, robots.txt and .htaccess to public_html_ready/.');
+  console.log('Copied hosting assets, favicon files, comment endpoint, robots.txt and .htaccess.');
 }
 
 copyAssets().catch((error) => {

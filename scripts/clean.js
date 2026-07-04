@@ -15,7 +15,9 @@ for (const directory of [
   path.join(outputDir, 'assets', 'css'),
   path.join(outputDir, 'assets', 'js'),
   path.join(outputDir, 'assets', 'images'),
-  path.join(outputDir, 'assets', 'fonts')
+  path.join(outputDir, 'assets', 'fonts'),
+  path.join(outputDir, 'api'),
+  path.join(outputDir, 'storage')
 ]) {
   fs.mkdirSync(directory, { recursive: true });
 }
