@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch {
       if (commentEmpty) {
         commentEmpty.hidden = false;
-        commentEmpty.textContent = 'نظرهای تأییدشده پس از فعال شدن سرویس روی هاست نمایش داده می‌شوند.';
+        commentEmpty.textContent = 'نظرهای تأییدشده پس از فعال شدن سرویس روی  نمایش داده می‌شوند.';
       }
     }
   };
