@@ -110,12 +110,40 @@ document.addEventListener('DOMContentLoaded', () => {
   const commentStatus = document.querySelector('[data-comment-status]');
   const commentMessage = commentForm?.querySelector('[name="message"]');
   const commentCounter = document.querySelector('[data-comment-counter]');
+  const commentToast = document.querySelector('[data-comment-toast]');
+  const commentToastTitle = commentToast?.querySelector('[data-comment-toast-title]');
+  const commentToastMessage = commentToast?.querySelector('[data-comment-toast-message]');
+  const commentToastClose = commentToast?.querySelector('[data-comment-toast-close]');
+  let commentToastTimer = null;
 
   const setCommentStatus = (message, state = '') => {
     if (!commentStatus) return;
     commentStatus.textContent = message;
     commentStatus.dataset.state = state;
   };
+
+  const hideCommentToast = () => {
+    if (!commentToast) return;
+    commentToast.classList.remove('is-visible');
+    window.clearTimeout(commentToastTimer);
+    window.setTimeout(() => {
+      commentToast.hidden = true;
+      commentToast.removeAttribute('data-state');
+    }, 220);
+  };
+
+  const showCommentToast = (title, message, state = 'success') => {
+    if (!commentToast || !commentToastTitle || !commentToastMessage) return;
+    window.clearTimeout(commentToastTimer);
+    commentToastTitle.textContent = title;
+    commentToastMessage.textContent = message;
+    commentToast.dataset.state = state;
+    commentToast.hidden = false;
+    window.requestAnimationFrame(() => commentToast.classList.add('is-visible'));
+    commentToastTimer = window.setTimeout(hideCommentToast, 6000);
+  };
+
+  commentToastClose?.addEventListener('click', hideCommentToast);
 
   const createCommentCard = (comment) => {
     const article = document.createElement('article');
@@ -200,8 +228,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (startedAt) startedAt.value = String(Date.now());
         updateCounter();
         setCommentStatus(result.message || 'نظر شما دریافت شد و پس از بررسی منتشر می‌شود.', 'success');
+        showCommentToast('نظر شما ثبت شد', 'پس از بررسی مدیر در سایت منتشر می‌شود.');
       } catch (error) {
         setCommentStatus(error.message || 'ارتباط برقرار نشد؛ لطفاً دوباره تلاش کنید.', 'error');
+        showCommentToast('ثبت نظر انجام نشد', error.message || 'لطفاً دوباره تلاش کنید.', 'error');
       } finally {
         submitButton?.removeAttribute('disabled');
         commentForm.removeAttribute('aria-busy');
@@ -209,5 +239,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     loadComments();
+
+    const currentUrl = new URL(window.location.href);
+    const commentResult = currentUrl.searchParams.get('comment');
+    if (commentResult === 'submitted') {
+      showCommentToast('نظر شما ثبت شد', 'پس از بررسی مدیر در سایت منتشر می‌شود.');
+    } else if (commentResult === 'error') {
+      showCommentToast('ثبت نظر انجام نشد', 'لطفاً فرم را بررسی و دوباره ارسال کنید.', 'error');
+    }
+    if (commentResult) {
+      currentUrl.searchParams.delete('comment');
+      window.history.replaceState({}, '', `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`);
+    }
   }
 });

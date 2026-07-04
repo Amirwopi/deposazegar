@@ -158,8 +158,8 @@
   }
 
   .brand img {
-    width: 2.9rem;
-    height: 2.9rem;
+    width: 2.45rem;
+    height: 2.45rem;
     flex: 0 0 auto;
   }
 
@@ -1454,6 +1454,81 @@
     color: #b91c1c;
   }
 
+  .comment-toast {
+    position: fixed;
+    z-index: 85;
+    right: 1rem;
+    bottom: calc(5.25rem + env(safe-area-inset-bottom));
+    left: 1rem;
+    display: grid;
+    grid-template-columns: 2.7rem minmax(0, 1fr) 2.2rem;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.8rem;
+    border: 1px solid #b9d5e7;
+    border-radius: 1rem;
+    background: var(--white);
+    box-shadow: 0 24px 60px rgb(3 15 27 / 28%);
+    color: var(--ink);
+    opacity: 0;
+    transform: translateY(1.5rem);
+    transition: opacity 200ms ease, transform 200ms ease;
+  }
+
+  .comment-toast[hidden] {
+    display: none;
+  }
+
+  .comment-toast.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .comment-toast-icon {
+    display: grid;
+    width: 2.7rem;
+    height: 2.7rem;
+    place-items: center;
+    border-radius: 0.75rem;
+    background: #dcfce7;
+    color: #166534;
+    font-size: 1.2rem;
+    font-weight: 900;
+  }
+
+  .comment-toast[data-state="error"] .comment-toast-icon {
+    background: #fee2e2;
+    color: #b91c1c;
+  }
+
+  .comment-toast > span:nth-child(2) {
+    display: grid;
+  }
+
+  .comment-toast strong {
+    color: var(--forest);
+    font-size: 0.9rem;
+  }
+
+  .comment-toast small {
+    margin-top: 0.1rem;
+    color: var(--muted);
+    font-size: 0.72rem;
+  }
+
+  .comment-toast button {
+    display: grid;
+    width: 2.2rem;
+    height: 2.2rem;
+    place-items: center;
+    border: 0;
+    border-radius: 0.6rem;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 1.35rem;
+    line-height: 1;
+  }
+
   .faq-list {
     display: grid;
     gap: 0.75rem;
@@ -1626,8 +1701,8 @@
   }
 
   .footer-brand img {
-    width: 3.8rem;
-    height: 3.8rem;
+    width: 3rem;
+    height: 3rem;
   }
 
   .footer-brand span {
@@ -1983,8 +2058,8 @@
   }
 
   .brand img {
-    width: 3.15rem;
-    height: 3.15rem;
+    width: 2.7rem;
+    height: 2.7rem;
   }
 
   .brand-copy strong {
@@ -2091,6 +2166,13 @@
     position: sticky;
     top: 6.5rem;
     padding: 1.6rem;
+  }
+
+  .comment-toast {
+    right: auto;
+    bottom: 1.25rem;
+    left: 1.25rem;
+    width: min(26rem, calc(100% - 2.5rem));
   }
 
   .final-cta-grid {

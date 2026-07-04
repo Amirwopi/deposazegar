@@ -99,8 +99,8 @@ async function validate() {
       fail(file, `meta description length is ${[...metaDescription].length}; expected 140–160 characters`);
     }
     if (!canonical) fail(file, 'missing canonical');
-    if (!/<link rel="stylesheet" href="assets\/css\/style\.css">/.test(html)) fail(file, 'missing production CSS reference');
-    if (!/<script src="assets\/js\/main\.js" defer><\/script>/.test(html)) fail(file, 'missing production JavaScript reference');
+    if (!/<link rel="stylesheet" href="assets\/css\/style\.css\?v=[a-f0-9]{10}">/.test(html)) fail(file, 'missing versioned production CSS reference');
+    if (!/<script src="assets\/js\/main\.js\?v=[a-f0-9]{10}" defer><\/script>/.test(html)) fail(file, 'missing versioned production JavaScript reference');
     if (/\.\.\/(?:data|scripts)|localhost|node_modules|tailwind\.config\.js|input\.css/i.test(html)) {
       fail(file, 'contains a development-only path or reference');
     }
@@ -257,9 +257,21 @@ async function validate() {
   const indexHtml = fs.readFileSync(path.join(rootDir, 'index.html'), 'utf8');
   if (!/data-comment-form/.test(indexHtml)
     || !/action="api\/comments\.php"/.test(indexHtml)
+    || !/data-comment-toast/.test(indexHtml)
     || !fs.existsSync(path.join(rootDir, 'api', 'comments.php'))
+    || !fs.existsSync(path.join(rootDir, 'admin', 'comments.php'))
+    || !fs.existsSync(path.join(rootDir, 'admin', 'admin.css'))
     || !fs.existsSync(path.join(rootDir, 'storage', '.htaccess'))) {
-    fail('index.html', 'real moderated comments form or its server endpoint is missing');
+    fail('index.html', 'moderated comments form, toast, API or admin panel is missing');
+  }
+  const setupTokenPath = path.join(rootDir, 'storage', '.admin-setup-token');
+  const setupToken = fs.existsSync(setupTokenPath) ? fs.readFileSync(setupTokenPath, 'utf8').trim() : '';
+  if (!/^[a-f0-9]{48}$/.test(setupToken)) fail('storage/.admin-setup-token', 'missing secure first-run admin setup token');
+  const commentApi = fs.readFileSync(path.join(rootDir, 'api', 'comments.php'), 'utf8');
+  if (!/Location: \/\?comment=\{\$result\}#comments/.test(commentApi)) fail('api/comments.php', 'non-JavaScript form fallback does not redirect back to comments');
+  const adminPhp = fs.readFileSync(path.join(rootDir, 'admin', 'comments.php'), 'utf8');
+  for (const securityControl of ['password_hash', 'password_verify', 'hash_equals', 'session_regenerate_id', 'admin_valid_csrf', 'X-Robots-Tag: noindex']) {
+    if (!adminPhp.includes(securityControl)) fail('admin/comments.php', `missing admin security control ${securityControl}`);
   }
   for (const [feet, meters] of [['۱۰', '۶'], ['۱۵', '۱۲'], ['۲۰', '۱۸'], ['۴۰', '۲۷']]) {
     const mappingMarkup = new RegExp(`${feet} فوت\\s*<small>\\(${meters} متر\\)<\\/small>`);
@@ -293,7 +305,8 @@ async function validate() {
 - تصاویر: WebP با JPG fallback و ابعاد ذاتی کنترل‌شده
 - شماره‌های تماس: ۹ شماره در Schema، CTA، صفحه تماس و فوتر
 - تماس: پنل کشویی شامل هر ۹ شماره و بدون لینک واتساپ
-- نظر کاربران: فرم واقعی PHP با تأیید مدیر و ذخیره امن
+- نظر کاربران: فرم PHP، Toast داخل صفحه و بازگشت امن بدون نمایش API
+- مدیریت نظرها: ورود امن، CSRF، محدودسازی تلاش ورود، تأیید، رد، حذف و تغییر رمز
 
 ## شاخص‌های هر صفحه
 

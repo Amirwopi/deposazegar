@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const pages = require('../data/pages.json');
 const {
   locationProfiles,
@@ -11,6 +12,11 @@ const {
 const projectRoot = path.join(__dirname, '..');
 const outputDir = path.join(projectRoot, 'public_html_ready');
 const baseSiteUrl = 'https://deposazegar.ir';
+const assetVersion = crypto.createHash('sha256')
+  .update(fs.readFileSync(path.join(outputDir, 'assets', 'css', 'style.css')))
+  .update(fs.readFileSync(path.join(projectRoot, 'assets', 'js', 'main.js')))
+  .digest('hex')
+  .slice(0, 10);
 const phones = [
   ['02188988459', '۰۲۱۸۸۹۸۸۴۵۹'],
   ['02188913383', '۰۲۱۸۸۹۱۳۳۸۳'],
@@ -663,6 +669,11 @@ const homeContent = (page) => `<section class="home-hero">
       <button class="btn btn-primary comment-submit" type="submit">ارسال نظر برای بررسی</button>
       <p class="comment-status" data-comment-status role="status" aria-live="polite"></p>
     </form>
+    <div class="comment-toast" data-comment-toast role="status" aria-live="polite" hidden>
+      <span class="comment-toast-icon" aria-hidden="true">✓</span>
+      <span><strong data-comment-toast-title>نظر شما ثبت شد</strong><small data-comment-toast-message>پس از بررسی مدیر در سایت منتشر می‌شود.</small></span>
+      <button type="button" data-comment-toast-close aria-label="بستن پیام">×</button>
+    </div>
   </div>
 </section>
 
@@ -813,7 +824,7 @@ const header = (page, faqs) => {
   <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
   <link rel="preload" href="assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/style.css?v=${assetVersion}">
   ${page.slug === 'index' ? '<link rel="preload" href="assets/images/container-storage-tehran.webp" as="image" type="image/webp" fetchpriority="high">' : ''}
   <script type="application/ld+json">${structuredData}</script>
 </head>
@@ -874,7 +885,7 @@ const footer = () => `<footer class="site-footer">
   </button>
 </div>
 ${bottomSheets()}
-<script src="assets/js/main.js" defer></script>
+<script src="assets/js/main.js?v=${assetVersion}" defer></script>
 </body>
 </html>`;
 

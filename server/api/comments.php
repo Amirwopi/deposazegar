@@ -13,6 +13,18 @@ $rateLimitFile = $storageDirectory . DIRECTORY_SEPARATOR . 'comment-rate.json';
 
 function respond(int $status, array $payload): void
 {
+    $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+    $accept = $_SERVER['HTTP_ACCEPT'] ?? '';
+    $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
+    $expectsJson = strpos($accept, 'application/json') !== false
+        || strpos($contentType, 'application/json') !== false;
+
+    if ($method === 'POST' && !$expectsJson) {
+        $result = !empty($payload['ok']) ? 'submitted' : 'error';
+        header("Location: /?comment={$result}#comments", true, 303);
+        exit;
+    }
+
     http_response_code($status);
     echo json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit;

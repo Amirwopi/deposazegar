@@ -36,6 +36,8 @@ npm test
 - `assets/css/input.css`: سورس CSS
 - `assets/js/main.js`: سورس JavaScript
 - `server/api/comments.php`: endpoint ثبت و دریافت نظرهای تأییدشده
+- `server/admin/comments.php`: پنل ورود و مدیریت کامل نظرها
+- `server/admin/admin.css`: رابط مستقل پنل مدیریت
 - `server/storage/.htaccess`: جلوگیری از دسترسی مستقیم به فایل نظرها
 - `public_html_ready/`: خروجی نهایی آماده هاست
 
@@ -54,5 +56,7 @@ npm start
 ```
 
 برای دیدن صفحات می‌توان از `npm start` استفاده کرد. ثبت و نمایش نظرها فقط روی هاستی که PHP را اجرا می‌کند فعال است.
+
+نام فایل CSS و JavaScript در HTML با Hash محتوای Build نسخه‌گذاری می‌شود تا پس از انتشار، Cache قدیمی باعث نمایش ناقص رابط یا اجرای کد قبلی نشود.
 
 راهنمای انتشار روی هاست در [README-hosting.md](README-hosting.md) قرار دارد.

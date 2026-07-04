@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const processAssets = require('./process-assets');
 
 const projectRoot = path.resolve(__dirname, '..');
@@ -54,11 +55,20 @@ async function copyAssets() {
     path.join(outputDir, 'api')
   );
   copyDirectory(
+    path.join(projectRoot, 'server', 'admin'),
+    path.join(outputDir, 'admin')
+  );
+  copyDirectory(
     path.join(projectRoot, 'server', 'storage'),
     path.join(outputDir, 'storage')
   );
+  fs.writeFileSync(
+    path.join(outputDir, 'storage', '.admin-setup-token'),
+    crypto.randomBytes(24).toString('hex'),
+    { encoding: 'utf8', mode: 0o600 }
+  );
 
-  console.log('Copied hosting assets, favicon files, comment endpoint, robots.txt and .htaccess.');
+  console.log('Copied hosting assets, comment API/admin, protected setup token, robots.txt and .htaccess.');
 }
 
 copyAssets().catch((error) => {
