@@ -1,7 +1,16 @@
 const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
-const pages = require('../data/pages.json');
+const basePages = require('../data/pages.json');
+const {
+  districtPages,
+  localPages,
+  localProfiles,
+  districtProfiles
+} = require('../data/local-seo');
+const { phaseTwoServicePages } = require('../data/phase-two-services');
+
+const pages = [...basePages, ...phaseTwoServicePages, ...districtPages, ...localPages];
 
 const projectRoot = path.resolve(__dirname, '..');
 const rootDir = path.join(projectRoot, 'public_html_ready');
@@ -76,8 +85,8 @@ async function validate() {
     const main = html.match(/<main id="main-content">([\s\S]*?)<\/main>/)?.[1] || '';
     const wordCount = countPersianWords(main);
     const minimumWords = ['about', 'contact'].includes(page.slug) ? 700 : 900;
-    if (page.slug !== 'index' && (wordCount < minimumWords || wordCount > 1200)) {
-      fail(file, `Persian main-content word count is ${wordCount}; expected ${minimumWords}–1200`);
+    if (page.slug !== 'index' && (wordCount < minimumWords || wordCount > 1400)) {
+      fail(file, `Persian main-content word count is ${wordCount}; expected ${minimumWords}–1400`);
     }
 
     const title = html.match(/<title>([\s\S]*?)<\/title>/)?.[1].trim() || '';
@@ -130,7 +139,7 @@ async function validate() {
     if (!/class="mobile-contact-bar"/.test(html) || !/data-sheet-open="phone-sheet"/.test(html) || !/data-sheet-open="locations-sheet"/.test(html)) {
       fail(file, 'mobile contact and locations actions are missing');
     }
-    if (/wa\.me|whatsapp|واتساپ/i.test(html)) fail(file, 'WhatsApp must be removed from the site');
+    if (!/https:\/\/wa\.me\/989102567906/.test(html)) fail(file, 'WhatsApp consultation CTA is missing');
     if (!/href="https:\/\/github\.com\/amirwopi"[^>]*>Amirwopi<\/a>/.test(html)) fail(file, 'Amirwopi copyright link is missing');
 
     for (const phone of phoneNumbers) {
@@ -237,6 +246,8 @@ async function validate() {
     if (!sitemap.includes(`<loc>${url}</loc>`)) fail('sitemap.xml', `missing ${url}`);
     const expectedPriority = page.slug === 'index' ? '1.0'
       : ['ejare-anbar-tehran', 'ejare-anbar-containeri-tehran', 'depo-lavazem-khaneh'].includes(page.slug) ? '0.9'
+      : page.type === 'district' ? '0.85'
+      : page.type === 'local' ? '0.8'
       : ['about', 'contact'].includes(page.slug) ? '0.6'
       : '0.8';
     const urlBlock = sitemap.match(new RegExp(`<url>\\s*<loc>${url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}<\\/loc>[\\s\\S]*?<\\/url>`))?.[0] || '';
@@ -304,7 +315,7 @@ async function validate() {
 - Schemaهای الزامی: ${requiredSchemaTypes.join('، ')}
 - تصاویر: WebP با JPG fallback و ابعاد ذاتی کنترل‌شده
 - شماره‌های تماس: ۹ شماره در Schema، CTA، صفحه تماس و فوتر
-- تماس: پنل کشویی شامل هر ۹ شماره و بدون لینک واتساپ
+- تماس: پنل کشویی شامل هر ۹ شماره و CTA مشاوره واتساپ
 - نظر کاربران: فرم PHP، Toast داخل صفحه و بازگشت امن بدون نمایش API
 - مدیریت نظرها: ورود امن، CSRF، محدودسازی تلاش ورود، تأیید، رد، حذف و تغییر رمز
 
@@ -318,7 +329,7 @@ ${auditRows.map((row) => `| ${row.file} | ${row.wordCount} | ${row.descriptionLe
 
 - Title، meta description، canonical و meta robots
 - یک H1 و حداقل چهار H2 در محتوای اصلی
-- حداقل ۹۰۰ واژه برای صفحات محتوایی و حداقل ۷۰۰ واژه برای درباره/تماس
+- ۹۰۰ تا ۱۴۰۰ واژه برای صفحات محتوایی و حداقل ۷۰۰ واژه برای درباره/تماس
 - حداقل ۵ FAQ نمایشی و تطبیق کامل با FAQPage Schema
 - حداقل ۵ لینک داخلی یکتا در محتوای اصلی
 - Organization، LocalBusiness، WebSite، Service، FAQPage و BreadcrumbList
@@ -327,6 +338,78 @@ ${auditRows.map((row) => `| ${row.file} | ${row.wordCount} | ${row.descriptionLe
 - WebP/JPG، ابعاد واقعی، OG image و Apple Touch Icon
 - ${pages.length} URL canonical، lastmod و priority منطقی در Sitemap
 - شعب غرب، جنوب و شرق استان تهران و پوشش استان البرز در محتوا و Schema
+
+## گزارش صفحات محلی و منطقه ای
+
+- صفحات مادر تهران: ${districtPages.filter((page) => districtProfiles[page.slug]?.city === 'تهران').length}
+- صفحات مادر کرج: ${districtPages.filter((page) => districtProfiles[page.slug]?.city === 'کرج').length}
+- صفحات محله ای منتشرشده: ${localPages.length}
+- صفحات خدماتی و راهنمای مرحله دوم: ${phaseTwoServicePages.length}
+- هر صفحه محله ای شامل H1 اختصاصی، intro اختصاصی، نیاز کاربران، خدمات، مزایا، قیمت، انتخاب متراژ، محله های نزدیک، FAQ و CTA است.
+
+## کلمات کلیدی هدف صفحات محله ای
+
+| صفحه | کلمات کلیدی اصلی |
+|---|---|
+${localPages.map((page) => {
+  const profile = localProfiles[page.slug];
+  return `| ${page.slug}.html | اجاره انبار در ${profile.name}، اجاره انبار وسایل منزل در ${profile.name}، دپو لوازم خانه در ${profile.name}، اجاره کانتینر در ${profile.name} |`;
+}).join('\n')}
+
+## گزارش لینک سازی داخلی
+
+- صفحه اصلی به همه صفحات مادر منطقه ای تهران و کرج، بخشی از محله های اولویت دار و همه صفحات خدماتی مرحله دوم لینک می دهد.
+- هر صفحه مادر منطقه ای به محله های منتشرشده همان منطقه و صفحات خدماتی، متراژها، بسته بندی، حمل ونقل و تماس لینک می دهد.
+- هر صفحه محله ای به صفحه مادر منطقه، صفحه شهر، محله های نزدیک، صفحات متراژ، دپو لوازم خانه، بسته بندی، حمل ونقل و تماس لینک می دهد.
+- Sitemap شامل همه URLهای تولیدشده است و شمار URLها با فهرست صفحات مولد برابر است.
+
+## گزارش canonical و redirect
+
+- Canonical هر صفحه روی نسخه اصلی دامنه com و URL همان صفحه تنظیم شده است.
+- robots.txt فقط مسیرهای عمومی را allow می کند و به Sitemap اصلی اشاره دارد.
+- .htaccess باید نسخه های http، www و دامنه ir را با 301 به https://deposazegar.com/ هدایت کند.
+- برای صفحات محلی از canonical متقابل یا noindex استفاده نشده است؛ هر صفحه محتوای مستقل و قابل ایندکس دارد.
+
+## صفحات محله ای منتشرشده و اولویت دار
+
+${localPages.map((page, index) => {
+  const profile = localProfiles[page.slug];
+  return `${index + 1}. ${page.slug}.html - ${profile.name} (${profile.city}، ${profile.regionLabel})`;
+}).join('\n')}
+
+## ۲۰ صفحه اولویت دار برای مرحله سوم
+
+${[
+  'gheymat-ejare-anbar-tehran.html - تقویت با داده قیمت واقعی در صورت تأیید مالک',
+  'ejare-anbar-saadat-abad.html - بررسی CTR و افزودن مثال های واقعی از مسیر حمل',
+  'ejare-anbar-tehranpars.html - تقویت لینک داخلی از صفحات شرق تهران',
+  'ejare-anbar-karaj-azimiyeh.html - افزودن اطلاعات دقیق تر پوشش البرز پس از داده Search Console',
+  'ejare-anbar-chitgar.html - بررسی کوئری های دریاچه و برج های نوساز',
+  'ejare-anbar-kootah-moddat.html - توسعه FAQ بر اساس impressionهای Search Console',
+  'ejare-anbar-asbabkeshi.html - افزودن چک لیست اسباب کشی قابل دانلود در صورت نیاز',
+  'rahnamay-entekhab-metraje-anbar.html - افزودن جدول ظرفیت با داده واقعی',
+  'tafavot-anbar-container-kanex.html - تقویت برای کوئری های کانکس و کانتینر',
+  'ejare-anbar-arzan-tehran.html - پایش حساسیت کلمه ارزان و جلوگیری از وعده قیمت غیرواقعی',
+  'ejare-anbar-gharb-tehran.html - لینک بیشتر به محله های جدید غرب',
+  'ejare-anbar-shargh-tehran.html - لینک بیشتر به تهرانپارس، نارمک، حکیمیه و رسالت',
+  'ejare-anbar-shomal-tehran.html - لینک بیشتر به محله های منطقه ۱ و ۳',
+  'ejare-anbar-karaj.html - تقویت با مناطق و محله های کرج',
+  'depo-lavazem-khaneh.html - افزودن سناریوهای جهیزیه و بازسازی',
+  'bastebandi-lavazem-anbar.html - افزودن تصویر یا جدول مواد بسته بندی',
+  'haml-o-naghl-anbar.html - افزودن عوامل هزینه حمل بعد از دریافت داده واقعی',
+  'ejare-anbar-containeri-tehran.html - لینک بیشتر به صفحه تفاوت انبار و کانتینر',
+  'ejare-container-20-foot.html - تقویت برای کوئری ظرفیت وسایل منزل',
+  'contact.html - افزودن ساعات پاسخ گویی در صورت تأیید'
+].map((item, index) => `${index + 1}. ${item}`).join('\n')}
+
+## چک لیست بعد از انتشار در Google Search Console
+
+- Inspect URL برای صفحه اصلی، Sitemap و چند صفحه محله ای مهم مثل تجریش، سعادت آباد، تهرانپارس، چیتگر و عظیمیه.
+- Submit sitemap: https://deposazegar.com/sitemap.xml
+- بررسی Coverage/Indexing برای خطاهای redirect، soft 404، duplicate without user-selected canonical و crawl anomaly.
+- بررسی گزارش Page Experience و Core Web Vitals بعد از جمع شدن داده واقعی موبایل.
+- بررسی Queries و Pages پس از ۲ تا ۴ هفته و تقویت صفحاتی که impression دارند ولی CTR پایین است.
+- افزودن اطلاعات واقعی قابل انتشار مثل ساعات پاسخ گویی، محدوده دقیق شعب، شرایط بیمه و تعرفه در صورت تأیید مالک کسب وکار.
 
 ## اطلاعاتی که باید از مالک کسب‌وکار دریافت شود
 
