@@ -1,13 +1,13 @@
 # گزارش ممیزی SEO دپو سازگار
 
-تاریخ اجرا: 2026-07-04
+تاریخ اجرا: 2026-07-09
 
 وضعیت کلی: **پاس**
 
 ## خلاصه
 
-- تعداد صفحات بررسی‌شده: 21
-- صفحات موجود در Sitemap: 21
+- تعداد صفحات بررسی‌شده: 24
+- صفحات موجود در Sitemap: 24
 - Schemaهای الزامی: Organization، LocalBusiness، WebSite، Service، FAQPage، BreadcrumbList
 - تصاویر: WebP با JPG fallback و ابعاد ذاتی کنترل‌شده
 - شماره‌های تماس: ۹ شماره در Schema، CTA، صفحه تماس و فوتر
@@ -19,10 +19,13 @@
 
 | صفحه | واژه فارسی | طول توضیح متا | H1 | H2 | FAQ | لینک داخلی یکتا |
 |---|---:|---:|---:|---:|---:|---:|
-| index.html | 1225 | 146 | 1 | 11 | 5 | 17 |
+| index.html | 1335 | 149 | 1 | 12 | 5 | 20 |
 | ejare-anbar-tehran.html | 1025 | 149 | 1 | 7 | 5 | 6 |
 | ejare-anbar-containeri-tehran.html | 1041 | 141 | 1 | 7 | 5 | 6 |
 | depo-lavazem-khaneh.html | 1028 | 154 | 1 | 7 | 5 | 6 |
+| bastebandi-lavazem-anbar.html | 1103 | 147 | 1 | 7 | 5 | 6 |
+| haml-o-naghl-anbar.html | 1101 | 140 | 1 | 7 | 5 | 6 |
+| chideman-anbar.html | 1088 | 140 | 1 | 7 | 5 | 6 |
 | ejare-container-10-foot.html | 1041 | 147 | 1 | 7 | 5 | 5 |
 | ejare-container-15-foot.html | 1044 | 151 | 1 | 7 | 5 | 5 |
 | ejare-container-20-foot.html | 1047 | 150 | 1 | 7 | 5 | 5 |
@@ -38,8 +41,8 @@
 | ejare-anbar-10-metri.html | 991 | 145 | 1 | 7 | 5 | 5 |
 | ejare-anbar-12-metri.html | 1022 | 155 | 1 | 7 | 5 | 5 |
 | ejare-anbar-20-metri.html | 1001 | 140 | 1 | 7 | 5 | 5 |
-| about.html | 874 | 143 | 1 | 7 | 5 | 6 |
-| contact.html | 1094 | 142 | 1 | 8 | 5 | 9 |
+| about.html | 891 | 143 | 1 | 7 | 5 | 7 |
+| contact.html | 1111 | 142 | 1 | 8 | 5 | 11 |
 
 ## کنترل‌های انجام‌شده
 
@@ -52,7 +55,7 @@
 - نبود آدرس پستی تأییدنشده در LocalBusiness
 - نبود لینک داخلی شکسته یا ارجاع به تصویر واترمارک‌دار
 - WebP/JPG، ابعاد واقعی، OG image و Apple Touch Icon
-- 21 URL canonical، lastmod و priority منطقی در Sitemap
+- 24 URL canonical، lastmod و priority منطقی در Sitemap
 - شعب غرب، جنوب و شرق استان تهران و پوشش استان البرز در محتوا و Schema
 
 ## اطلاعاتی که باید از مالک کسب‌وکار دریافت شود

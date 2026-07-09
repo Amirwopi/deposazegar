@@ -556,6 +556,72 @@
     color: #fbbf24;
   }
 
+  .prep-services {
+    position: relative;
+    overflow: hidden;
+    border-block: 1px solid var(--line);
+    background:
+      radial-gradient(circle at 12% 18%, rgb(29 111 165 / 13%), transparent 24rem),
+      linear-gradient(180deg, #f8fafc, #eef6fb);
+  }
+
+  .prep-service-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .prep-service-card {
+    display: grid;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 1.25rem;
+    background: var(--white);
+    box-shadow: 0 18px 45px rgb(15 39 66 / 9%);
+    transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  }
+
+  .prep-service-card:hover {
+    border-color: var(--green);
+    box-shadow: var(--shadow);
+    transform: translateY(-4px);
+  }
+
+  .prep-service-card picture {
+    min-width: 0;
+  }
+
+  .prep-service-image {
+    width: 100%;
+    height: 15rem;
+    object-fit: cover;
+  }
+
+  .prep-service-card > div {
+    display: grid;
+    align-content: start;
+    padding: 1.25rem;
+  }
+
+  .prep-service-card span {
+    color: var(--green);
+    font-size: 0.82rem;
+    font-weight: 900;
+  }
+
+  .prep-service-card h3 {
+    margin-top: 0.45rem;
+    font-size: 1.35rem;
+  }
+
+  .prep-service-card p {
+    color: var(--muted);
+  }
+
+  .prep-service-card b {
+    margin-top: 0.35rem;
+    color: var(--green-dark);
+  }
+
   .size-grid {
     display: grid;
     gap: 0.75rem;
@@ -1012,6 +1078,34 @@
     box-shadow: var(--shadow);
   }
 
+  .size-hero-figure {
+    position: relative;
+  }
+
+  .size-hero-figure picture {
+    display: grid;
+    overflow: hidden;
+    min-height: 21rem;
+    place-items: center;
+    border: 1px solid #bfd5e5;
+    border-radius: 1.35rem;
+    background:
+      radial-gradient(circle at 18% 16%, rgb(251 191 36 / 22%), transparent 12rem),
+      linear-gradient(145deg, #eef6fb, #ffffff 54%, #e4eef7);
+    box-shadow: var(--shadow);
+  }
+
+  .size-hero-image {
+    width: 100%;
+    height: min(68svh, 34rem);
+    max-height: none;
+    padding: 0.7rem;
+    border-radius: 1.35rem;
+    object-fit: contain;
+    object-position: center;
+    box-shadow: none;
+  }
+
   .article-shell {
     background: var(--paper);
   }
@@ -1207,6 +1301,36 @@
 
   .contact-callout .btn {
     justify-self: start;
+  }
+
+  .management-contact-card {
+    display: grid;
+    gap: 0.35rem;
+    margin: 1.4rem 0;
+    padding: 1.1rem 1.2rem;
+    border: 1px solid #f59e0b;
+    border-radius: 1rem;
+    background:
+      linear-gradient(135deg, rgb(245 158 11 / 16%), transparent 70%),
+      var(--white);
+    box-shadow: 0 14px 38px rgb(15 39 66 / 8%);
+  }
+
+  .management-contact-card span {
+    color: var(--forest);
+    font-size: 0.8rem;
+    font-weight: 900;
+  }
+
+  .management-contact-card strong {
+    color: #92400e;
+    font-size: clamp(1.4rem, 5vw, 2rem);
+    line-height: 1.2;
+  }
+
+  .management-contact-card small {
+    color: var(--muted);
+    font-size: 0.82rem;
   }
 
   .comments-section {
@@ -1871,6 +1995,39 @@
     gap: 1rem;
   }
 
+  .sheet-support-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 4.7rem minmax(0, 1fr);
+    gap: 0.9rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0.8rem;
+    overflow: hidden;
+    border: 1px solid #bfd5e5;
+    border-radius: 1rem;
+    background:
+      linear-gradient(135deg, rgb(29 111 165 / 12%), transparent 72%),
+      var(--white);
+  }
+
+  .sheet-support-image {
+    width: 4.7rem;
+    height: 4.7rem;
+    border: 3px solid #fff;
+    border-radius: 1rem;
+    object-fit: cover;
+    box-shadow: 0 10px 26px rgb(15 39 66 / 18%);
+  }
+
+  .sheet-support-card strong {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--forest);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
   .sheet-header h2 {
     margin-top: 0.2rem;
     font-size: clamp(1.35rem, 4vw, 1.9rem);
@@ -1905,6 +2062,30 @@
     margin: 0.65rem 0 1rem;
     color: var(--muted);
     font-size: 0.9rem;
+  }
+
+  .management-phone-card {
+    display: grid;
+    gap: 0.15rem;
+    margin-bottom: 0.75rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid #f59e0b;
+    border-radius: 0.9rem;
+    background:
+      linear-gradient(135deg, rgb(245 158 11 / 18%), transparent 70%),
+      #fffaf0;
+  }
+
+  .management-phone-card span {
+    color: #92400e;
+    font-size: 0.75rem;
+    font-weight: 900;
+  }
+
+  .management-phone-card strong {
+    color: var(--forest);
+    font-size: 1.35rem;
+    line-height: 1.2;
   }
 
   .sheet-phone-grid {
@@ -1968,6 +2149,15 @@
 
   .card-grid-three, .size-grid, .selection-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .prep-service-card {
+    grid-template-columns: minmax(11rem, 0.9fr) minmax(0, 1fr);
+  }
+
+  .prep-service-image {
+    height: 100%;
+    min-height: 15rem;
   }
 
   .quick-benefits-grid {
@@ -2048,8 +2238,8 @@
   .desktop-nav {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
-    font-size: 0.9rem;
+    gap: clamp(0.65rem, 1vw, 1.05rem);
+    font-size: 0.84rem;
     font-weight: 700;
   }
 
@@ -2113,6 +2303,18 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .prep-service-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .prep-service-card {
+    grid-template-columns: 1fr;
+  }
+
+  .prep-service-image {
+    height: 17rem;
+  }
+
   .size-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -2155,6 +2357,16 @@
 
   .page-hero-image {
     max-height: 25rem;
+  }
+
+  .size-hero-figure picture {
+    min-height: 31rem;
+  }
+
+  .size-hero-image {
+    height: min(72svh, 39rem);
+    max-height: none;
+    padding: 0.9rem;
   }
 
   .comments-layout {

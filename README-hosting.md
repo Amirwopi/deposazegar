@@ -10,7 +10,7 @@
 4. تمام محتوای داخل `public_html_ready/` را در `public_html` آپلود کنید.
 5. مطمئن شوید `index.html` مستقیماً داخل `public_html` قرار گرفته، نه داخل یک پوشه اضافی.
 6. SSL را فعال و ریدایرکت HTTP به HTTPS را تنظیم کنید.
-7. آدرس `https://deposazegar.ir/sitemap.xml` را در Google Search Console ثبت کنید.
+7. آدرس `https://deposazegar.com/sitemap.xml` را در Google Search Console ثبت کنید.
 8. مطمئن شوید PHP اجازه ساخت فایل در پوشه `storage/` را دارد؛ معمولاً سطح دسترسی ۷۵۰ یا ۷۵۵ برای پوشه کافی است.
 9. پس از تغییر favicon، صفحه اصلی را در URL Inspection برای بازخزیدن ارسال کنید.
 
@@ -46,7 +46,7 @@ public_html/
 پس از اولین آپلود:
 
 1. در تنظیمات File Manager نمایش فایل‌های مخفی را فعال کنید، سپس فایل `storage/.admin-setup-token` را باز و کد داخل آن را کپی کنید.
-2. وارد `https://deposazegar.ir/admin/comments.php` شوید.
+2. وارد `https://deposazegar.com/admin/comments.php` شوید.
 3. کد راه‌اندازی، نام کاربری دلخواه و یک رمز حداقل ۱۲ نویسه‌ای را وارد کنید.
 4. پس از ساخت حساب، فایل کد راه‌اندازی خودکار حذف و رمز فقط به‌صورت Hash ذخیره می‌شود.
 

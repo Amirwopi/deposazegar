@@ -11,7 +11,7 @@ const {
 
 const projectRoot = path.join(__dirname, '..');
 const outputDir = path.join(projectRoot, 'public_html_ready');
-const baseSiteUrl = 'https://deposazegar.ir';
+const baseSiteUrl = 'https://deposazegar.com';
 const assetVersion = crypto.createHash('sha256')
   .update(fs.readFileSync(path.join(outputDir, 'assets', 'css', 'style.css')))
   .update(fs.readFileSync(path.join(projectRoot, 'assets', 'js', 'main.js')))
@@ -28,6 +28,7 @@ const phones = [
   ['09192147106', '۰۹۱۹۲۱۴۷۱۰۶'],
   ['09192147105', '۰۹۱۹۲۱۴۷۱۰۵']
 ];
+const managementPhone = ['09192147105', '۰۹۱۹۲۱۴۷۱۰۵'];
 const branchGroups = [
   {
     key: 'west',
@@ -64,8 +65,8 @@ const servedAreas = [
   { '@type': 'City', name: 'کرج' }
 ];
 const imageMeta = {
-  hero: ['container-storage-tehran', 588, 309],
-  containerService: ['ejare-anbar-containeri', 588, 291],
+  hero: ['home-storage-intro', 739, 415],
+  containerService: ['warehouse-intro', 960, 1280],
   containerExterior: ['container-storage-unit-tehran', 500, 500],
   openContainer: ['container-open-storage', 600, 450],
   shelving: ['warehouse-shelving-storage', 640, 480],
@@ -75,7 +76,25 @@ const imageMeta = {
   indoorWarehouse: ['indoor-warehouse-tehran', 320, 260],
   commercialWarehouse: ['commercial-warehouse-storage', 644, 476],
   loadingArea: ['storage-loading-area', 150, 150],
-  container20: ['container-20-foot-storage', 640, 480]
+  container10: ['container-10-foot-storage', 1217, 1280],
+  container15: ['container-15-foot-storage', 1122, 1402],
+  container20: ['container-20-foot-storage', 1216, 1280],
+  container40: ['container-40-foot-storage', 1216, 1280],
+  support: ['support-team', 1280, 1235],
+  packing: ['packing-service', 1280, 853],
+  packingDetail: ['packing-service-detail', 1280, 853],
+  packingBoxes: ['packing-service-boxes', 1024, 1024],
+  packingMaterials: ['packing-service-materials', 1280, 853],
+  transport: ['transport-service', 960, 1280],
+  transportDetail: ['transport-service-detail', 1280, 958],
+  transportLoading: ['transport-service-loading', 960, 1280],
+  arrangement: ['arrangement-service', 1280, 719],
+  arrangementDetail: ['arrangement-service-detail', 1280, 960],
+  arrangementWarehouse: ['arrangement-service-warehouse', 1280, 1040],
+  warehouseIntro: ['warehouse-intro', 960, 1280],
+  warehouseIntroDetail: ['warehouse-intro-detail', 1280, 960],
+  warehouseIntroWest: ['warehouse-intro-west', 960, 1280],
+  warehouseIntroSouth: ['warehouse-intro-south', 960, 1280]
 };
 
 const escapeHtml = (value = '') => value
@@ -108,6 +127,41 @@ const phoneLinks = (className = '') => phones.map(([raw, display]) =>
 const phoneSheetButton = (label, className = 'btn btn-primary', ariaLabel = label) =>
   `<button class="${className}" type="button" data-sheet-open="phone-sheet" aria-haspopup="dialog" aria-controls="phone-sheet" aria-expanded="false" aria-label="${escapeHtml(ariaLabel)}">${escapeHtml(label)}</button>`;
 
+const serviceImageKey = (slug) => ({
+  'ejare-anbar-tehran': 'warehouse',
+  'ejare-anbar-containeri-tehran': 'containerExterior',
+  'depo-lavazem-khaneh': 'homeGoods',
+  'bastebandi-lavazem-anbar': 'packing',
+  'haml-o-naghl-anbar': 'transport',
+  'chideman-anbar': 'arrangement'
+}[slug] || 'containerService');
+
+const sizeImageKey = (slug) => ({
+  'ejare-container-10-foot': 'container10',
+  'ejare-container-15-foot': 'container15',
+  'ejare-container-20-foot': 'container20',
+  'ejare-container-30-foot': 'warehouseIntroSouth',
+  'ejare-container-40-foot': 'container40',
+  'ejare-anbar-6-metri': 'packingBoxes',
+  'ejare-anbar-10-metri': 'packingMaterials',
+  'ejare-anbar-12-metri': 'arrangementWarehouse',
+  'ejare-anbar-20-metri': 'indoorWarehouse'
+}[slug] || 'containerExterior');
+
+const locationImageKey = (slug) => ({
+  'ejare-anbar-gharb-tehran': 'warehouseIntroWest',
+  'ejare-anbar-shargh-tehran': 'warehouseIntro',
+  'ejare-anbar-shomal-tehran': 'warehouseIntroDetail',
+  'ejare-anbar-markaz-tehran': 'shelving',
+  'ejare-anbar-jonoub-tehran': 'commercialWarehouse',
+  'ejare-anbar-karaj': 'openContainer'
+}[slug] || 'warehouse');
+
+const infoImageKey = (slug) => ({
+  about: 'officeContainer',
+  contact: 'support'
+}[slug] || 'indoorWarehouse');
+
 const branchCards = (className = '') => `<div class="branch-groups ${className}">
   ${branchGroups.map((group) => `<article class="branch-group branch-group-${group.key}">
     <div class="branch-group-heading">
@@ -125,6 +179,13 @@ const bottomSheets = () => `
 <div class="sheet-backdrop" data-sheet-backdrop hidden></div>
 <section id="phone-sheet" class="bottom-sheet" role="dialog" aria-modal="true" aria-labelledby="phone-sheet-title" hidden>
   <div class="sheet-handle" aria-hidden="true"></div>
+  <div class="sheet-support-card">
+    ${picture('support', 'پشتیبانی تلفنی دپو سازگار برای انتخاب انبار', 'sheet-support-image')}
+    <div>
+      <span class="eyebrow">پاسخ‌گویی و راهنمایی</span>
+      <strong>برای انتخاب متراژ، مسیر شعبه و زمان بازدید تماس بگیرید.</strong>
+    </div>
+  </div>
   <div class="sheet-header">
     <div><span class="eyebrow">همه خطوط پاسخ‌گویی</span><h2 id="phone-sheet-title">تماس فوری با دپو سازگار</h2></div>
     <button class="sheet-close" type="button" data-sheet-close aria-label="بستن پنل تماس">
@@ -132,6 +193,10 @@ const bottomSheets = () => `
     </button>
   </div>
   <p class="sheet-intro">برای انتخاب متراژ، استعلام شرایط شعب و هماهنگی بازدید با یکی از شماره‌های زیر تماس بگیرید.</p>
+  <a class="management-phone-card" href="tel:${managementPhone[0]}" aria-label="تماس با مدیریت دپو سازگار">
+    <span>ارتباط مستقیم با مدیریت</span>
+    <strong class="dir-ltr">${managementPhone[1]}</strong>
+  </a>
   <div class="sheet-phone-grid">${phoneLinks('sheet-phone-link')}</div>
 </section>
 <section id="locations-sheet" class="bottom-sheet locations-sheet" role="dialog" aria-modal="true" aria-labelledby="locations-sheet-title" hidden>
@@ -281,7 +346,7 @@ const locationContent = (page, profile) => `<section class="page-hero">
         <a class="btn btn-secondary" href="#guide">مطالعه راهنمای منطقه</a>
       </div>
     </div>
-    ${figurePicture('commercialWarehouse', `فضای انبار برای دپو لوازم متقاضیان ${profile.label}`, 'page-hero-image', `نمونه فضای دپو؛ شرایط گزینه مناسب کاربران ${profile.label} هنگام بازدید تأیید می‌شود.`, { figureClass: 'page-hero-figure' })}
+    ${figurePicture(locationImageKey(page.slug), `فضای انبار برای دپو لوازم متقاضیان ${profile.label}`, 'page-hero-image', `نمونه فضای دپو؛ شرایط گزینه مناسب کاربران ${profile.label} هنگام بازدید تأیید می‌شود.`, { figureClass: 'page-hero-figure' })}
   </div>
 </section>
 <article id="guide" class="section article-shell">
@@ -330,7 +395,7 @@ const sizeContent = (page, profile) => `<section class="page-hero">
         <a class="btn btn-secondary" href="#guide">راهنمای انتخاب اندازه</a>
       </div>
     </div>
-    ${figurePicture('container20', `${profile.label} برای نگهداری وسایل و کالا`, 'page-hero-image', `نمونه چیدمان کانتینری؛ ظرفیت واقعی ${profile.label} به ابعاد مفید و نوع وسایل وابسته است.`, { figureClass: 'page-hero-figure' })}
+    ${figurePicture(sizeImageKey(page.slug), `${profile.label} برای نگهداری وسایل و کالا`, 'page-hero-image size-hero-image', `نمونه چیدمان کانتینری؛ ظرفیت واقعی ${profile.label} به ابعاد مفید و نوع وسایل وابسته است.`, { figureClass: 'page-hero-figure size-hero-figure' })}
   </div>
 </section>
 <article id="guide" class="section article-shell">
@@ -380,7 +445,7 @@ const serviceContent = (page, profile) => `<section class="page-hero">
         <a class="btn btn-secondary" href="#guide">جزئیات خدمت</a>
       </div>
     </div>
-    ${figurePicture(page.slug === 'depo-lavazem-khaneh' ? 'homeGoods' : 'containerService', page.h1, 'page-hero-image', `تصویر مرتبط با ${page.h1}؛ مشخصات فضای نهایی پیش از رزرو بررسی می‌شود.`, { figureClass: 'page-hero-figure' })}
+    ${figurePicture(serviceImageKey(page.slug), page.h1, 'page-hero-image', `تصویر مرتبط با ${page.h1}؛ مشخصات فضای نهایی پیش از رزرو بررسی می‌شود.`, { figureClass: 'page-hero-figure' })}
   </div>
 </section>
 <article id="guide" class="section article-shell">
@@ -423,7 +488,7 @@ const infoPageContent = (page, profile) => `<section class="page-hero">
       <h1>${escapeHtml(page.h1)}</h1>
       <p class="lead">${escapeHtml(page.description)}</p>
     </div>
-    ${figurePicture(page.slug === 'contact' ? 'indoorWarehouse' : 'officeContainer', page.h1, 'page-hero-image', page.slug === 'contact' ? 'نمونه فضای انبار؛ برای دریافت نشانی گزینه موجود و هماهنگی بازدید تماس بگیرید.' : 'نمونه کانتینر اداری و دپو؛ ویژگی‌های هر فضا در مشاوره بررسی می‌شود.', { figureClass: 'page-hero-figure' })}
+    ${figurePicture(infoImageKey(page.slug), page.h1, 'page-hero-image', page.slug === 'contact' ? 'پشتیبانی دپو سازگار؛ برای دریافت نشانی گزینه موجود و هماهنگی بازدید تماس بگیرید.' : 'نمونه کانتینر اداری و دپو؛ ویژگی‌های هر فضا در مشاوره بررسی می‌شود.', { figureClass: 'page-hero-figure' })}
   </div>
 </section>
 <article class="section article-shell">
@@ -446,8 +511,13 @@ const infoPageContent = (page, profile) => `<section class="page-hero">
 
     <h2>${page.slug === 'contact' ? 'تمام راه‌های تماس' : 'تعهد به ارتباط شفاف'}</h2>
     <p>${profile.cta} شماره‌های ثابت برای گفت‌وگوی اداری و خطوط همراه برای دسترسی بیشتر درج شده‌اند. اگر یک خط پاسخ نداد، از شماره دیگر استفاده کنید؛ اطلاعاتی که آماده کرده‌اید باعث می‌شود ادامه گفت‌وگو منسجم بماند.</p>
+    <a class="management-contact-card" href="tel:${managementPhone[0]}">
+      <span>شماره مدیریت</span>
+      <strong class="dir-ltr">${managementPhone[1]}</strong>
+      <small>برای پیگیری مدیریتی، هماهنگی ویژه یا درخواست‌های حساس‌تر از این خط استفاده کنید.</small>
+    </a>
     <div class="contact-directory" aria-label="فهرست کامل شماره‌های تماس">
-      ${phones.map(([raw, display], index) => `<div><span>${index < 4 ? 'تلفن ثابت' : 'تلفن همراه'}</span><a href="tel:${raw}" class="dir-ltr">${display}</a></div>`).join('')}
+      ${phones.map(([raw, display], index) => `<div><span>${raw === managementPhone[0] ? 'همراه مدیریت' : index < 4 ? 'تلفن ثابت' : 'تلفن همراه'}</span><a href="tel:${raw}" class="dir-ltr">${display}</a></div>`).join('')}
     </div>
     ${page.slug === 'contact' ? `
     <h2>شعب استان تهران، پوشش استان البرز و اطلاعات لازم هنگام تماس</h2>
@@ -471,8 +541,9 @@ const infoPageContent = (page, profile) => `<section class="page-hero">
       ['ejare-anbar-tehran.html', 'راهنمای اجاره انبار'],
       ['ejare-anbar-containeri-tehran.html', 'اجاره انبار کانتینری'],
       ['depo-lavazem-khaneh.html', 'آماده‌سازی لوازم خانه'],
-      ['ejare-anbar-gharb-tehran.html', 'پوشش متقاضیان غرب تهران'],
-      ['index.html#rental-process', 'فرایند پنج‌مرحله‌ای اجاره']
+      ['bastebandi-lavazem-anbar.html', 'بسته‌بندی لوازم'],
+      ['haml-o-naghl-anbar.html', 'حمل‌ونقل تا انبار'],
+      ['chideman-anbar.html', 'چیدمان در انبار']
     ])}
   </div>
 </article>`;
@@ -516,6 +587,30 @@ const homeContent = (page) => `<section class="home-hero">
       <a class="service-card" href="ejare-anbar-tehran.html"><span>۰۱</span><h3>اجاره انبار در تهران</h3><p>راهنمای انتخاب فضای متراژی برای وسایل خانه، دفتر و کالای مجاز.</p><b>مشاهده راهنما ←</b></a>
       <a class="service-card featured" href="ejare-anbar-containeri-tehran.html"><span>۰۲</span><h3>انبار کانتینری</h3><p>مقایسه ظرفیت‌های کانتینری و نکات بررسی بدنه، کف و چیدمان.</p><b>مقایسه کانتینرها ←</b></a>
       <a class="service-card" href="depo-lavazem-khaneh.html"><span>۰۳</span><h3>دپو لوازم خانه</h3><p>آماده‌سازی اثاثیه برای بازسازی، سفر یا فاصله میان دو جابه‌جایی.</p><b>راهنمای اثاثیه ←</b></a>
+    </div>
+  </div>
+</section>
+
+<section class="section prep-services" aria-labelledby="prep-services-title">
+  <div class="container">
+    <div class="section-heading">
+      <span class="eyebrow">قبل از ورود وسایل به انبار</span>
+      <h2 id="prep-services-title">بسته‌بندی، حمل‌ونقل و چیدمان اصولی</h2>
+      <p>کیفیت دپو فقط به خود انبار وابسته نیست؛ آماده‌سازی درست وسایل، مسیر حمل و نقشه چیدمان روی هزینه، سلامت بار و دسترسی آینده اثر مستقیم دارد.</p>
+    </div>
+    <div class="prep-service-grid">
+      <a class="prep-service-card" href="bastebandi-lavazem-anbar.html">
+        ${picture('packing', 'بسته‌بندی اصولی وسایل پیش از دپو', 'prep-service-image')}
+        <div><span>۰۱</span><h3>بسته‌بندی</h3><p>انتخاب کارتن مناسب، ضربه‌گیر، پوشش قابل تنفس و برچسب‌گذاری باعث می‌شود بار هنگام حمل و نگهداری قابل کنترل‌تر بماند.</p><b>راهنمای بسته‌بندی ←</b></div>
+      </a>
+      <a class="prep-service-card" href="haml-o-naghl-anbar.html">
+        ${picture('transport', 'حمل‌ونقل وسایل تا انبار دپو سازگار', 'prep-service-image')}
+        <div><span>۰۲</span><h3>حمل‌ونقل</h3><p>نوع خودرو، طبقه مبدأ، آسانسور، زمان توقف و مسیر شعبه باید پیش از حرکت مشخص شود تا سفر اضافه و آسیب کمتر شود.</p><b>هماهنگی حمل ←</b></div>
+      </a>
+      <a class="prep-service-card" href="chideman-anbar.html">
+        ${picture('arrangement', 'چیدمان وسایل در انبار و کانتینر', 'prep-service-image')}
+        <div><span>۰۳</span><h3>چیدمان</h3><p>وسایل سنگین پایین، اقلام حساس جدا، کارتن‌های هم‌اندازه در ستون و مسیر دسترسی نزدیک در، فضا را کاربردی‌تر می‌کند.</p><b>راهنمای چیدمان ←</b></div>
+      </a>
     </div>
   </div>
 </section>
@@ -685,10 +780,10 @@ const homeContent = (page) => `<section class="home-hero">
       <p>تصاویر برای آشنایی بصری‌اند؛ شرایط و ظرفیت گزینه نهایی را هنگام بازدید تأیید کنید.</p>
     </div>
     <div class="gallery-grid">
-      ${figurePicture('containerExterior', 'انبار کانتینری دپو سازگار در تهران', 'gallery-image', 'نمای بیرونی یک کانتینر فلزی برای دپوی وسایل')}
-      ${figurePicture('openContainer', 'فضای داخلی کانتینر برای نگهداری وسایل خانه', 'gallery-image', 'فضای داخلی کانتینر پیش از چیدمان بار')}
-      ${figurePicture('shelving', 'فضای انبار برای دپو لوازم اداری و کالا', 'gallery-image', 'نمونه استفاده از قفسه برای نظم بهتر کالا')}
-      ${figurePicture('warehouse', 'انبار سرپوشیده برای نگهداری لوازم در تهران', 'gallery-image', 'نمای یک فضای سرپوشیده مناسب بررسی حضوری')}
+      ${figurePicture('containerExterior', 'انبار کانتینری دپو سازگار در تهران', 'gallery-image', 'نمای کانتینر مناسب دپوی وسایل و کالای مجاز')}
+      ${figurePicture('packingDetail', 'بسته‌بندی وسایل پیش از ورود به انبار', 'gallery-image', 'آماده‌سازی کارتن‌ها و اقلام حساس برای دپو')}
+      ${figurePicture('transportDetail', 'حمل‌ونقل وسایل تا شعبه انبار', 'gallery-image', 'هماهنگی حمل برای انتقال وسایل تا انبار')}
+      ${figurePicture('arrangementDetail', 'چیدمان وسایل در فضای انبار', 'gallery-image', 'چیدمان مرحله‌ای برای استفاده بهتر از فضای دپو')}
     </div>
   </div>
 </section>`;
@@ -724,7 +819,7 @@ const schemaGraph = (page, faqs) => {
         contactPoint: phones.map(([raw], index) => ({
           '@type': 'ContactPoint',
           telephone: raw,
-          contactType: index < 4 ? 'customer service' : 'sales',
+          contactType: raw === managementPhone[0] ? 'management' : index < 4 ? 'customer service' : 'sales',
           areaServed: ['استان تهران', 'استان البرز', 'تهران', 'کرج'],
           availableLanguage: 'Persian'
         }))
@@ -746,7 +841,7 @@ const schemaGraph = (page, faqs) => {
           '@id': `${baseSiteUrl}/#branch-${branch.code}`,
           name: `دپو سازگار؛ شعبه ${branch.name}`,
           branchCode: branch.code,
-          telephone: phones[0][0],
+          telephone: managementPhone[0],
           areaServed: { '@type': 'Place', name: branch.name },
           parentOrganization: { '@id': `${baseSiteUrl}/#localbusiness` }
         })),
@@ -825,7 +920,7 @@ const header = (page, faqs) => {
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
   <link rel="preload" href="assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/style.css?v=${assetVersion}">
-  ${page.slug === 'index' ? '<link rel="preload" href="assets/images/container-storage-tehran.webp" as="image" type="image/webp" fetchpriority="high">' : ''}
+  ${page.slug === 'index' ? '<link rel="preload" href="assets/images/home-storage-intro.webp" as="image" type="image/webp" fetchpriority="high">' : ''}
   <script type="application/ld+json">${structuredData}</script>
 </head>
 <body>
@@ -841,6 +936,7 @@ const header = (page, faqs) => {
         <a href="ejare-anbar-tehran.html">اجاره انبار</a>
         <a href="ejare-anbar-containeri-tehran.html">انبار کانتینری</a>
         <a href="depo-lavazem-khaneh.html">دپو لوازم خانه</a>
+        <a href="bastebandi-lavazem-anbar.html">بسته‌بندی</a>
         <a href="ejare-anbar-karaj.html">استان البرز</a>
         <a href="about.html">درباره ما</a>
         <a href="contact.html">تماس</a>
@@ -851,7 +947,7 @@ const header = (page, faqs) => {
       </button>
     </div>
     <nav id="mobile-menu" class="mobile-nav" aria-label="ناوبری موبایل" hidden>
-      <a href="index.html">خانه</a><a href="ejare-anbar-tehran.html">اجاره انبار</a><a href="ejare-anbar-containeri-tehran.html">انبار کانتینری</a><a href="depo-lavazem-khaneh.html">دپو لوازم خانه</a><a href="ejare-anbar-karaj.html">استان البرز</a><a href="about.html">درباره ما</a><a href="contact.html">تماس با ما</a>
+      <a href="index.html">خانه</a><a href="ejare-anbar-tehran.html">اجاره انبار</a><a href="ejare-anbar-containeri-tehran.html">انبار کانتینری</a><a href="depo-lavazem-khaneh.html">دپو لوازم خانه</a><a href="bastebandi-lavazem-anbar.html">بسته‌بندی</a><a href="haml-o-naghl-anbar.html">حمل‌ونقل</a><a href="chideman-anbar.html">چیدمان</a><a href="ejare-anbar-karaj.html">استان البرز</a><a href="about.html">درباره ما</a><a href="contact.html">تماس با ما</a>
     </nav>
   </header>
   ${breadcrumb(page)}
@@ -864,7 +960,7 @@ const footer = () => `<footer class="site-footer">
       <a class="footer-brand" href="index.html" aria-label="دپو سازگار؛ صفحه اصلی"><img src="assets/images/brand-mark.svg" width="512" height="512" alt=""><span><strong>دپو سازگار</strong><small>فضای امن، انتخاب دقیق</small></span></a>
       <p>راهنمای انتخاب و هماهنگی اجاره انبار و کانتینر برای لوازم خانه، دفتر و کالای مجاز در استان تهران و استان البرز.</p>
     </div>
-    <div><h2>دسترسی سریع</h2><a href="ejare-anbar-tehran.html">اجاره انبار تهران</a><a href="depo-lavazem-khaneh.html">دپو لوازم خانه</a><a href="about.html">درباره دپو سازگار</a><a href="contact.html">تماس با ما</a></div>
+    <div><h2>دسترسی سریع</h2><a href="ejare-anbar-tehran.html">اجاره انبار تهران</a><a href="depo-lavazem-khaneh.html">دپو لوازم خانه</a><a href="bastebandi-lavazem-anbar.html">بسته‌بندی</a><a href="haml-o-naghl-anbar.html">حمل‌ونقل</a><a href="chideman-anbar.html">چیدمان</a><a href="contact.html">تماس با ما</a></div>
     <div><h2>مناطق</h2><a href="ejare-anbar-shomal-tehran.html">شمال تهران</a><a href="ejare-anbar-shargh-tehran.html">شرق تهران</a><a href="ejare-anbar-markaz-tehran.html">مرکز تهران</a><a href="ejare-anbar-gharb-tehran.html">غرب تهران</a><a href="ejare-anbar-jonoub-tehran.html">جنوب تهران</a><a href="ejare-anbar-karaj.html">کرج و استان البرز</a></div>
     <div class="footer-phones"><h2>همه شماره‌های تماس</h2>${phoneLinks()}</div>
   </div>

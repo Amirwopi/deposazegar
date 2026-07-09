@@ -233,7 +233,7 @@ async function validate() {
 
   const sitemap = fs.readFileSync(path.join(rootDir, 'sitemap.xml'), 'utf8');
   for (const page of pages) {
-    const url = `https://deposazegar.ir/${page.slug === 'index' ? '' : `${page.slug}.html`}`;
+    const url = `https://deposazegar.com/${page.slug === 'index' ? '' : `${page.slug}.html`}`;
     if (!sitemap.includes(`<loc>${url}</loc>`)) fail('sitemap.xml', `missing ${url}`);
     const expectedPriority = page.slug === 'index' ? '1.0'
       : ['ejare-anbar-tehran', 'ejare-anbar-containeri-tehran', 'depo-lavazem-khaneh'].includes(page.slug) ? '0.9'
@@ -246,7 +246,7 @@ async function validate() {
   if ((sitemap.match(/<url>/g) || []).length !== pages.length) fail('sitemap.xml', 'URL count does not match page count');
 
   const robots = fs.readFileSync(path.join(rootDir, 'robots.txt'), 'utf8');
-  if (!/User-agent:\s*\*/.test(robots) || !/Allow:\s*\//.test(robots) || !/Sitemap:\s*https:\/\/deposazegar\.ir\/sitemap\.xml/.test(robots)) {
+  if (!/User-agent:\s*\*/.test(robots) || !/Allow:\s*\//.test(robots) || !/Sitemap:\s*https:\/\/deposazegar\.com\/sitemap\.xml/.test(robots)) {
     fail('robots.txt', 'required allow and sitemap directives are missing');
   }
 

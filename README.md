@@ -14,7 +14,7 @@ npm install
 npm run build
 ```
 
-Build پوشه خروجی قبلی را پاک می‌کند، CSS فشرده را می‌سازد، ۲۱ صفحه HTML و Sitemap را تولید می‌کند، faviconهای ریشه، endpoint نظرها و دارایی‌های لازم را کپی می‌کند و در پایان artifact نهایی را تست می‌کند.
+Build پوشه خروجی قبلی را پاک می‌کند، CSS فشرده را می‌سازد، ۲۴ صفحه HTML و Sitemap را تولید می‌کند، faviconهای ریشه، endpoint نظرها و دارایی‌های لازم را کپی می‌کند و در پایان artifact نهایی را تست می‌کند.
 
 ## تست
 
@@ -27,6 +27,7 @@ npm test
 ## ساختار پروژه
 
 - `data/`: اطلاعات و محتوای صفحات
+- `assets/image-new/`: تصاویر خام ورودی برای ساخت نسخه‌های استاندارد JPG/WebP، تصویر پشتیبانی و favicon VIP
 - `scripts/generate-pages.js`: تولید HTML و Sitemap
 - `scripts/process-assets.js`: بهینه‌سازی تصاویر
 - `scripts/clean.js`: پاک‌سازی و ساخت پوشه خروجی
@@ -57,6 +58,6 @@ npm start
 
 برای دیدن صفحات می‌توان از `npm start` استفاده کرد. ثبت و نمایش نظرها فقط روی هاستی که PHP را اجرا می‌کند فعال است.
 
-نام فایل CSS و JavaScript در HTML با Hash محتوای Build نسخه‌گذاری می‌شود تا پس از انتشار، Cache قدیمی باعث نمایش ناقص رابط یا اجرای کد قبلی نشود.
+نام فایل CSS و JavaScript در HTML با Hash محتوای Build نسخه‌گذاری می‌شود تا پس از انتشار، Cache قدیمی باعث نمایش ناقص رابط یا اجرای کد قبلی نشود. صفحات خدمات آماده‌سازی شامل بسته‌بندی، حمل‌ونقل و چیدمان از `data/pages.json` و `data/page-content.js` تولید می‌شوند و در Sitemap دامنه `deposazegar.com` قرار می‌گیرند.
 
 راهنمای انتشار روی هاست در [README-hosting.md](README-hosting.md) قرار دارد.
