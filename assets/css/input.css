@@ -448,7 +448,7 @@
     gap: 0.75rem;
   }
 
-  .quick-benefits-grid > div {
+  .quick-benefits-grid > :is(div, a) {
     display: grid;
     min-width: 0;
     align-content: start;
@@ -457,6 +457,16 @@
     border: 1px solid var(--line);
     border-radius: 0.85rem;
     background: var(--paper);
+  }
+
+  .quick-benefits-grid > a {
+    transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease;
+  }
+
+  .quick-benefits-grid > a:hover {
+    border-color: var(--green);
+    background: #eef6fb;
+    transform: translateY(-2px);
   }
 
   .quick-benefits-grid > .quick-benefit-accent {
@@ -1250,6 +1260,80 @@
   .related-links a:hover {
     border-color: var(--green);
     background: #eff6fb;
+  }
+
+  .directory-disclosure-grid {
+    display: grid;
+    gap: 0.9rem;
+    margin-top: 1.5rem;
+  }
+
+  .directory-disclosure {
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    background: var(--white);
+    box-shadow: 0 10px 30px rgb(15 39 66 / 7%);
+  }
+
+  .directory-disclosure summary {
+    display: flex;
+    min-height: 5rem;
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.1rem;
+    list-style: none;
+  }
+
+  .directory-disclosure summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .directory-disclosure summary span {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .directory-disclosure summary strong {
+    color: var(--ink);
+    font-size: 1.05rem;
+    font-weight: 900;
+  }
+
+  .directory-disclosure summary small {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  .directory-disclosure summary b {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 999px;
+    background: #e8f3f9;
+    color: var(--green-dark);
+    font-size: 1.2rem;
+    line-height: 1;
+    transition: transform 180ms ease, background-color 180ms ease;
+  }
+
+  .directory-disclosure[open] summary b {
+    background: var(--forest);
+    color: var(--white);
+    transform: rotate(45deg);
+  }
+
+  .directory-links {
+    padding: 0 1rem 1rem;
+  }
+
+  .directory-links a {
+    min-height: 2.8rem;
+    padding-block: 0.55rem;
+    font-size: 0.9rem;
   }
 
   .contact-directory {
@@ -2067,7 +2151,7 @@
   .management-phone-card {
     display: grid;
     gap: 0.15rem;
-    margin-bottom: 0.75rem;
+    margin-top: 0.75rem;
     padding: 0.85rem 1rem;
     border: 1px solid #f59e0b;
     border-radius: 0.9rem;
@@ -2093,14 +2177,22 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.55rem;
     max-height: 55svh;
+    padding: 0.75rem;
     overflow-y: auto;
+    border: 1px solid #bfd5e5;
+    border-radius: 1rem;
+    background:
+      linear-gradient(135deg, rgb(248 250 252 / 93%), rgb(239 246 251 / 82%)),
+      url("../images/support-team.webp") center / cover no-repeat;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 68%);
   }
 
   .sheet-phone-grid .phone-link {
     min-height: 3.25rem;
-    border: 1px solid #bfd5e5;
-    background: var(--white);
+    border: 1px solid rgb(191 213 229 / 86%);
+    background: rgb(255 255 255 / 88%);
     color: var(--green-dark);
+    backdrop-filter: blur(3px);
   }
 
   .sheet-phone-grid .phone-link:hover {
@@ -2149,6 +2241,11 @@
 
   .card-grid-three, .size-grid, .selection-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .directory-disclosure-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
   }
 
   .prep-service-card {
@@ -2260,7 +2357,7 @@
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
 
-  .quick-benefits-grid > div:not(.quick-benefit-accent) {
+  .quick-benefits-grid > :is(div, a):not(.quick-benefit-accent) {
     grid-column: span 3;
   }
 

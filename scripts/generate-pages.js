@@ -196,7 +196,7 @@ const branchCards = (className = '') => `<div class="branch-groups ${className}"
 
 const bottomSheets = () => `
 <div class="sheet-backdrop" data-sheet-backdrop hidden></div>
-<section id="phone-sheet" class="bottom-sheet" role="dialog" aria-modal="true" aria-labelledby="phone-sheet-title" hidden>
+<section id="phone-sheet" class="bottom-sheet phone-sheet-panel" role="dialog" aria-modal="true" aria-labelledby="phone-sheet-title" hidden>
   <div class="sheet-handle" aria-hidden="true"></div>
   <div class="sheet-support-card">
     ${picture('support', 'پشتیبانی تلفنی دپو سازگار برای انتخاب انبار', 'sheet-support-image')}
@@ -212,11 +212,11 @@ const bottomSheets = () => `
     </button>
   </div>
   <p class="sheet-intro">برای انتخاب متراژ، استعلام شرایط شعب و هماهنگی بازدید با یکی از شماره‌های زیر تماس بگیرید.</p>
+  <div class="sheet-phone-grid">${phoneLinks('sheet-phone-link')}</div>
   <a class="management-phone-card" href="tel:${managementPhone[0]}" aria-label="تماس با مدیریت دپو سازگار">
     <span>ارتباط مستقیم با مدیریت</span>
     <strong class="dir-ltr">${managementPhone[1]}</strong>
   </a>
-  <div class="sheet-phone-grid">${phoneLinks('sheet-phone-link')}</div>
 </section>
 <section id="locations-sheet" class="bottom-sheet locations-sheet" role="dialog" aria-modal="true" aria-labelledby="locations-sheet-title" hidden>
   <div class="sheet-handle" aria-hidden="true"></div>
@@ -413,6 +413,14 @@ const directoryLinkList = (links, className = 'related-links') => `<div class="$
   ${links.map(([href, label]) => `<a href="${href}">${escapeHtml(label)}<span aria-hidden="true">←</span></a>`).join('')}
 </div>`;
 
+const directoryDisclosure = (title, description, links) => `<details class="directory-disclosure">
+  <summary>
+    <span><strong>${escapeHtml(title)}</strong><small>${escapeHtml(description)}</small></span>
+    <b aria-hidden="true">+</b>
+  </summary>
+  ${directoryLinkList(links, 'related-links directory-links')}
+</details>`;
+
 const serviceRelatedLinks = (links) => {
   const priorityLocalLinks = ['ejare-anbar-tajrish', 'ejare-anbar-saadat-abad', 'ejare-anbar-tehranpars', 'ejare-anbar-chitgar', 'ejare-anbar-karaj-azimiyeh']
     .filter((slug) => localProfiles[slug])
@@ -467,7 +475,7 @@ const districtContent = (page, profile) => {
     ${midCta(page, `بررسی گزینه مناسب برای ${profile.label}`)}
 
     <h2>محله های مهم ${profile.label}</h2>
-    <p>برای جلوگیری از ساخت صفحات تکراری، فقط محله هایی که در مرحله اول محتوای اختصاصی دارند به صورت صفحه جدا منتشر شده اند. اگر محله شما در فهرست نیست، همین صفحه مادر برای شروع کافی است و در تماس می توانید نام دقیق محله را اعلام کنید. صفحات زیر برای کاربران واقعی نوشته شده اند و هرکدام مسیر، نیاز و مثال کاربردی خود را دارند.</p>
+    <p>محله های مهم این محدوده را در فهرست زیر می بینید. اگر محله شما در همین حوالی است، هنگام تماس نام دقیق مبدأ، حجم وسایل و مدت نگهداری را اعلام کنید تا مسیر حمل، متراژ مناسب و گزینه های نزدیک تر بررسی شوند.</p>
     ${directoryLinkList(publishedLocalLinks)}
 
     <h2>انتخاب متراژ و خدمات جانبی</h2>
@@ -801,9 +809,9 @@ const homeContent = (page) => `<section class="home-hero">
     <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M7 7h7.5a3 3 0 0 1 0 6H9.5a3 3 0 0 0 0 6H17"/></svg><strong>انتخاب اقتصادی</strong><span>پرداخت برای فضای نزدیک به نیاز</span></div>
     <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12 10 17 20 7"/></svg><strong>مشاوره روشن</strong><span>مقایسه ظرفیت پیش از رزرو</span></div>
     <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-13v5l3 2"/></svg><strong>هماهنگی بازدید</strong><span>بررسی گزینه موجود پیش از حمل</span></div>
-    <div class="quick-benefit-accent"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 8 8-4 8 4-8 4Zm0 0v9l8 4 8-4V8M8 10v3m8-3v3"/></svg><strong>بسته‌بندی</strong><span>تفکیک، محافظت و برچسب‌گذاری اصولی وسایل پیش از جابه‌جایی</span></div>
-    <div class="quick-benefit-accent"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h12v10H3zM15 10h3l3 3v4h-6M7 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg><strong>حمل‌ونقل</strong><span>هماهنگی وسیله نقلیه متناسب با حجم بار و مسیر مبدأ تا انبار</span></div>
-    <div class="quick-benefit-accent"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg><strong>چیدمان</strong><span>جانمایی وسایل سنگین، کارتن‌ها و مسیر دسترسی برای استفاده بهتر از فضا</span></div>
+    <a class="quick-benefit-accent" href="bastebandi-lavazem-anbar.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 8 8-4 8 4-8 4Zm0 0v9l8 4 8-4V8M8 10v3m8-3v3"/></svg><strong>بسته‌بندی</strong><span>تفکیک، محافظت و برچسب‌گذاری اصولی وسایل پیش از جابه‌جایی</span></a>
+    <a class="quick-benefit-accent" href="haml-o-naghl-anbar.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h12v10H3zM15 10h3l3 3v4h-6M7 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg><strong>حمل‌ونقل</strong><span>هماهنگی وسیله نقلیه متناسب با حجم بار و مسیر مبدأ تا انبار</span></a>
+    <a class="quick-benefit-accent" href="chideman-anbar.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg><strong>چیدمان</strong><span>جانمایی وسایل سنگین، کارتن‌ها و مسیر دسترسی برای استفاده بهتر از فضا</span></a>
   </div>
 </section>
 
@@ -904,26 +912,16 @@ const homeContent = (page) => `<section class="home-hero">
 <section class="section section-muted" aria-labelledby="local-seo-directory-title">
   <div class="container">
     <div class="section-heading">
-      <span class="eyebrow">صفحات محلی مرحله اول و دوم</span>
-      <h2 id="local-seo-directory-title">راهنمای اجاره انبار بر اساس منطقه و محله</h2>
-      <p>برای جلوگیری از صفحات تکراری، در مرحله اول فقط محله های پرترافیک و صفحه های مادر منطقه ای منتشر شده اند. هر صفحه مسیر، نیاز و لینک های نزدیک خود را دارد.</p>
+      <span class="eyebrow">محدوده های خدمات</span>
+      <h2 id="local-seo-directory-title">اجاره انبار در تهران و کرج</h2>
+      <p>برای انتخاب سریع تر، محدوده موردنظر خود را از بین مناطق تهران، مناطق کرج یا محله های پرتقاضا انتخاب کنید.</p>
     </div>
-    <aside class="related-box" aria-labelledby="tehran-districts-title">
-      <h2 id="tehran-districts-title">مناطق تهران</h2>
-      ${directoryLinkList(districtDirectory('تهران'))}
-    </aside>
-    <aside class="related-box" aria-labelledby="karaj-districts-title">
-      <h2 id="karaj-districts-title">مناطق کرج</h2>
-      ${directoryLinkList(districtDirectory('کرج'))}
-    </aside>
-    <aside class="related-box" aria-labelledby="published-neighborhoods-title">
-      <h2 id="published-neighborhoods-title">محله‌های اولویت دار منتشرشده</h2>
-      ${directoryLinkList([...localDirectory('tehran'), ...localDirectory('karaj')].slice(0, 60))}
-    </aside>
-    <aside class="related-box" aria-labelledby="phase-two-services-title">
-      <h2 id="phase-two-services-title">صفحات خدماتی و راهنماهای مرحله دوم</h2>
-      ${directoryLinkList(phaseTwoServicePages.map((servicePage) => [pageHref(servicePage.slug), servicePage.h1]))}
-    </aside>
+    <div class="directory-disclosure-grid">
+      ${directoryDisclosure('مناطق تهران', '۲۲ صفحه منطقه‌ای برای انتخاب محدوده دقیق‌تر', districtDirectory('تهران'))}
+      ${directoryDisclosure('مناطق کرج', '۱۲ صفحه منطقه‌ای برای مسیرهای استان البرز', districtDirectory('کرج'))}
+      ${directoryDisclosure('محله‌های پرتقاضا', 'دسترسی سریع به محله‌های پرتکرار تهران و کرج', [...localDirectory('tehran'), ...localDirectory('karaj')].slice(0, 60))}
+      ${directoryDisclosure('راهنماهای کاربردی', 'قیمت، متراژ، اسباب‌کشی، جهیزیه و تفاوت انبار با کانتینر', phaseTwoServicePages.map((servicePage) => [pageHref(servicePage.slug), servicePage.h1]))}
+    </div>
   </div>
 </section>
 

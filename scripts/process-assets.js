@@ -88,19 +88,14 @@ async function processAssets() {
   await ogBase.clone().jpeg({ quality: 88, progressive: true }).toFile(path.join(imagesDir, 'og-cover.jpg'));
   await ogBase.clone().webp({ quality: 84, effort: 5 }).toFile(path.join(imagesDir, 'og-cover.webp'));
 
-  const faviconPng = await sharp(path.join(imagesDir, 'vip-lock-icon.jpg'), { autoOrient: true })
-    .resize(96, 96, { fit: 'cover', position: 'centre' })
-    .png({ compressionLevel: 9 })
-    .toBuffer();
-  fs.writeFileSync(path.join(imagesDir, 'favicon-96.png'), faviconPng);
-
-  const faviconSvg = `<svg width="96" height="96" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="20" x2="80" y1="10" y2="86" gradientUnits="userSpaceOnUse"><stop stop-color="#0f2742"/><stop offset="1" stop-color="#1d6fa5"/></linearGradient></defs><rect width="96" height="96" rx="23" fill="url(#g)"/><path d="M28 49V37c0-11.2 8.8-20 20-20s20 8.8 20 20v12" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/><rect x="22" y="44" width="52" height="36" rx="9" fill="#f59e0b"/><path d="M48 54v13" stroke="#0f2742" stroke-width="7" stroke-linecap="round"/><circle cx="48" cy="54" r="5" fill="#0f2742"/><text x="48" y="91" text-anchor="middle" fill="#fff" font-family="Tahoma, sans-serif" font-size="14" font-weight="700">VIP</text></svg>`;
+  const faviconSvg = `<svg width="96" height="96" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="18" x2="82" y1="12" y2="84" gradientUnits="userSpaceOnUse"><stop stop-color="#0f2742"/><stop offset=".58" stop-color="#164f78"/><stop offset="1" stop-color="#1d6fa5"/></linearGradient><filter id="s" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="0" dy="3" stdDeviation="2" flood-color="#082033" flood-opacity=".34"/></filter></defs><rect width="96" height="96" rx="24" fill="url(#g)"/><path d="M18 22h60" stroke="#f59e0b" stroke-width="6" stroke-linecap="round"/><text x="48" y="64" text-anchor="middle" fill="#fff" font-family="Arial, Tahoma, sans-serif" font-size="37" font-weight="900" letter-spacing="1" filter="url(#s)">VIP</text><path d="M22 75h52" stroke="#f59e0b" stroke-width="4" stroke-linecap="round"/></svg>`;
   fs.writeFileSync(path.join(imagesDir, 'favicon.svg'), faviconSvg, 'utf8');
 
   const svgFaviconPng = await sharp(Buffer.from(faviconSvg), { density: 384 })
     .resize(96, 96)
     .png({ compressionLevel: 9 })
     .toBuffer();
+  fs.writeFileSync(path.join(imagesDir, 'favicon-96.png'), svgFaviconPng);
 
   const icoHeader = Buffer.alloc(22);
   icoHeader.writeUInt16LE(0, 0);
@@ -116,8 +111,7 @@ async function processAssets() {
   icoHeader.writeUInt32LE(22, 18);
   fs.writeFileSync(path.join(imagesDir, 'favicon.ico'), Buffer.concat([icoHeader, svgFaviconPng]));
 
-  await sharp(path.join(imagesDir, 'vip-lock-icon.jpg'), { autoOrient: true })
-    .resize(180, 180, { fit: 'cover', position: 'centre' })
+  await sharp(Buffer.from(faviconSvg), { density: 512 })
     .resize(180, 180)
     .png({ compressionLevel: 9 })
     .toFile(path.join(imagesDir, 'apple-touch-icon.png'));
