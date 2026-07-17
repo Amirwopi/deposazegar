@@ -1409,6 +1409,80 @@ fs.writeFileSync(path.join(outputDir, 'sitemap-services.xml'), generateSitemap(s
 fs.writeFileSync(path.join(outputDir, 'sitemap-locations.xml'), generateSitemap(sitemapLocationsList), 'utf8');
 fs.writeFileSync(path.join(outputDir, 'sitemap-posts.xml'), generateSitemap(sitemapPostsList), 'utf8');
 
+// -------------------------------------------------------------------------
+// Generate llms.txt (Persian & Finglish) for AI models and search engines
+// -------------------------------------------------------------------------
+const llmsTxt = `# دپو سازگار (Deposazegar)
+
+> مجموعه انبارهای اختصاصی و کانتینری دپو سازگار در تهران و کرج. اجاره انبار امن برای وسایل منزل، اثاثیه، جهیزیه و کالای تجاری با امنیت ۲۴ ساعته، نگهبانی و بیمه.
+
+## صفحات اصلی (Primary Pages)
+- [/](${baseSiteUrl}/): صفحه اصلی دپو سازگار - معرفی خدمات، شعب، کانتینرها و ثبت نظرات.
+- [/pricing](${baseSiteUrl}/pricing): قیمت اجاره انبار - تعرفه و هزینه اجاره انواع کانتینر ۱۰، ۱۵، ۲۰، ۳۰ و ۴۰ فوت.
+- [/contact](${baseSiteUrl}/contact): تماس با ما - شماره‌های تماس مستقیم شعب غرب، شرق، شمال، مرکز و جنوب تهران و کرج.
+- [/about](${baseSiteUrl}/about): درباره ما - معرفی مجموعه دپو سازگار، سابقه و استانداردهای امنیتی انبارها.
+
+## خدمات و راهنماها (Services & Guides)
+- [/container-storage](${baseSiteUrl}/container-storage): انبار کانتینری - راهنمای کامل اجاره کانتینرهای فلزی اختصاصی و ضدآب.
+- [/home-appliances-storage](${baseSiteUrl}/home-appliances-storage): انبار وسایل منزل - دپو و نگهداری امن اثاثیه خانه در زمان اسباب‌کشی یا بازسازی.
+- [/commercial-storage](${baseSiteUrl}/commercial-storage): انبار تجاری و شرکتی - دپو کالا، تجهیزات اداری و اسناد شرکت‌ها.
+- [/bastebandi-lavazem-anbar](${baseSiteUrl}/bastebandi-lavazem-anbar): بسته‌بندی لوازم - اصول بسته‌بندی حرفه‌ای کارتن‌ها و وسایل برای انبار.
+- [/haml-o-naghl-anbar](${baseSiteUrl}/haml-o-naghl-anbar): حمل‌ونقل تا انبار - خدمات خاور، کامیون و کارگر اسباب‌کشی تا محل انبار.
+- [/chideman-anbar](${baseSiteUrl}/chideman-anbar): چیدمان انبار - چگونگی استفاده بهینه از فضای کانتینر برای جا دادن وسایل بیشتر.
+
+## کانتینرها بر اساس اندازه (Container Sizes)
+- [/ejare-container-10-foot](${baseSiteUrl}/ejare-container-10-foot): کانتینر ۱۰ فوت (ظرفیت حدود ۱ خاور کوچک)
+- [/ejare-container-15-foot](${baseSiteUrl}/ejare-container-15-foot): کانتینر ۱۵ فوت (ظرفیت متوسط)
+- [/ejare-container-20-foot](${baseSiteUrl}/ejare-container-20-foot): کانتینر ۲۰ فوت (ظرفیت حدود ۱ خاور بزرگ اثاثیه)
+- [/ejare-container-30-foot](${baseSiteUrl}/ejare-container-30-foot): کانتینر ۳۰ فوت (ظرفیت بالا)
+- [/ejare-container-40-foot](${baseSiteUrl}/ejare-container-40-foot): کانتینر ۴۰ فوت (بزرگ‌ترین سایز، معادل ۲ خاور کامل)
+
+## شعب و مناطق (Locations & Branches)
+- [/location/west-tehran](${baseSiteUrl}/location/west-tehran): شعب غرب تهران (تهرانسر، چیتگر، لشگری، آزادگان)
+- [/location/east-tehran](${baseSiteUrl}/location/east-tehran): شعب شرق تهران (حکیمیه، تهرانپارس)
+- [/ejare-anbar-shomal-tehran](${baseSiteUrl}/ejare-anbar-shomal-tehran): شعب شمال تهران (تجریش، نیاوران، پاسداران)
+- [/ejare-anbar-markaz-tehran](${baseSiteUrl}/ejare-anbar-markaz-tehran): شعب مرکز تهران (یوسف‌آباد، هفت‌تیر)
+- [/location/south-tehran](${baseSiteUrl}/location/south-tehran): شعب جنوب تهران (آزادگان، اتوبان ساوه)
+- [/ejare-anbar-karaj](${baseSiteUrl}/ejare-anbar-karaj): شعب کرج (عظیمیه، جهانشهر، مهرشهر، فردیس)
+
+---
+
+# Deposazegar (Finglish Version)
+
+> Majmooe anbari-haye ekhtesasi va containeri-ye Depo Sazegar dar Tehran va Karaj. Ejare anbar-e amn baraye vasayel-e manzel, asasiyeh, jahizieh va kalaye tejari ba amniat-e 24 saateh, negahbani va bimeh.
+
+## Safahat-e Asli (Primary Pages)
+- [/](${baseSiteUrl}/): Safeh-ye asli-ye Depo Sazegar - moarefi-ye khadamat, shoab, container-ha va sabt-e nazarat.
+- [/pricing](${baseSiteUrl}/pricing): Gheymat-e ejare anbar - tarfeh va hazineh-ye ejare-ye anvah-e container-e 10, 15, 20, 30 va 40 foot.
+- [/contact](${baseSiteUrl}/contact): Tamas ba ma - shomareh-haye tamas-e mostaghim-e shoab-e gharb, shargh, shomal, markaz va jonoub-e Tehran va Karaj.
+- [/about](${baseSiteUrl}/about): Darbareh ma - moarefi-ye majmooe-ye Depo Sazegar, sabegheh va standard-haye amniati-ye anbar-ha.
+
+## Khadamat va Rahnama-ha (Services & Guides)
+- [/container-storage](${baseSiteUrl}/container-storage): Anbar-e containeri - rahnama-ye kamel-e ejare-ye container-haye felezi-ye ekhtesasi va zedd-e ab.
+- [/home-appliances-storage](${baseSiteUrl}/home-appliances-storage): Anbar-e vasayel-e manzel - depo va negahdari-ye amn-e asasiyeh-ye khaneh dar zaman-e asbabkeshi ya bazsazi.
+- [/commercial-storage](${baseSiteUrl}/commercial-storage): Anbar-e tejari va sherkati - depo-ye kala, tajhizat-e edari va asnad-e sherkat-ha.
+- [/bastebandi-lavazem-anbar](${baseSiteUrl}/bastebandi-lavazem-anbar): Bastebandi-ye lavazem - osoul-e bastebandi-ye herfehei-ye carton-ha va vasayel baraye anbar.
+- [/haml-o-naghl-anbar](${baseSiteUrl}/haml-o-naghl-anbar): Haml-o-naghl ta anbar - khadamat-e khavar, kamion va kargar-e asbabkeshi ta mahal-e anbar.
+- [/chideman-anbar](${baseSiteUrl}/chideman-anbar): Chideman-e anbar - chegoonegi-ye estefadeh-ye behineh az faza-ye container baraye ja dadan-e vasayel-e bishtar.
+
+## Container-ha bar asase andazeh (Container Sizes)
+- [/ejare-container-10-foot](${baseSiteUrl}/ejare-container-10-foot): Container-e 10 foot (zarfiat-e hodoud-e 1 khavar-e kouchak)
+- [/ejare-container-15-foot](${baseSiteUrl}/ejare-container-15-foot): Container-e 15 foot (zarfiat-e motavasset)
+- [/ejare-container-20-foot](${baseSiteUrl}/ejare-container-20-foot): Container-e 20 foot (zarfiat-e hodoud-e 1 khavar-e bozorg-e asasiyeh)
+- [/ejare-container-30-foot](${baseSiteUrl}/ejare-container-30-foot): Container-e 30 foot (zarfiat-e bala)
+- [/ejare-container-40-foot](${baseSiteUrl}/ejare-container-40-foot): Container-e 40 foot (bozorgtarin size, moadel-e 2 khavar-e kamel)
+
+## Shoab va Manategh (Locations & Branches)
+- [/location/west-tehran](${baseSiteUrl}/location/west-tehran): Shoab-e gharb-e Tehran (Tehranser, Chitgar, Lashgari, Azadegan)
+- [/location/east-tehran](${baseSiteUrl}/location/east-tehran): Shoab-e shargh-e Tehran (Hakimieh, Tehranpars)
+- [/ejare-anbar-shomal-tehran](${baseSiteUrl}/ejare-anbar-shomal-tehran): Shoab-e shomal-e Tehran (Tajrish, Niavaran, Pasdaran)
+- [/ejare-anbar-markaz-tehran](${baseSiteUrl}/ejare-anbar-markaz-tehran): Shoab-e markaz-e Tehran (Yousef Abad, Haft Tir)
+- [/location/south-tehran](${baseSiteUrl}/location/south-tehran): Shoab-e jonoub-e Tehran (Azadegan, Otoban-e Saveh)
+- [/ejare-anbar-karaj](${baseSiteUrl}/ejare-anbar-karaj): Shoab-e Karaj (Azimiyeh, Jahanshahr, Mehrshahr, Fardis)
+`;
+
+fs.writeFileSync(path.join(outputDir, 'llms.txt'), llmsTxt, 'utf8');
+
 console.log(`Generated ${pages.length} HTML pages and 5 sitemap files in public_html_ready/.`);
 console.log(`Sitemap split: ${sitemapPagesList.length} pages, ${sitemapServicesList.length} services, ${sitemapLocationsList.length} locations, ${sitemapPostsList.length} posts.`);
 console.log(wordCounts.join('\n'));

@@ -300,6 +300,16 @@ async function validate() {
     fail('robots.txt', 'required allow and sitemap directives are missing');
   }
 
+  const llmsPath = path.join(rootDir, 'llms.txt');
+  if (!fs.existsSync(llmsPath)) {
+    fail('llms.txt', 'missing llms.txt file');
+  } else {
+    const llmsContent = fs.readFileSync(llmsPath, 'utf8');
+    if (!llmsContent.includes('# دپو سازگار (Deposazegar)') || !llmsContent.includes('# Deposazegar (Finglish Version)')) {
+      fail('llms.txt', 'llms.txt is missing required Persian or Finglish sections');
+    }
+  }
+
   const contactHtml = fs.readFileSync(path.join(rootDir, 'contact.html'), 'utf8');
   for (const phone of phoneNumbers) {
     if (!contactHtml.includes(phone)) fail('contact.html', `missing phone number ${phone}`);
