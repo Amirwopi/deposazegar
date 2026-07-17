@@ -49,7 +49,7 @@ for (const [number, character, neighborhoods, access] of tehranDistricts) {
     city: 'تهران',
     number,
     label: `منطقه ${toPersianDigits(number)} تهران`,
-    parentHref: 'ejare-anbar-tehran.html',
+    parentHref: 'ejare-anbar-tehran',
     parentLabel: 'اجاره انبار تهران',
     character,
     neighborhoods,
@@ -63,7 +63,7 @@ for (const [number, character, neighborhoods, access] of karajDistricts) {
     city: 'کرج',
     number,
     label: `منطقه ${toPersianDigits(number)} کرج`,
-    parentHref: 'ejare-anbar-karaj.html',
+    parentHref: 'ejare-anbar-karaj',
     parentLabel: 'اجاره انبار کرج',
     character,
     neighborhoods,
@@ -192,16 +192,16 @@ for (const [name, slug, cityKey, regionNumber, nearby, audience, access, example
 
 const localPages = Object.entries(localProfiles).map(([slug, profile]) => ({
   slug,
-  title: `اجاره انبار در ${profile.name} | انبار امن وسایل منزل و شرکت`,
-  description: `اجاره انبار در ${profile.name} برای وسایل منزل، اسباب کشی، بازسازی و نگهداری کوتاه مدت یا بلندمدت؛ مشاوره رایگان، حمل ونقل و انتخاب متراژ مناسب. تماس سریع.`,
+  title: `اجاره انبار در ${profile.name} ${profile.city} + قیمت کانتینر و اتاقک | دپو سازگار`,
+  description: `اجاره انبار وسایل منزل یا کالا در محدوده ${profile.name}؟ کانتینرهای اختصاصی دپو سازگار در نزدیک‌ترین شعبه با امنیت ۲۴ ساعته و نگهبانی. همین حالا تماس بگیرید.`,
   h1: `اجاره انبار در ${profile.name}`,
   type: 'local'
 }));
 
 const districtPages = Object.entries(districtProfiles).map(([slug, profile]) => ({
   slug,
-  title: `اجاره انبار در ${profile.label} | راهنمای محله ها`,
-  description: `اجاره انبار در ${profile.label} برای وسایل منزل و کسب وکار؛ معرفی محله های مهم، مسیرهای دسترسی، انتخاب متراژ، هزینه های موثر، مشاوره رزرو و تماس سریع.`,
+  title: `اجاره انبار در ${profile.label} + قیمت کانتینر و اتاقک | دپو سازگار`,
+  description: `اجاره انبار وسایل منزل یا کالا در محدوده ${profile.label}؟ کانتینرهای اختصاصی دپو سازگار در نزدیک‌ترین شعبه با امنیت ۲۴ ساعته و نگهبانی. همین حالا تماس بگیرید.`,
   h1: `اجاره انبار در ${profile.label}`,
   type: 'district'
 }));

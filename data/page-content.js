@@ -10,14 +10,14 @@ const locationProfiles = {
     localTip: 'اگر بار از چند نشانی در غرب جمع می‌شود، ابتدا نقطه پایانی مسیر و ترتیب توقف‌ها را مشخص کنید تا اثاثیه حساس کمتر جابه‌جا شود',
     cta: 'برای مقایسه گزینه‌های مناسب کاربران غرب تهران، محله مبدأ، حجم تقریبی و بازه زمانی مدنظر را تلفنی اعلام کنید.',
     links: [
-      ['ejare-anbar-saadat-abad.html', 'انبار در سعادت‌آباد'],
-      ['ejare-anbar-chitgar.html', 'انبار در چیتگر'],
-      ['ejare-anbar-mantaghe-2-tehran.html', 'منطقه ۲ تهران'],
-      ['ejare-anbar-mantaghe-5-tehran.html', 'منطقه ۵ تهران'],
-      ['ejare-anbar-mantaghe-22-tehran.html', 'منطقه ۲۲ تهران'],
-      ['ejare-anbar-tehran.html', 'راهنمای جامع اجاره انبار در تهران'],
+      ['ejare-anbar-saadat-abad', 'انبار در سعادت‌آباد'],
+      ['ejare-anbar-chitgar', 'انبار در چیتگر'],
+      ['ejare-anbar-mantaghe-2-tehran', 'منطقه ۲ تهران'],
+      ['ejare-anbar-mantaghe-5-tehran', 'منطقه ۵ تهران'],
+      ['ejare-anbar-mantaghe-22-tehran', 'منطقه ۲۲ تهران'],
+      ['ejare-anbar-tehran', 'راهنمای جامع اجاره انبار در تهران'],
       ['container-storage', 'شناخت انبار کانتینری'],
-      ['contact.html', 'شماره‌ها و راهنمای تماس']
+      ['contact', 'شماره‌ها و راهنمای تماس']
     ]
   },
   'ejare-anbar-shargh-tehran': {
@@ -31,14 +31,14 @@ const locationProfiles = {
     localTip: 'بارهای مربوط به واحدهای بدون آسانسور را در بسته‌های کوچک‌تر آماده کنید و تعداد کارتن‌ها را پیش از تماس ثبت کنید',
     cta: 'برای دریافت پیشنهاد متناسب با شرق تهران، نشانی تقریبی مبدأ، نوع وسایل و تعداد دفعات دسترسی مورد انتظار را بگویید.',
     links: [
-      ['ejare-anbar-tehranpars.html', 'انبار در تهرانپارس'],
-      ['ejare-anbar-pasdaran.html', 'انبار در پاسداران'],
-      ['ejare-anbar-mantaghe-4-tehran.html', 'منطقه ۴ تهران'],
-      ['ejare-anbar-mantaghe-8-tehran.html', 'منطقه ۸ تهران'],
-      ['ejare-anbar-mantaghe-13-tehran.html', 'منطقه ۱۳ تهران'],
-      ['ejare-anbar-tehran.html', 'راهنمای جامع اجاره انبار در تهران'],
+      ['ejare-anbar-tehranpars', 'انبار در تهرانپارس'],
+      ['ejare-anbar-pasdaran', 'انبار در پاسداران'],
+      ['ejare-anbar-mantaghe-4-tehran', 'منطقه ۴ تهران'],
+      ['ejare-anbar-mantaghe-8-tehran', 'منطقه ۸ تهران'],
+      ['ejare-anbar-mantaghe-13-tehran', 'منطقه ۱۳ تهران'],
+      ['ejare-anbar-tehran', 'راهنمای جامع اجاره انبار در تهران'],
       ['home-appliances-storage', 'دپو لوازم خانه و اثاثیه'],
-      ['contact.html', 'شماره‌ها و راهنمای تماس']
+      ['contact', 'شماره‌ها و راهنمای تماس']
     ]
   },
   'ejare-anbar-shomal-tehran': {
@@ -52,14 +52,14 @@ const locationProfiles = {
     localTip: 'برای وسایل حساس به رطوبت یا دما، شرایط واقعی فضای پیشنهادی را در بازدید بررسی کنید و تنها به عنوان کلی انبار اکتفا نکنید',
     cta: 'برای برنامه‌ریزی دپوی وسایل در شمال تهران، درباره طبقه مبدأ، آسانسور باربر، اقلام حساس و مدت نگهداری توضیح دهید.',
     links: [
-      ['ejare-anbar-aghdasieh.html', 'انبار در اقدسیه'],
-      ['ejare-anbar-vanak.html', 'انبار در ونک'],
-      ['ejare-anbar-pasdaran.html', 'انبار در پاسداران'],
-      ['ejare-anbar-mantaghe-1-tehran.html', 'منطقه ۱ تهران'],
-      ['ejare-anbar-mantaghe-3-tehran.html', 'منطقه ۳ تهران'],
-      ['ejare-anbar-tehran.html', 'راهنمای جامع اجاره انبار در تهران'],
+      ['ejare-anbar-aghdasieh', 'انبار در اقدسیه'],
+      ['ejare-anbar-vanak', 'انبار در ونک'],
+      ['ejare-anbar-pasdaran', 'انبار در پاسداران'],
+      ['ejare-anbar-mantaghe-1-tehran', 'منطقه ۱ تهران'],
+      ['ejare-anbar-mantaghe-3-tehran', 'منطقه ۳ تهران'],
+      ['ejare-anbar-tehran', 'راهنمای جامع اجاره انبار در تهران'],
       ['container-storage', 'شناخت انبار کانتینری'],
-      ['contact.html', 'شماره‌ها و راهنمای تماس']
+      ['contact', 'شماره‌ها و راهنمای تماس']
     ]
   },
   'ejare-anbar-markaz-tehran': {
@@ -73,13 +73,13 @@ const locationProfiles = {
     localTip: 'اسناد و تجهیزات هر واحد سازمانی را با کد جداگانه بسته‌بندی کنید تا برای بازیابی یک قلم مجبور به باز کردن همه کارتن‌ها نشوید',
     cta: 'برای انتخاب انبار کاربران مرکز تهران، محدودیت زمانی ساختمان، تعداد زونکن یا تجهیزات و نیاز به مراجعه دوره‌ای را مطرح کنید.',
     links: [
-      ['ejare-anbar-mantaghe-6-tehran.html', 'منطقه ۶ تهران'],
-      ['ejare-anbar-mantaghe-7-tehran.html', 'منطقه ۷ تهران'],
-      ['ejare-anbar-mantaghe-11-tehran.html', 'منطقه ۱۱ تهران'],
-      ['ejare-anbar-mantaghe-12-tehran.html', 'منطقه ۱۲ تهران'],
-      ['ejare-anbar-tehran.html', 'راهنمای جامع اجاره انبار در تهران'],
+      ['ejare-anbar-mantaghe-6-tehran', 'منطقه ۶ تهران'],
+      ['ejare-anbar-mantaghe-7-tehran', 'منطقه ۷ تهران'],
+      ['ejare-anbar-mantaghe-11-tehran', 'منطقه ۱۱ تهران'],
+      ['ejare-anbar-mantaghe-12-tehran', 'منطقه ۱۲ تهران'],
+      ['ejare-anbar-tehran', 'راهنمای جامع اجاره انبار در تهران'],
       ['home-appliances-storage', 'دپو لوازم خانه و اثاثیه'],
-      ['contact.html', 'شماره‌ها و راهنمای تماس']
+      ['contact', 'شماره‌ها و راهنمای تماس']
     ]
   },
   'ejare-anbar-jonoub-tehran': {
@@ -93,13 +93,13 @@ const locationProfiles = {
     localTip: 'برای بار تجاری، ورودی و خروجی هر سری کالا را در یک فهرست تاریخ‌دار ثبت کنید و اقلام پرفروش را نزدیک مسیر دسترسی بچینید',
     cta: 'برای بررسی گزینه اقتصادی در جنوب تهران، نوع کالا، وزن، تعداد پالت یا کارتن و مدت تقریبی قرارداد را اعلام کنید.',
     links: [
-      ['ejare-anbar-mantaghe-16-tehran.html', 'منطقه ۱۶ تهران'],
-      ['ejare-anbar-mantaghe-18-tehran.html', 'منطقه ۱۸ تهران'],
-      ['ejare-anbar-mantaghe-19-tehran.html', 'منطقه ۱۹ تهران'],
-      ['ejare-anbar-mantaghe-20-tehran.html', 'منطقه ۲۰ تهران'],
-      ['ejare-anbar-tehran.html', 'راهنمای جامع اجاره انبار در تهران'],
+      ['ejare-anbar-mantaghe-16-tehran', 'منطقه ۱۶ تهران'],
+      ['ejare-anbar-mantaghe-18-tehran', 'منطقه ۱۸ تهران'],
+      ['ejare-anbar-mantaghe-19-tehran', 'منطقه ۱۹ تهران'],
+      ['ejare-anbar-mantaghe-20-tehran', 'منطقه ۲۰ تهران'],
+      ['ejare-anbar-tehran', 'راهنمای جامع اجاره انبار در تهران'],
       ['container-storage', 'شناخت انبار کانتینری'],
-      ['contact.html', 'شماره‌ها و راهنمای تماس']
+      ['contact', 'شماره‌ها و راهنمای تماس']
     ]
   },
   'ejare-anbar-karaj': {
@@ -113,14 +113,14 @@ const locationProfiles = {
     localTip: 'اگر بخشی از بار در تهران و بخش دیگر در کرج قرار دارد، ترتیب جمع‌آوری را پیش از اعزام خودرو مشخص کنید و اقلام حساس را در آخرین توقف بارگیری کنید',
     cta: 'برای اجاره انبار در کرج، محله مبدأ، حجم وسایل، مسیر دسترسی و مدت تقریبی نگهداری را اعلام کنید تا شعبه مناسب بررسی شود.',
     links: [
-      ['ejare-anbar-karaj-azimiyeh.html', 'انبار در عظیمیه کرج'],
-      ['ejare-anbar-karaj-mantaghe-1.html', 'منطقه ۱ کرج'],
-      ['ejare-anbar-karaj-mantaghe-3.html', 'منطقه ۳ کرج'],
-      ['ejare-anbar-karaj-mantaghe-4.html', 'منطقه ۴ کرج'],
-      ['ejare-anbar-karaj-mantaghe-5.html', 'منطقه ۵ کرج'],
-      ['ejare-anbar-tehran.html', 'راهنمای اجاره انبار در تهران'],
+      ['ejare-anbar-karaj-azimiyeh', 'انبار در عظیمیه کرج'],
+      ['ejare-anbar-karaj-mantaghe-1', 'منطقه ۱ کرج'],
+      ['ejare-anbar-karaj-mantaghe-3', 'منطقه ۳ کرج'],
+      ['ejare-anbar-karaj-mantaghe-4', 'منطقه ۴ کرج'],
+      ['ejare-anbar-karaj-mantaghe-5', 'منطقه ۵ کرج'],
+      ['ejare-anbar-tehran', 'راهنمای اجاره انبار در تهران'],
       ['container-storage', 'شناخت انبار کانتینری'],
-      ['contact.html', 'شماره‌ها و راهنمای تماس']
+      ['contact', 'شماره‌ها و راهنمای تماس']
     ]
   }
 };
@@ -226,7 +226,7 @@ const serviceProfiles = {
     process: 'نیازسنجی تلفنی، برآورد حجم، مقایسه اندازه‌ها، هماهنگی بازدید و سپس ثبت شرایط توافق‌شده',
     benefits: 'حذف هزینه فضای بلااستفاده، نظم بیشتر در تحویل، امکان تفکیک بار خانگی و تجاری و تصمیم‌گیری شفاف پیش از حمل',
     cautions: 'نوع قفل، وضعیت کف و سقف، ضوابط دسترسی، اقلام ممنوعه، بیمه و مسئولیت طرفین باید پیش از امضا بررسی شود',
-    links: [['container-storage', 'راهنمای انبار کانتینری'], ['home-appliances-storage', 'دپو لوازم خانه'], ['ejare-anbar-10-metri.html', 'انبار ۱۰ متری'], ['location/west-tehran', 'پوشش غرب تهران'], ['ejare-anbar-karaj.html', 'اجاره انبار در کرج'], ['ejare-container-20-foot.html', 'کانتینر ۲۰ فوت'], ['contact.html', 'مشاوره و تماس']],
+    links: [['container-storage', 'راهنمای انبار کانتینری'], ['home-appliances-storage', 'دپو لوازم خانه'], ['ejare-anbar-10-metri', 'انبار ۱۰ متری'], ['location/west-tehran', 'پوشش غرب تهران'], ['ejare-anbar-karaj', 'اجاره انبار در کرج'], ['ejare-container-20-foot', 'کانتینر ۲۰ فوت'], ['contact', 'مشاوره و تماس']],
     cta: 'برای شروع، تعداد اتاق‌ها یا گروه کالا، اقلام بزرگ، محله مبدأ و مدت تقریبی را اعلام کنید.'
   },
   'ejare-anbar-containeri-tehran': {
@@ -236,7 +236,7 @@ const serviceProfiles = {
     process: 'بررسی حجم و وزن، انتخاب طول کانتینر، بازدید از بدنه و درها، تعیین شیوه پلمب و ثبت دسترسی در قرارداد',
     benefits: 'تفکیک روشن محموله، چیدمان یکپارچه، تنوع ظرفیت و امکان برنامه‌ریزی برای تحویل یک‌مرحله‌ای',
     cautions: 'سلامت آب‌بندی، تهویه، کف، آثار خوردگی، فاصله بار از دیواره و شرایط محیطی محل باید متناسب با جنس کالا کنترل شود',
-    links: [['ejare-container-10-foot.html', 'کانتینر ۱۰ فوت'], ['ejare-container-15-foot.html', 'کانتینر ۱۵ فوت'], ['ejare-container-20-foot.html', 'کانتینر ۲۰ فوت'], ['ejare-container-30-foot.html', 'کانتینر ۳۰ فوت'], ['ejare-container-40-foot.html', 'کانتینر ۴۰ فوت'], ['contact.html', 'مشاوره انتخاب کانتینر']],
+    links: [['ejare-container-10-foot', 'کانتینر ۱۰ فوت'], ['ejare-container-15-foot', 'کانتینر ۱۵ فوت'], ['ejare-container-20-foot', 'کانتینر ۲۰ فوت'], ['ejare-container-30-foot', 'کانتینر ۳۰ فوت'], ['ejare-container-40-foot', 'کانتینر ۴۰ فوت'], ['contact', 'مشاوره انتخاب کانتینر']],
     cta: 'برای مقایسه کانتینرها، ابعاد بزرگ‌ترین وسیله، تعداد کارتن‌ها و حساسیت بار به شرایط محیطی را مطرح کنید.'
   },
   'depo-lavazem-khaneh': {
@@ -246,7 +246,7 @@ const serviceProfiles = {
     process: 'تهیه فهرست، تفکیک وسایل حساس، بسته‌بندی، برآورد متراژ، ثبت وضعیت ظاهری و تحویل مطابق قرارداد',
     benefits: 'کاهش آشفتگی خانه، محافظت بهتر در زمان عملیات ساختمانی، جلوگیری از چند بار جابه‌جایی و بازیابی ساده‌تر وسایل',
     cautions: 'یخچال و لباسشویی باید خشک شوند، مبلمان پوشش قابل تنفس داشته باشد و اقلام ارزشمند یا اسناد حیاتی جداگانه مدیریت شوند',
-    links: [['ejare-anbar-6-metri.html', 'انبار ۶ متری'], ['ejare-anbar-10-metri.html', 'انبار ۱۰ متری'], ['ejare-anbar-12-metri.html', 'انبار ۱۲ متری'], ['ejare-anbar-20-metri.html', 'انبار ۲۰ متری'], ['ejare-container-20-foot.html', 'کانتینر ۲۰ فوت'], ['contact.html', 'تماس برای برآورد وسایل']],
+    links: [['ejare-anbar-6-metri', 'انبار ۶ متری'], ['ejare-anbar-10-metri', 'انبار ۱۰ متری'], ['ejare-anbar-12-metri', 'انبار ۱۲ متری'], ['ejare-anbar-20-metri', 'انبار ۲۰ متری'], ['ejare-container-20-foot', 'کانتینر ۲۰ فوت'], ['contact', 'تماس برای برآورد وسایل']],
     cta: 'برای برآورد دپوی خانه، تعداد اتاق‌ها، لوازم برقی بزرگ، سرویس خواب و تعداد تقریبی کارتن‌ها را اعلام کنید.'
   },
   'bastebandi-lavazem-anbar': {
@@ -256,7 +256,7 @@ const serviceProfiles = {
     process: 'تفکیک وسایل بر اساس جنس و حساسیت، انتخاب کارتن و محافظ، خشک‌کردن لوازم برقی، پیچیدن قطعات شکستنی، برچسب‌گذاری هر بسته و تهیه فهرست تحویل',
     benefits: 'کاهش شکستگی و خط و خش، سرعت بیشتر در حمل، استفاده بهتر از فضای انبار، پیدا کردن ساده‌تر وسایل و امکان چیدمان ایمن‌تر در کانتینر یا انبار متراژی',
     cautions: 'کارتن خیلی بزرگ برای کتاب و ظروف سنگین مناسب نیست، پلاستیک محکم برای مبلمان در نگهداری طولانی می‌تواند رطوبت حبس کند و اقلام ارزشمند یا اسناد حیاتی نباید داخل بار عمومی قرار گیرند',
-    links: [['home-appliances-storage', 'دپو لوازم خانه'], ['haml-o-naghl-anbar.html', 'حمل‌ونقل وسایل تا انبار'], ['chideman-anbar.html', 'چیدمان وسایل در انبار'], ['ejare-container-10-foot.html', 'کانتینر ۱۰ فوت'], ['ejare-container-20-foot.html', 'کانتینر ۲۰ فوت'], ['contact.html', 'مشاوره بسته‌بندی']],
+    links: [['home-appliances-storage', 'دپو لوازم خانه'], ['haml-o-naghl-anbar', 'حمل‌ونقل وسایل تا انبار'], ['chideman-anbar', 'چیدمان وسایل در انبار'], ['ejare-container-10-foot', 'کانتینر ۱۰ فوت'], ['ejare-container-20-foot', 'کانتینر ۲۰ فوت'], ['contact', 'مشاوره بسته‌بندی']],
     cta: 'برای راهنمای بسته‌بندی، نوع وسایل حساس، تعداد تقریبی کارتن‌ها و تاریخ حمل را اعلام کنید تا آماده‌سازی با متراژ پیشنهادی هماهنگ شود.'
   },
   'haml-o-naghl-anbar': {
@@ -266,7 +266,7 @@ const serviceProfiles = {
     process: 'ثبت نشانی و طبقه مبدأ، بررسی آسانسور و امکان توقف، تخمین حجم و وزن، انتخاب خودرو، زمان‌بندی حرکت، هماهنگی ورود به شعبه و تحویل طبق فهرست وسایل',
     benefits: 'کاهش رفت‌وبرگشت غیرضروری، انتخاب خودروی متناسب، کنترل بهتر زمان تخلیه، کاهش فشار به وسایل حساس و هماهنگی دقیق‌تر میان بسته‌بندی، حمل و چیدمان نهایی',
     cautions: 'حجم بار، طبقه، مسیر پله، محدودیت توقف و ساعت مجاز ورود خودروی باری روی هزینه و ریسک اثر مستقیم دارد؛ قبل از اعزام باید نشانی دقیق شعبه و شرایط تخلیه تأیید شود',
-    links: [['bastebandi-lavazem-anbar.html', 'بسته‌بندی لوازم برای انبار'], ['chideman-anbar.html', 'چیدمان وسایل در انبار'], ['location/west-tehran', 'شعب غرب تهران'], ['location/south-tehran', 'شعب جنوب تهران'], ['ejare-anbar-karaj.html', 'اجاره انبار در کرج'], ['contact.html', 'هماهنگی حمل']],
+    links: [['bastebandi-lavazem-anbar', 'بسته‌بندی لوازم برای انبار'], ['chideman-anbar', 'چیدمان وسایل در انبار'], ['location/west-tehran', 'شعب غرب تهران'], ['location/south-tehran', 'شعب جنوب تهران'], ['ejare-anbar-karaj', 'اجاره انبار در کرج'], ['contact', 'هماهنگی حمل']],
     cta: 'برای هماهنگی حمل، محله مبدأ، طبقه، آسانسور، تعداد اقلام بزرگ و زمان مطلوب جابه‌جایی را آماده کنید.'
   },
   'chideman-anbar': {
@@ -276,7 +276,7 @@ const serviceProfiles = {
     process: 'طراحی زون‌های بار، قرار دادن وسایل سنگین در کف، تثبیت اقلام بزرگ، ساخت ستون‌های کارتن هم‌اندازه، نگه داشتن مسیر دسترسی و ثبت نقشه ساده چیدمان',
     benefits: 'استفاده بهینه از متراژ، جلوگیری از له‌شدن کارتن‌ها، دسترسی سریع به اقلام پرمصرف، کاهش زمان تخلیه نهایی و امکان انتخاب اندازه کوچک‌تر بدون ایجاد آشفتگی',
     cautions: 'چیدن بی‌نقشه تا سقف می‌تواند در را مسدود کند یا به وسایل فشار بیاورد؛ لوازم شکننده، مبلمان، وسایل برقی و کارتن‌های سنگین هرکدام جای مخصوص خود را می‌خواهند',
-    links: [['container-storage', 'راهنمای انبار کانتینری'], ['ejare-container-20-foot.html', 'کانتینر ۲۰ فوت'], ['ejare-container-40-foot.html', 'کانتینر ۴۰ فوت'], ['bastebandi-lavazem-anbar.html', 'بسته‌بندی لوازم'], ['haml-o-naghl-anbar.html', 'حمل‌ونقل وسایل'], ['contact.html', 'مشاوره چیدمان']],
+    links: [['container-storage', 'راهنمای انبار کانتینری'], ['ejare-container-20-foot', 'کانتینر ۲۰ فوت'], ['ejare-container-40-foot', 'کانتینر ۴۰ فوت'], ['bastebandi-lavazem-anbar', 'بسته‌بندی لوازم'], ['haml-o-naghl-anbar', 'حمل‌ونقل وسایل'], ['contact', 'مشاوره چیدمان']],
     cta: 'برای پیشنهاد چیدمان، بگویید چند بار در طول قرارداد به وسایل نیاز دارید و کدام اقلام باید نزدیک ورودی بمانند.'
   }
 };

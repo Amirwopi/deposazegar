@@ -37,6 +37,14 @@ Options -Indexes
   RewriteRule ^ejare-anbar-jonoub-tehran\.html$ /location/south-tehran [R=301,L,NE]
 
   # -------------------------------
+  # Blanket 301: strip .html from ALL direct requests → clean URLs
+  # Catches any *.html URL typed/linked directly and redirects to clean version
+  # Uses THE_REQUEST so internal rewrites (line below) are not affected
+  # -------------------------------
+  RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.+)\.html\ HTTP/
+  RewriteRule ^ /%1 [R=301,L,NE]
+
+  # -------------------------------
   # Clean URL rewrite: serve .html without extension
   # -------------------------------
   RewriteCond %{REQUEST_FILENAME} !-d

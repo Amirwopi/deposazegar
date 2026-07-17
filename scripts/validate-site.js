@@ -29,7 +29,7 @@ const pageFilePath = (page) => {
 const pageCanonicalUrl = (page) => {
   if (page.slug === 'index') return 'https://deposazegar.com/';
   const clean = cleanUrlMap[page.slug];
-  return clean ? `https://deposazegar.com/${clean}` : `https://deposazegar.com/${page.slug}.html`;
+  return clean ? `https://deposazegar.com/${clean}` : `https://deposazegar.com/${page.slug}`;
 };
 
 const projectRoot = path.resolve(__dirname, '..');
@@ -122,11 +122,10 @@ async function validate() {
     const h1Count = (main.match(/<h1(?:\s|>)/g) || []).length;
     const h2Count = (main.match(/<h2(?:\s|>)/g) || []).length;
     const faqCount = (main.match(/<details class="faq-item">/g) || []).length;
-    const cleanUrls = Object.values(cleanUrlMap);
     const internalLinks = new Set(
       [...main.matchAll(/href="([^"]+)"/g)]
         .map((match) => match[1].split('#')[0])
-        .filter((reference) => reference.endsWith('.html') || cleanUrls.includes(reference))
+        .filter((reference) => reference && !/^(?:https?:|tel:|mailto:|\/|#|assets\/)/.test(reference) && !reference.includes('.'))
     );
     auditRows.push({ file, wordCount, title, descriptionLength: [...metaDescription].length, h1Count, h2Count, faqCount, internalLinks: internalLinks.size });
 
@@ -422,26 +421,26 @@ ${localPages.map((page, index) => {
 ## ۲۰ صفحه اولویت دار برای مرحله سوم
 
 ${[
-  'pricing.html - تقویت با داده قیمت واقعی در صورت تأیید مالک',
-  'ejare-anbar-saadat-abad.html - بررسی CTR و افزودن مثال های واقعی از مسیر حمل',
-  'ejare-anbar-tehranpars.html - تقویت لینک داخلی از صفحات شرق تهران',
-  'ejare-anbar-karaj-azimiyeh.html - افزودن اطلاعات دقیق تر پوشش البرز پس از داده Search Console',
-  'ejare-anbar-chitgar.html - بررسی کوئری های دریاچه و برج های نوساز',
-  'ejare-anbar-kootah-moddat.html - توسعه FAQ بر اساس impressionهای Search Console',
-  'ejare-anbar-asbabkeshi.html - افزودن چک لیست اسباب کشی قابل دانلود در صورت نیاز',
-  'rahnamay-entekhab-metraje-anbar.html - افزودن جدول ظرفیت با داده واقعی',
-  'tafavot-anbar-container-kanex.html - تقویت برای کوئری های کانکس و کانتینر',
-  'ejare-anbar-arzan-tehran.html - پایش حساسیت کلمه ارزان و جلوگیری از وعده قیمت غیرواقعی',
-  'location/west-tehran.html - لینک بیشتر به محله های جدید غرب',
-  'location/east-tehran.html - لینک بیشتر به تهرانپارس، نارمک، حکیمیه و رسالت',
-  'ejare-anbar-shomal-tehran.html - لینک بیشتر به محله های منطقه ۱ و ۳',
-  'ejare-anbar-karaj.html - تقویت با مناطق و محله های کرج',
-  'home-appliances-storage.html - افزودن سناریوهای جهیزیه و بازسازی',
-  'bastebandi-lavazem-anbar.html - افزودن تصویر یا جدول مواد بسته بندی',
-  'haml-o-naghl-anbar.html - افزودن عوامل هزینه حمل بعد از دریافت داده واقعی',
-  'container-storage.html - لینک بیشتر به صفحه تفاوت انبار و کانتینر',
-  'ejare-container-20-foot.html - تقویت برای کوئری ظرفیت وسایل منزل',
-  'contact.html - افزودن ساعات پاسخ گویی در صورت تأیید'
+  'pricing - تقویت با داده قیمت واقعی در صورت تأیید مالک',
+  'ejare-anbar-saadat-abad - بررسی CTR و افزودن مثال های واقعی از مسیر حمل',
+  'ejare-anbar-tehranpars - تقویت لینک داخلی از صفحات شرق تهران',
+  'ejare-anbar-karaj-azimiyeh - افزودن اطلاعات دقیق تر پوشش البرز پس از داده Search Console',
+  'ejare-anbar-chitgar - بررسی کوئری های دریاچه و برج های نوساز',
+  'ejare-anbar-kootah-moddat - توسعه FAQ بر اساس impressionهای Search Console',
+  'ejare-anbar-asbabkeshi - افزودن چک لیست اسباب کشی قابل دانلود در صورت نیاز',
+  'rahnamay-entekhab-metraje-anbar - افزودن جدول ظرفیت با داده واقعی',
+  'tafavot-anbar-container-kanex - تقویت برای کوئری های کانکس و کانتینر',
+  'ejare-anbar-arzan-tehran - پایش حساسیت کلمه ارزان و جلوگیری از وعده قیمت غیرواقعی',
+  'location/west-tehran - لینک بیشتر به محله های جدید غرب',
+  'location/east-tehran - لینک بیشتر به تهرانپارس، نارمک، حکیمیه و رسالت',
+  'ejare-anbar-shomal-tehran - لینک بیشتر به محله های منطقه ۱ و ۳',
+  'ejare-anbar-karaj - تقویت با مناطق و محله های کرج',
+  'home-appliances-storage - افزودن سناریوهای جهیزیه و بازسازی',
+  'bastebandi-lavazem-anbar - افزودن تصویر یا جدول مواد بسته بندی',
+  'haml-o-naghl-anbar - افزودن عوامل هزینه حمل بعد از دریافت داده واقعی',
+  'container-storage - لینک بیشتر به صفحه تفاوت انبار و کانتینر',
+  'ejare-container-20-foot - تقویت برای کوئری ظرفیت وسایل منزل',
+  'contact - افزودن ساعات پاسخ گویی در صورت تأیید'
 ].map((item, index) => `${index + 1}. ${item}`).join('\n')}
 
 ## چک لیست بعد از انتشار در Google Search Console
