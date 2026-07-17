@@ -135,6 +135,13 @@ const escapeHtml = (value = '') => value
   .replaceAll('>', '&gt;')
   .replaceAll('"', '&quot;');
 
+/** Ensure a relative path becomes root-absolute (starts with /). */
+const absPath = (path) => {
+  if (!path) return '/';
+  if (path.startsWith('/') || path.startsWith('#') || path.startsWith('http') || path.startsWith('tel:') || path.startsWith('mailto:') || path.startsWith('data:')) return path;
+  return '/' + path;
+};
+
 const canonicalUrl = (page) => {
   if (page.slug === 'index') return baseSiteUrl + '/';
   const clean = cleanUrlMap[page.slug];
@@ -146,8 +153,8 @@ const picture = (key, alt, classes, options = {}) => {
   const loading = options.eager ? 'eager' : 'lazy';
   const priority = options.eager ? ' fetchpriority="high"' : '';
   return `<picture>
-    <source srcset="assets/images/${filename}.webp" type="image/webp">
-    <img src="assets/images/${filename}.jpg" width="${width}" height="${height}" alt="${escapeHtml(alt)}" class="${classes}" loading="${loading}" decoding="async"${priority}>
+    <source srcset="/assets/images/${filename}.webp" type="image/webp">
+    <img src="/assets/images/${filename}.jpg" width="${width}" height="${height}" alt="${escapeHtml(alt)}" class="${classes}" loading="${loading}" decoding="async"${priority}>
   </picture>`;
 };
 
@@ -248,7 +255,7 @@ const bottomSheets = () => `
   </div>
   <div class="sheet-scroll">
     ${branchCards('branch-groups-sheet')}
-    <a class="karaj-sheet-link" href="ejare-anbar-karaj"><strong>اجاره انبار در کرج</strong><span>مشاهده راهنمای مسیر، متراژ و هماهنگی شعبه ←</span></a>
+    <a class="karaj-sheet-link" href="/ejare-anbar-karaj"><strong>اجاره انبار در کرج</strong><span>مشاهده راهنمای مسیر، متراژ و هماهنگی شعبه ←</span></a>
   </div>
 </section>`;
 
@@ -368,7 +375,7 @@ const midCta = (page, title) => `<aside class="mid-cta" aria-label="مشاوره
   <div class="mid-cta-actions">
     ${phoneSheetButton('دریافت همه شماره‌ها', 'btn btn-primary', `نمایش همه شماره‌ها برای ${page.h1}`)}
     ${whatsappButton('مشاوره واتساپ')}
-    <a class="btn btn-secondary" href="contact">راهنمای پیش از تماس</a>
+    <a class="btn btn-secondary" href="/contact">راهنمای پیش از تماس</a>
   </div>
 </aside>`;
 
@@ -381,7 +388,7 @@ const finalCta = (page) => `<section class="final-cta" aria-labelledby="final-ct
       <div class="final-cta-actions">
         ${phoneSheetButton('نمایش همه شماره‌های تماس', 'btn btn-primary', 'باز کردن فهرست ۹ شماره تماس دپو سازگار')}
         ${whatsappButton('مشاوره واتساپ', 'btn btn-on-dark')}
-        <a class="btn btn-on-dark" href="contact">مشاهده صفحه تماس</a>
+        <a class="btn btn-on-dark" href="/contact">مشاهده صفحه تماس</a>
       </div>
     </div>
     <div class="final-cta-signal" aria-label="مزیت تماس با دپو سازگار">
@@ -396,13 +403,13 @@ const detailsList = (items) => `<ul class="check-list">${items.map(item => `<li>
 
 const relatedLinks = (links) => `<aside class="related-box" aria-labelledby="related-title">
   <h2 id="related-title">راهنماهای مرتبط</h2>
-  <div class="related-links">${links.map(([href, label]) => `<a href="${href}">${escapeHtml(label)}<span aria-hidden="true">←</span></a>`).join('')}</div>
+  <div class="related-links">${links.map(([href, label]) => `<a href="${absPath(href)}">${escapeHtml(label)}<span aria-hidden="true">←</span></a>`).join('')}</div>
 </aside>`;
 
 const pageHref = (slug) => {
   if (slug === 'index') return '/';
   const clean = cleanUrlMap[slug];
-  return clean || slug;
+  return absPath(clean || slug);
 };
 
 const districtLocalLinks = (districtSlug) => Object.entries(localProfiles)
@@ -416,13 +423,13 @@ const localPageLinkByShortSlug = (shortSlug) => {
 };
 
 const localSizesLinks = () => [
-  ['ejare-anbar-6-metri', 'اجاره انبار ۶ متری'],
-  ['ejare-anbar-10-metri', 'اجاره انبار ۱۰ متری'],
-  ['ejare-anbar-12-metri', 'اجاره انبار ۱۲ متری'],
-  ['ejare-anbar-20-metri', 'اجاره انبار ۲۰ متری'],
-  ['ejare-container-10-foot', 'اجاره کانتینر ۱۰ فوت'],
-  ['ejare-container-20-foot', 'اجاره کانتینر ۲۰ فوت'],
-  ['ejare-container-40-foot', 'اجاره کانتینر ۴۰ فوت']
+  ['/ejare-anbar-6-metri', 'اجاره انبار ۶ متری'],
+  ['/ejare-anbar-10-metri', 'اجاره انبار ۱۰ متری'],
+  ['/ejare-anbar-12-metri', 'اجاره انبار ۱۲ متری'],
+  ['/ejare-anbar-20-metri', 'اجاره انبار ۲۰ متری'],
+  ['/ejare-container-10-foot', 'اجاره کانتینر ۱۰ فوت'],
+  ['/ejare-container-20-foot', 'اجاره کانتینر ۲۰ فوت'],
+  ['/ejare-container-40-foot', 'اجاره کانتینر ۴۰ فوت']
 ];
 
 const localDirectory = (cityKey) => Object.entries(localProfiles)
@@ -434,7 +441,7 @@ const districtDirectory = (city) => Object.entries(districtProfiles)
   .map(([slug, profile]) => [pageHref(slug), profile.label]);
 
 const directoryLinkList = (links, className = 'related-links') => `<div class="${className}">
-  ${links.map(([href, label]) => `<a href="${href}">${escapeHtml(label)}<span aria-hidden="true">←</span></a>`).join('')}
+  ${links.map(([href, label]) => `<a href="${absPath(href)}">${escapeHtml(label)}<span aria-hidden="true">←</span></a>`).join('')}
 </div>`;
 
 const directoryDisclosure = (title, description, links) => `<details class="directory-disclosure">
@@ -480,7 +487,7 @@ const districtContent = (page, profile) => {
 </section>
 <article id="district-guide" class="section article-shell">
   <div class="container content-reading">
-    <p class="article-intro">${profile.label} به دلیل ${profile.character} فقط با یک پیشنهاد عمومی پوشش داده نمی شود. متقاضی اجاره انبار در این محدوده باید هم حجم وسایل را بسنجد و هم مسیر حمل از محله مبدأ تا فضای پیشنهادی را بررسی کند. اگر هنوز در مرحله مقایسه شهری هستید، صفحه <a href="${profile.parentHref}">${profile.parentLabel}</a> نقطه شروع خوبی است.</p>
+    <p class="article-intro">${profile.label} به دلیل ${profile.character} فقط با یک پیشنهاد عمومی پوشش داده نمی شود. متقاضی اجاره انبار در این محدوده باید هم حجم وسایل را بسنجد و هم مسیر حمل از محله مبدأ تا فضای پیشنهادی را بررسی کند. اگر هنوز در مرحله مقایسه شهری هستید، صفحه <a href="${absPath(profile.parentHref)}">${profile.parentLabel}</a> نقطه شروع خوبی است.</p>
     <p>محله های شاخص این محدوده شامل ${profile.neighborhoods} هستند. هرکدام بافت، عرض کوچه، امکان توقف و نوع بار رایج متفاوتی دارند. برای همین بهتر است پیش از تماس، وسایل را به سه گروه اثاثیه حجیم، کارتن و اقلام حساس تقسیم کنید. این کار کمک می کند بین انبار متراژی، انبار کانتینری و فضای دارای راهرو انتخاب دقیق تری داشته باشید.</p>
 
     <h2>چه کسانی در ${profile.label} به اجاره انبار نیاز دارند؟</h2>
@@ -503,7 +510,7 @@ const districtContent = (page, profile) => {
     ${directoryLinkList(publishedLocalLinks)}
 
     <h2>انتخاب متراژ و خدمات جانبی</h2>
-    <p>برای بار محدود، انبار ۶ متری یا ۱۰ متری می تواند گزینه اقتصادی باشد. برای جهیزیه، وسایل یک واحد کوچک یا بار اداری متوسط، ۱۲ متر و ۲۰ متر را با هم مقایسه کنید. اگر بار حجیم، طولانی مدت یا نیازمند فضای مستقل است، <a href="container-storage">انبار کانتینری</a> و اندازه های ۱۰، ۲۰ یا ۴۰ فوت هم قابل بررسی است. بسته بندی، حمل و چیدمان باید جداگانه قیمت گذاری و در توافق نهایی روشن شود.</p>
+    <p>برای بار محدود، انبار ۶ متری یا ۱۰ متری می تواند گزینه اقتصادی باشد. برای جهیزیه، وسایل یک واحد کوچک یا بار اداری متوسط، ۱۲ متر و ۲۰ متر را با هم مقایسه کنید. اگر بار حجیم، طولانی مدت یا نیازمند فضای مستقل است، <a href="/container-storage">انبار کانتینری</a> و اندازه های ۱۰، ۲۰ یا ۴۰ فوت هم قابل بررسی است. بسته بندی، حمل و چیدمان باید جداگانه قیمت گذاری و در توافق نهایی روشن شود.</p>
     ${directoryLinkList(localSizesLinks())}
 
     <h2>قیمت اجاره انبار در ${profile.label} چقدر است؟</h2>
@@ -562,7 +569,7 @@ const localContent = (page, profile) => {
 
     <h2>خدمات قابل ارائه برای ${profile.name}</h2>
     <p>خدمات قابل بررسی شامل اجاره انبار وسایل منزل، اجاره کوتاه مدت و بلندمدت، انبار کانتینری، بررسی نیاز به کانکس، بسته بندی وسایل، هماهنگی حمل ونقل تا انبار و مشاوره انتخاب متراژ مناسب است. حمل، بسته بندی یا چیدمان را پیش فرض قرارداد انبار ندانید و هزینه و مسئولیت آن را جداگانه مکتوب کنید.</p>
-    <p>اگر حجم بار کم است، <a href="ejare-anbar-6-metri">انبار ۶ متری</a> یا <a href="ejare-anbar-10-metri">انبار ۱۰ متری</a> می تواند کافی باشد. برای بار بیشتر، <a href="ejare-anbar-12-metri">۱۲ متر</a>، <a href="ejare-anbar-20-metri">۲۰ متر</a> یا صفحه <a href="container-storage">اجاره انبار کانتینری</a> را مقایسه کنید.</p>
+    <p>اگر حجم بار کم است، <a href="/ejare-anbar-6-metri">انبار ۶ متری</a> یا <a href="/ejare-anbar-10-metri">انبار ۱۰ متری</a> می تواند کافی باشد. برای بار بیشتر، <a href="/ejare-anbar-12-metri">۱۲ متر</a>، <a href="/ejare-anbar-20-metri">۲۰ متر</a> یا صفحه <a href="/container-storage">اجاره انبار کانتینری</a> را مقایسه کنید.</p>
 
     <h2>اجاره کانتینر و کانکس در ${profile.name}</h2>
     <p>اگر وسایل حجیم، کالای خشک یا بار یکپارچه دارید، اجاره کانتینر در ${profile.name} می تواند جایگزین مناسبی برای انبار متراژی باشد؛ به ویژه وقتی فضای مستقل، چیدمان یکجا یا قرارداد طولانی تر لازم است. کانکس بیشتر برای نیازهای پروژه ای و موقت مطرح می شود و باید از نظر کاربری، مسیر حمل، محل استقرار و شرایط واقعی موجود جداگانه بررسی شود.</p>
@@ -614,11 +621,11 @@ const locationContent = (page, profile) => `<section class="page-hero">
 </section>
 <article id="guide" class="section article-shell">
   <div class="container content-reading">
-    <p class="article-intro">جست‌وجوی انبار برای ${profile.audience} معمولاً فقط به پیدا کردن یک فضای خالی محدود نیست. زمان حرکت خودروی باربری، امکان توقف در مبدأ، تعداد دفعات مراجعه و اندازه واقعی وسایل روی هزینه نهایی اثر می‌گذارند. یک گزینه ارزان اما دور یا دشوار برای دسترسی می‌تواند با چند سفر اضافه، گران‌تر از انتخابی شود که از ابتدا بر اساس مسیر و حجم بار سنجیده شده است. برای دید کلی‌تر، <a href="ejare-anbar-tehran">راهنمای اجاره انبار در تهران</a> را نیز بخوانید.</p>
-    <p>نیاز رایج در این محدوده شامل ${profile.needs} است. به همین دلیل بهتر است پیش از تماس، بار را به سه گروه «بزرگ و غیرقابل‌چیدن»، «کارتنی و قابل‌چیدن» و «حساس یا نیازمند بررسی بیشتر» تقسیم کنید. این دسته‌بندی به کارشناس کمک می‌کند میان انبار متراژی و <a href="container-storage">انبار کانتینری</a>، و میان فضای فشرده یا دارای راهرو، پیشنهاد دقیق‌تری ارائه کند.</p>
+    <p class="article-intro">جست‌وجوی انبار برای ${profile.audience} معمولاً فقط به پیدا کردن یک فضای خالی محدود نیست. زمان حرکت خودروی باربری، امکان توقف در مبدأ، تعداد دفعات مراجعه و اندازه واقعی وسایل روی هزینه نهایی اثر می‌گذارند. یک گزینه ارزان اما دور یا دشوار برای دسترسی می‌تواند با چند سفر اضافه، گران‌تر از انتخابی شود که از ابتدا بر اساس مسیر و حجم بار سنجیده شده است. برای دید کلی‌تر، <a href="/ejare-anbar-tehran">راهنمای اجاره انبار در تهران</a> را نیز بخوانید.</p>
+    <p>نیاز رایج در این محدوده شامل ${profile.needs} است. به همین دلیل بهتر است پیش از تماس، بار را به سه گروه «بزرگ و غیرقابل‌چیدن»، «کارتنی و قابل‌چیدن» و «حساس یا نیازمند بررسی بیشتر» تقسیم کنید. این دسته‌بندی به کارشناس کمک می‌کند میان انبار متراژی و <a href="/container-storage">انبار کانتینری</a>، و میان فضای فشرده یا دارای راهرو، پیشنهاد دقیق‌تری ارائه کند.</p>
 
     <h2>نیاز کاربران ${profile.label} با یک نسخه ثابت حل نمی‌شود</h2>
-    <p>${profile.uses} از کاربردهای متداول برای متقاضیان این منطقه‌اند، اما هرکدام چیدمان متفاوتی می‌خواهند. برای اثاثیه، <a href="home-appliances-storage">راهنمای دپو لوازم خانه</a> جزئیات آماده‌سازی بیشتری دارد. اثاثیه منزل معمولاً قطعات حجیم و فضای مرده بیشتری دارد؛ در مقابل، کارتن یا بایگانی را می‌توان منظم‌تر و عمودی چید. برای کالای تجاری نیز ترتیب ورود و خروج مهم است.</p>
+    <p>${profile.uses} از کاربردهای متداول برای متقاضیان این منطقه‌اند، اما هرکدام چیدمان متفاوتی می‌خواهند. برای اثاثیه، <a href="/home-appliances-storage">راهنمای دپو لوازم خانه</a> جزئیات آماده‌سازی بیشتری دارد. اثاثیه منزل معمولاً قطعات حجیم و فضای مرده بیشتری دارد؛ در مقابل، کارتن یا بایگانی را می‌توان منظم‌تر و عمودی چید. برای کالای تجاری نیز ترتیب ورود و خروج مهم است.</p>
     <h2>دسترسی و برنامه حمل از ${profile.label}</h2>
     <p>برای برنامه مسیر می‌توان ${profile.access} را بررسی کرد، اما ساعت حرکت و محدودیت محلی گاهی از کوتاهی مسیر مهم‌تر است. ${profile.logistics}. نشانی دقیق انبار و شرایط ورود خودرو را در تماس نهایی بگیرید؛ عبارت «پوشش منطقه» به‌تنهایی تضمین نمی‌کند که هر فضای موجود دقیقاً داخل همان محله باشد.</p>
 
@@ -663,15 +670,15 @@ const sizeContent = (page, profile) => `<section class="page-hero">
 </section>
 <article id="guide" class="section article-shell">
   <div class="container content-reading">
-    <p class="article-intro">${profile.label} را می‌توان ${profile.scale} دانست، اما نام متراژ یا فوت به‌تنهایی ظرفیت قطعی را نشان نمی‌دهد. ابعاد داخلی واقعی، شکل در، ارتفاع مفید و وجود اجزای سازه‌ای ممکن است فضای قابل استفاده را تغییر دهند. به همین دلیل اندازه دقیق گزینه موجود را پیش از رزرو بگیرید و آن را با معیارهای <a href="ejare-anbar-tehran">راهنمای انتخاب انبار در تهران</a> بسنجید.</p>
-    <p>این اندازه معمولاً برای ${profile.suitable} بررسی می‌شود. بااین‌حال دو خانواده با تعداد اتاق برابر می‌توانند حجم کاملاً متفاوتی داشته باشند. مبلمان یک‌تکه، کمدی که باز نمی‌شود یا تعداد زیاد وسایل برقی فضای بیشتری از کارتن‌های منظم می‌گیرند. برای اثاثیه، نکات <a href="home-appliances-storage">دپو لوازم خانه</a> را نیز در برآورد لحاظ کنید.</p>
+    <p class="article-intro">${profile.label} را می‌توان ${profile.scale} دانست، اما نام متراژ یا فوت به‌تنهایی ظرفیت قطعی را نشان نمی‌دهد. ابعاد داخلی واقعی، شکل در، ارتفاع مفید و وجود اجزای سازه‌ای ممکن است فضای قابل استفاده را تغییر دهند. به همین دلیل اندازه دقیق گزینه موجود را پیش از رزرو بگیرید و آن را با معیارهای <a href="/ejare-anbar-tehran">راهنمای انتخاب انبار در تهران</a> بسنجید.</p>
+    <p>این اندازه معمولاً برای ${profile.suitable} بررسی می‌شود. بااین‌حال دو خانواده با تعداد اتاق برابر می‌توانند حجم کاملاً متفاوتی داشته باشند. مبلمان یک‌تکه، کمدی که باز نمی‌شود یا تعداد زیاد وسایل برقی فضای بیشتری از کارتن‌های منظم می‌گیرند. برای اثاثیه، نکات <a href="/home-appliances-storage">دپو لوازم خانه</a> را نیز در برآورد لحاظ کنید.</p>
 
     <h2>${profile.label} در عمل مناسب چه وسایلی است؟</h2>
     <p>کاربرد مناسب زمانی شکل می‌گیرد که وسایل قابلیت چیدمان پایدار داشته باشند و وزن به‌درستی توزیع شود. ${profile.layout}. اقلام پرکاربرد باید نزدیک ورودی بمانند؛ وسایلی که تا پایان قرارداد نیاز نمی‌شوند می‌توانند در بخش عمیق‌تر قرار گیرند. برای جلوگیری از گم شدن، هر ردیف یا ستون را با کد روی فهرست ثبت کنید.</p>
     <p>این فضا برای ${profile.avoid} انتخاب مطلوبی نیست. اگر با فشردن بیش از اندازه فقط بتوان در را بست، دسترسی، گردش هوا و ایمنی وسایل قربانی شده است. از سوی دیگر، خالی گذاشتن بخش بزرگی از کف نیز یعنی هزینه ظرفیتی را می‌پردازید که استفاده نمی‌شود. هدف، بیشترین تراکم ممکن نیست؛ چیدمان پایدار و متناسب با برنامه مراجعه است.</p>
 
     <h2>مقایسه با اندازه‌های نزدیک</h2>
-    <p>${profile.comparison}. برای تصمیم، مبلغ ماهانه را به‌تنهایی مقایسه نکنید. ممکن است فضای کوچک‌تر به سفر حمل دوم یا بازچینی نیاز پیدا کند؛ فضای بزرگ‌تر نیز ممکن است ماه‌ها خالی بماند. در گزینه‌های فوتی، <a href="container-storage">راهنمای انبار کانتینری تهران</a> مقایسه کامل‌تری ارائه می‌دهد.</p>
+    <p>${profile.comparison}. برای تصمیم، مبلغ ماهانه را به‌تنهایی مقایسه نکنید. ممکن است فضای کوچک‌تر به سفر حمل دوم یا بازچینی نیاز پیدا کند؛ فضای بزرگ‌تر نیز ممکن است ماه‌ها خالی بماند. در گزینه‌های فوتی، <a href="/container-storage">راهنمای انبار کانتینری تهران</a> مقایسه کامل‌تری ارائه می‌دهد.</p>
     <h2>چطور پیش از رزرو حجم را اندازه بگیریم؟</h2>
     <p>مهم‌ترین داده‌ها عبارت‌اند از ${profile.measure}. یک نقشه ساده روی کاغذ بکشید و مستطیل اقلام بزرگ را روی آن قرار دهید. سپس فضایی برای باز شدن در و مسیر دسترسی اضافه کنید. کارتن‌ها را بر اساس اندازه و وزن گروه‌بندی کنید؛ ستون‌های هم‌اندازه پایدارتر از توده‌ای با شکل‌های نامنظم‌اند.</p>
     ${detailsList([
@@ -713,7 +720,7 @@ const serviceContent = (page, profile) => `<section class="page-hero">
 </section>
 <article id="guide" class="section article-shell">
   <div class="container content-reading">
-    <p class="article-intro">${profile.label} برای ${profile.audience} کاربرد دارد. محور این خدمت ${profile.promise} است. انتخاب عجولانه فقط بر اساس قیمت ماهانه ممکن است به کمبود فضا، سفر حمل اضافه یا پرداخت هزینه برای ظرفیت خالی منجر شود؛ بنابراین فرایند باید از شناخت بار آغاز شود. برای مقایسه بیشتر، ${profile.links.slice(0, 3).map(([href, label]) => `<a href="${href}">${label}</a>`).join('، ')} را ببینید.</p>
+    <p class="article-intro">${profile.label} برای ${profile.audience} کاربرد دارد. محور این خدمت ${profile.promise} است. انتخاب عجولانه فقط بر اساس قیمت ماهانه ممکن است به کمبود فضا، سفر حمل اضافه یا پرداخت هزینه برای ظرفیت خالی منجر شود؛ بنابراین فرایند باید از شناخت بار آغاز شود. برای مقایسه بیشتر، ${profile.links.slice(0, 3).map(([href, label]) => `<a href="${absPath(href)}">${label}</a>`).join('، ')} را ببینید.</p>
     <p>در تماس اولیه، تعداد اتاق‌ها یا گروه‌های کالا، اقلام بزرگ، تعداد تقریبی کارتن، محله مبدأ، تاریخ شروع و مدت نگهداری مطرح می‌شود. این اطلاعات برای برآورد اولیه کافی است، اما تصمیم نهایی پس از مقایسه ابعاد مفید و مشاهده شرایط گزینه موجود قابل اتکاتر خواهد بود.</p>
 
     <h2>${profile.label} دقیقاً شامل چه مراحلی است؟</h2>
@@ -756,7 +763,7 @@ const infoPageContent = (page, profile) => `<section class="page-hero">
 </section>
 <article class="section article-shell">
   <div class="container content-reading">
-    <p class="article-intro">دپو سازگار با تمرکز بر ${profile.focus} فعالیت می‌کند. مسئله اصلی فقط پیدا کردن چند متر فضای خالی نیست؛ اندازه، نوع وسایل، مسیر حمل، مدت نگهداری، نحوه مراجعه و شرایط واقعی فضای پیشنهادی باید کنار هم قرار گیرند. نقطه شروع می‌تواند <a href="ejare-anbar-tehran">راهنمای اجاره انبار تهران</a>، <a href="container-storage">معرفی انبار کانتینری</a> یا <a href="home-appliances-storage">راهنمای دپو وسایل خانه</a> باشد.</p>
+    <p class="article-intro">دپو سازگار با تمرکز بر ${profile.focus} فعالیت می‌کند. مسئله اصلی فقط پیدا کردن چند متر فضای خالی نیست؛ اندازه، نوع وسایل، مسیر حمل، مدت نگهداری، نحوه مراجعه و شرایط واقعی فضای پیشنهادی باید کنار هم قرار گیرند. نقطه شروع می‌تواند <a href="/ejare-anbar-tehran">راهنمای اجاره انبار تهران</a>، <a href="/container-storage">معرفی انبار کانتینری</a> یا <a href="/home-appliances-storage">راهنمای دپو وسایل خانه</a> باشد.</p>
     <p>${profile.approach}. این رویکرد کمک می‌کند تفاوت میان یک برآورد اولیه و پیشنهاد نهایی روشن بماند. موجودی و قیمت می‌تواند با زمان تغییر کند، بنابراین اطلاعات مربوط به محل، امکانات و هزینه برای همان گزینه و تاریخ تماس تأیید می‌شود.</p>
 
     <h2>${page.slug === 'contact' ? 'پیش از تماس چه چیزهایی آماده کنید؟' : 'از نیازسنجی تا انتخاب فضای مناسب'}</h2>
@@ -784,7 +791,7 @@ const infoPageContent = (page, profile) => `<section class="page-hero">
     </div>
     ${page.slug === 'contact' ? `
     <h2>شعب استان تهران، پوشش استان البرز و اطلاعات لازم هنگام تماس</h2>
-    <p>دپو سازگار در غرب، جنوب و شرق استان تهران شعب فعال دارد و درخواست‌های <a href="ejare-anbar-karaj">اجاره انبار در کرج و استان البرز</a> را نیز پوشش می‌دهد. برای مقایسه منطقه‌ای می‌توانید راهنمای <a href="location/west-tehran">غرب تهران</a>، <a href="location/east-tehran">شرق تهران</a> و <a href="location/south-tehran">جنوب تهران</a> را بخوانید. ظرفیت و نشانی دقیق ورودی هر شعبه هنگام تماس تأیید می‌شود.</p>
+    <p>دپو سازگار در غرب، جنوب و شرق استان تهران شعب فعال دارد و درخواست‌های <a href="/ejare-anbar-karaj">اجاره انبار در کرج و استان البرز</a> را نیز پوشش می‌دهد. برای مقایسه منطقه‌ای می‌توانید راهنمای <a href="/location/west-tehran">غرب تهران</a>، <a href="/location/east-tehran">شرق تهران</a> و <a href="/location/south-tehran">جنوب تهران</a> را بخوانید. ظرفیت و نشانی دقیق ورودی هر شعبه هنگام تماس تأیید می‌شود.</p>
     ${branchCards('branch-groups-contact')}
     ${detailsList([
       'نوع وسایل یا کالایی که قصد دپوی آن را دارید.',
@@ -833,9 +840,9 @@ const homeContent = (page) => `<section class="home-hero">
     <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M7 7h7.5a3 3 0 0 1 0 6H9.5a3 3 0 0 0 0 6H17"/></svg><strong>انتخاب اقتصادی</strong><span>پرداخت برای فضای نزدیک به نیاز</span></div>
     <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12 10 17 20 7"/></svg><strong>مشاوره روشن</strong><span>مقایسه ظرفیت پیش از رزرو</span></div>
     <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-13v5l3 2"/></svg><strong>هماهنگی بازدید</strong><span>بررسی گزینه موجود پیش از حمل</span></div>
-    <a class="quick-benefit-accent" href="bastebandi-lavazem-anbar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 8 8-4 8 4-8 4Zm0 0v9l8 4 8-4V8M8 10v3m8-3v3"/></svg><strong>بسته‌بندی</strong><span>تفکیک، محافظت و برچسب‌گذاری اصولی وسایل پیش از جابه‌جایی</span></a>
-    <a class="quick-benefit-accent" href="haml-o-naghl-anbar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h12v10H3zM15 10h3l3 3v4h-6M7 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg><strong>حمل‌ونقل</strong><span>هماهنگی وسیله نقلیه متناسب با حجم بار و مسیر مبدأ تا انبار</span></a>
-    <a class="quick-benefit-accent" href="chideman-anbar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg><strong>چیدمان</strong><span>جانمایی وسایل سنگین، کارتن‌ها و مسیر دسترسی برای استفاده بهتر از فضا</span></a>
+    <a class="quick-benefit-accent" href="/bastebandi-lavazem-anbar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 8 8-4 8 4-8 4Zm0 0v9l8 4 8-4V8M8 10v3m8-3v3"/></svg><strong>بسته‌بندی</strong><span>تفکیک، محافظت و برچسب‌گذاری اصولی وسایل پیش از جابه‌جایی</span></a>
+    <a class="quick-benefit-accent" href="/haml-o-naghl-anbar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h12v10H3zM15 10h3l3 3v4h-6M7 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg><strong>حمل‌ونقل</strong><span>هماهنگی وسیله نقلیه متناسب با حجم بار و مسیر مبدأ تا انبار</span></a>
+    <a class="quick-benefit-accent" href="/chideman-anbar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg><strong>چیدمان</strong><span>جانمایی وسایل سنگین، کارتن‌ها و مسیر دسترسی برای استفاده بهتر از فضا</span></a>
   </div>
 </section>
 
@@ -847,9 +854,9 @@ const homeContent = (page) => `<section class="home-hero">
       <p>از اسباب‌کشی موقت تا فضای جانبی کسب‌وکار، هر سناریو به اندازه و چیدمان متفاوت نیاز دارد.</p>
     </div>
     <div class="card-grid card-grid-three">
-      <a class="service-card" href="ejare-anbar-tehran"><span>۰۱</span><h3>اجاره انبار در تهران</h3><p>راهنمای انتخاب فضای متراژی برای وسایل خانه، دفتر و کالای مجاز.</p><b>مشاهده راهنما ←</b></a>
-      <a class="service-card featured" href="container-storage"><span>۰۲</span><h3>انبار کانتینری</h3><p>مقایسه ظرفیت‌های کانتینری و نکات بررسی بدنه، کف و چیدمان.</p><b>مقایسه کانتینرها ←</b></a>
-      <a class="service-card" href="home-appliances-storage"><span>۰۳</span><h3>دپو لوازم خانه</h3><p>آماده‌سازی اثاثیه برای بازسازی، سفر یا فاصله میان دو جابه‌جایی.</p><b>راهنمای اثاثیه ←</b></a>
+      <a class="service-card" href="/ejare-anbar-tehran"><span>۰۱</span><h3>اجاره انبار در تهران</h3><p>راهنمای انتخاب فضای متراژی برای وسایل خانه، دفتر و کالای مجاز.</p><b>مشاهده راهنما ←</b></a>
+      <a class="service-card featured" href="/container-storage"><span>۰۲</span><h3>انبار کانتینری</h3><p>مقایسه ظرفیت‌های کانتینری و نکات بررسی بدنه، کف و چیدمان.</p><b>مقایسه کانتینرها ←</b></a>
+      <a class="service-card" href="/home-appliances-storage"><span>۰۳</span><h3>دپو لوازم خانه</h3><p>آماده‌سازی اثاثیه برای بازسازی، سفر یا فاصله میان دو جابه‌جایی.</p><b>راهنمای اثاثیه ←</b></a>
     </div>
   </div>
 </section>
@@ -862,15 +869,15 @@ const homeContent = (page) => `<section class="home-hero">
       <p>کیفیت دپو فقط به خود انبار وابسته نیست؛ آماده‌سازی درست وسایل، مسیر حمل و نقشه چیدمان روی هزینه، سلامت بار و دسترسی آینده اثر مستقیم دارد.</p>
     </div>
     <div class="prep-service-grid">
-      <a class="prep-service-card" href="bastebandi-lavazem-anbar">
+      <a class="prep-service-card" href="/bastebandi-lavazem-anbar">
         ${picture('packingCard', 'بسته‌بندی اصولی وسایل پیش از دپو', 'prep-service-image')}
         <div><span>۰۱</span><h3>بسته‌بندی</h3><p>انتخاب کارتن مناسب، ضربه‌گیر، پوشش قابل تنفس و برچسب‌گذاری باعث می‌شود بار هنگام حمل و نگهداری قابل کنترل‌تر بماند.</p><b>راهنمای بسته‌بندی ←</b></div>
       </a>
-      <a class="prep-service-card" href="haml-o-naghl-anbar">
+      <a class="prep-service-card" href="/haml-o-naghl-anbar">
         ${picture('transportCard', 'حمل‌ونقل وسایل تا انبار دپو سازگار', 'prep-service-image')}
         <div><span>۰۲</span><h3>حمل‌ونقل</h3><p>نوع خودرو، طبقه مبدأ، آسانسور، زمان توقف و مسیر شعبه باید پیش از حرکت مشخص شود تا سفر اضافه و آسیب کمتر شود.</p><b>هماهنگی حمل ←</b></div>
       </a>
-      <a class="prep-service-card" href="chideman-anbar">
+      <a class="prep-service-card" href="/chideman-anbar">
         ${picture('arrangementCard', 'چیدمان وسایل در انبار و کانتینر', 'prep-service-image')}
         <div><span>۰۳</span><h3>چیدمان</h3><p>وسایل سنگین پایین، اقلام حساس جدا، کارتن‌های هم‌اندازه در ستون و مسیر دسترسی نزدیک در، فضا را کاربردی‌تر می‌کند.</p><b>راهنمای چیدمان ←</b></div>
       </a>
@@ -886,10 +893,10 @@ const homeContent = (page) => `<section class="home-hero">
       <p>چهار نقطه شروع رایج را ببینید؛ اندازه نهایی پس از بررسی فهرست وسایل و ابعاد مفید انتخاب می‌شود.</p>
     </div>
     <div class="size-grid">
-      <a href="ejare-container-10-foot"><strong>۱۰ فوت <small>(۶ متر)</small></strong><span>کارتن و وسایل محدود</span></a>
-      <a href="ejare-container-15-foot"><strong>۱۵ فوت <small>(۱۲ متر)</small></strong><span>واحد کوچک تا متوسط</span></a>
-      <a href="ejare-container-20-foot"><strong>۲۰ فوت <small>(۱۸ متر)</small></strong><span>گزینه استاندارد و منعطف</span></a>
-      <a href="ejare-container-40-foot"><strong>۴۰ فوت <small>(۲۷ متر)</small></strong><span>بار حجیم و زون‌بندی‌شده</span></a>
+      <a href="/ejare-container-10-foot"><strong>۱۰ فوت <small>(۶ متر)</small></strong><span>کارتن و وسایل محدود</span></a>
+      <a href="/ejare-container-15-foot"><strong>۱۵ فوت <small>(۱۲ متر)</small></strong><span>واحد کوچک تا متوسط</span></a>
+      <a href="/ejare-container-20-foot"><strong>۲۰ فوت <small>(۱۸ متر)</small></strong><span>گزینه استاندارد و منعطف</span></a>
+      <a href="/ejare-container-40-foot"><strong>۴۰ فوت <small>(۲۷ متر)</small></strong><span>بار حجیم و زون‌بندی‌شده</span></a>
     </div>
   </div>
 </section>
@@ -900,7 +907,7 @@ const homeContent = (page) => `<section class="home-hero">
       <span class="eyebrow">چرا دپو سازگار؟</span>
       <h2 id="why-title">انتخاب انبار با عدد، نه حدس</h2>
       <p>پیشنهاد متراژ از روی تعداد اتاق به‌تنهایی دقیق نیست. ابعاد وسایل بزرگ، تعداد کارتن، مدت نگهداری و نیاز به دسترسی دوره‌ای کنار هم بررسی می‌شوند تا هزینه فضای خالی یا سفر دوباره باربری کمتر شود.</p>
-      <a class="text-link" href="ejare-anbar-tehran">مطالعه راهنمای جامع اجاره انبار ←</a>
+      <a class="text-link" href="/ejare-anbar-tehran">مطالعه راهنمای جامع اجاره انبار ←</a>
     </div>
     <div class="why-points">
       <div><strong>۰۱</strong><p>تفکیک بار خانگی، اداری و تجاری مجاز پیش از پیشنهاد فضا</p></div>
@@ -923,12 +930,12 @@ const homeContent = (page) => `<section class="home-hero">
       <p class="note">نشانی دقیق، ظرفیت فعال و زمان بازدید هر شعبه هنگام تماس نهایی تأیید می‌شود.</p>
     </div>
     <div class="coverage-links">
-      <a href="ejare-anbar-shomal-tehran"><span>شمال</span><small>شیب مسیر و بار حساس</small></a>
-      <a href="location/east-tehran"><span>شرق</span><small>مجتمع‌های مسکونی و دفاتر</small></a>
-      <a href="ejare-anbar-markaz-tehran"><span>مرکز</span><small>طرح ترافیک و بایگانی</small></a>
-      <a href="location/west-tehran"><span>غرب</span><small>اسباب‌کشی و موجودی فروشگاه</small></a>
-      <a href="location/south-tehran"><span>جنوب</span><small>بار تجاری و انتخاب اقتصادی</small></a>
-      <a href="ejare-anbar-karaj"><span>کرج</span><small>مسیر تهران–کرج و استان البرز</small></a>
+      <a href="/ejare-anbar-shomal-tehran"><span>شمال</span><small>شیب مسیر و بار حساس</small></a>
+      <a href="/location/east-tehran"><span>شرق</span><small>مجتمع‌های مسکونی و دفاتر</small></a>
+      <a href="/ejare-anbar-markaz-tehran"><span>مرکز</span><small>طرح ترافیک و بایگانی</small></a>
+      <a href="/location/west-tehran"><span>غرب</span><small>اسباب‌کشی و موجودی فروشگاه</small></a>
+      <a href="/location/south-tehran"><span>جنوب</span><small>بار تجاری و انتخاب اقتصادی</small></a>
+      <a href="/ejare-anbar-karaj"><span>کرج</span><small>مسیر تهران–کرج و استان البرز</small></a>
     </div>
   </div>
 </section>
@@ -959,7 +966,7 @@ const homeContent = (page) => `<section class="home-hero">
     ${branchCards('branch-groups-home')}
     <div class="karaj-coverage-card">
       <div><span class="eyebrow">پوشش استان البرز</span><h3>اجاره انبار در کرج</h3><p>برای مسیرهای کرج، فردیس، مهرشهر، گوهردشت و ارتباط با غرب تهران، راهنمای اختصاصی کرج را بررسی کنید.</p></div>
-      <a class="btn btn-secondary" href="ejare-anbar-karaj">مشاهده صفحه کرج</a>
+      <a class="btn btn-secondary" href="/ejare-anbar-karaj">مشاهده صفحه کرج</a>
     </div>
   </div>
 </section>
@@ -972,10 +979,10 @@ const homeContent = (page) => `<section class="home-hero">
       <p>این کارت‌ها نقطه شروع‌اند؛ ابعاد مفید فضای موجود و شکل واقعی وسایل باید پیش از رزرو بررسی شوند.</p>
     </div>
     <div class="selection-grid">
-      <article><div class="selection-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 8 8-4 8 4-8 4Zm0 0v9l8 4 8-4V8M12 12v9"/></svg></div><h3>چند کارتن و وسایل کم‌حجم</h3><p>لوازم شخصی، چمدان، زونکن و وسایل موقت مستأجران.</p><a href="ejare-anbar-6-metri">بررسی انبار ۶ متری</a></article>
-      <article><div class="selection-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9h16v10M7 9V5h10v4M8 14h8"/></svg></div><h3>بخشی از وسایل یک واحد کوچک</h3><p>جهیزیه محدود، وسایل یک اتاق و چند قطعه مبلمان.</p><a href="ejare-anbar-10-metri">مقایسه ۱۰ و ۱۲ متر</a></article>
-      <article><div class="selection-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M5 20V6h14v14M9 10h2m2 0h2m-6 4h2m2 0h2"/></svg></div><h3>اثاثیه بیشتر یا لوازم اداری</h3><p>حجم بالاتر خانه، تجهیزات دفتر یا کالای فروشگاهی سبک.</p><a href="ejare-anbar-20-metri">بررسی انبار ۲۰ متری</a></article>
-      <article><div class="selection-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18v12H3zM7 7V5h10v2M8 11v4m4-4v4m4-4v4"/></svg></div><h3>حجم بالا یا دپوی طولانی‌تر</h3><p>اثاثیه زیاد یا بار تجاری که به زون‌بندی منظم نیاز دارد.</p><a href="ejare-container-20-foot">مقایسه ۲۰ و ۴۰ فوت</a></article>
+      <article><div class="selection-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 8 8-4 8 4-8 4Zm0 0v9l8 4 8-4V8M12 12v9"/></svg></div><h3>چند کارتن و وسایل کم‌حجم</h3><p>لوازم شخصی، چمدان، زونکن و وسایل موقت مستأجران.</p><a href="/ejare-anbar-6-metri">بررسی انبار ۶ متری</a></article>
+      <article><div class="selection-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9h16v10M7 9V5h10v4M8 14h8"/></svg></div><h3>بخشی از وسایل یک واحد کوچک</h3><p>جهیزیه محدود، وسایل یک اتاق و چند قطعه مبلمان.</p><a href="/ejare-anbar-10-metri">مقایسه ۱۰ و ۱۲ متر</a></article>
+      <article><div class="selection-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M5 20V6h14v14M9 10h2m2 0h2m-6 4h2m2 0h2"/></svg></div><h3>اثاثیه بیشتر یا لوازم اداری</h3><p>حجم بالاتر خانه، تجهیزات دفتر یا کالای فروشگاهی سبک.</p><a href="/ejare-anbar-20-metri">بررسی انبار ۲۰ متری</a></article>
+      <article><div class="selection-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18v12H3zM7 7V5h10v2M8 11v4m4-4v4m4-4v4"/></svg></div><h3>حجم بالا یا دپوی طولانی‌تر</h3><p>اثاثیه زیاد یا بار تجاری که به زون‌بندی منظم نیاز دارد.</p><a href="/ejare-container-20-foot">مقایسه ۲۰ و ۴۰ فوت</a></article>
     </div>
   </div>
 </section>
@@ -1083,8 +1090,8 @@ const breadcrumbTrail = (page) => {
   if (local) {
     return [
       { name: 'خانه', href: '/', item: baseSiteUrl },
-      { name: local.cityKey === 'karaj' ? 'اجاره انبار کرج' : 'اجاره انبار تهران', href: local.cityKey === 'karaj' ? 'ejare-anbar-karaj' : 'ejare-anbar-tehran', item: `${baseSiteUrl}/${local.cityKey === 'karaj' ? 'ejare-anbar-karaj' : 'ejare-anbar-tehran'}` },
-      { name: local.regionLabel, href: pageHref(local.regionSlug), item: `${baseSiteUrl}/${local.regionSlug}` },
+      { name: local.cityKey === 'karaj' ? 'اجاره انبار کرج' : 'اجاره انبار تهران', href: local.cityKey === 'karaj' ? '/ejare-anbar-karaj' : '/ejare-anbar-tehran', item: `${baseSiteUrl}/${local.cityKey === 'karaj' ? 'ejare-anbar-karaj' : 'ejare-anbar-tehran'}` },
+      { name: local.regionLabel, href: pageHref(local.regionSlug), item: `${baseSiteUrl}${pageHref(local.regionSlug)}` },
       { name: page.h1, href: pageHref(page.slug), item: canonicalUrl(page) }
     ];
   }
@@ -1092,7 +1099,7 @@ const breadcrumbTrail = (page) => {
   if (district) {
     return [
       { name: 'خانه', href: '/', item: baseSiteUrl },
-      { name: district.parentLabel, href: district.parentHref, item: `${baseSiteUrl}/${district.parentHref}` },
+      { name: district.parentLabel, href: absPath(district.parentHref), item: `${baseSiteUrl}${absPath(district.parentHref)}` },
       { name: page.h1, href: pageHref(page.slug), item: canonicalUrl(page) }
     ];
   }
@@ -1108,7 +1115,7 @@ const schemaGraph = (page, faqs) => {
     '@type': 'ListItem',
     position: index + 1,
     name: item.name,
-    item: item.item || `${baseSiteUrl}/${item.href === '/' ? '' : item.href}`
+    item: item.item || `${baseSiteUrl}${item.href === '/' ? '' : absPath(item.href)}`
   }));
   const local = localProfiles[page.slug];
   const district = districtProfiles[page.slug];
@@ -1255,9 +1262,9 @@ const header = (page, faqs) => {
   <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
   <style>${criticalCss}</style>
-  <link rel="preload" href="assets/css/style.css?v=${assetVersion}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="assets/css/style.css?v=${assetVersion}"></noscript>
-  ${page.slug === 'index' ? '<link rel="preload" href="assets/images/home-storage-intro.webp" as="image" type="image/webp" fetchpriority="high">' : ''}
+  <link rel="preload" href="/assets/css/style.css?v=${assetVersion}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/assets/css/style.css?v=${assetVersion}"></noscript>
+  ${page.slug === 'index' ? '<link rel="preload" href="/assets/images/home-storage-intro.webp" as="image" type="image/webp" fetchpriority="high">' : ''}
   <script type="application/ld+json">${structuredData}</script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=${ga4MeasurementId}"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${ga4MeasurementId}');</script>
@@ -1267,19 +1274,19 @@ const header = (page, faqs) => {
   <header class="site-header">
     <div class="container header-row">
       <a class="brand" href="/" aria-label="دپو سازگار؛ صفحه اصلی">
-        <img src="assets/images/brand-mark.svg" width="512" height="512" alt="">
+        <img src="/assets/images/brand-mark.svg" width="512" height="512" alt="">
         <span class="brand-copy"><strong>دپو سازگار</strong><small>فضای امن، انتخاب دقیق</small></span>
       </a>
       <nav class="desktop-nav" aria-label="ناوبری اصلی">
         <a href="/">خانه</a>
-        <a href="ejare-anbar-tehran">اجاره انبار</a>
-        <a href="container-storage">انبار کانتینری</a>
-        <a href="pricing">قیمت</a>
-        <a href="home-appliances-storage">دپو لوازم خانه</a>
-        <a href="bastebandi-lavazem-anbar">بسته‌بندی</a>
-        <a href="ejare-anbar-karaj">استان البرز</a>
-        <a href="about">درباره ما</a>
-        <a href="contact">تماس</a>
+        <a href="/ejare-anbar-tehran">اجاره انبار</a>
+        <a href="/container-storage">انبار کانتینری</a>
+        <a href="/pricing">قیمت</a>
+        <a href="/home-appliances-storage">دپو لوازم خانه</a>
+        <a href="/bastebandi-lavazem-anbar">بسته‌بندی</a>
+        <a href="/ejare-anbar-karaj">استان البرز</a>
+        <a href="/about">درباره ما</a>
+        <a href="/contact">تماس</a>
       </nav>
       <button class="header-phone" type="button" data-sheet-open="phone-sheet" aria-haspopup="dialog" aria-controls="phone-sheet" aria-expanded="false">تماس فوری</button>
       <button id="mobile-menu-btn" class="menu-button" type="button" aria-label="باز کردن منوی اصلی" aria-controls="mobile-menu" aria-expanded="false">
@@ -1287,7 +1294,7 @@ const header = (page, faqs) => {
       </button>
     </div>
     <nav id="mobile-menu" class="mobile-nav" aria-label="ناوبری موبایل" hidden>
-      <a href="/">خانه</a><a href="ejare-anbar-tehran">اجاره انبار</a><a href="container-storage">انبار کانتینری</a><a href="pricing">قیمت اجاره انبار</a><a href="home-appliances-storage">دپو لوازم خانه</a><a href="bastebandi-lavazem-anbar">بسته‌بندی</a><a href="haml-o-naghl-anbar">حمل‌ونقل</a><a href="chideman-anbar">چیدمان</a><a href="ejare-anbar-karaj">استان البرز</a><a href="about">درباره ما</a><a href="contact">تماس با ما</a>
+      <a href="/">خانه</a><a href="/ejare-anbar-tehran">اجاره انبار</a><a href="/container-storage">انبار کانتینری</a><a href="/pricing">قیمت اجاره انبار</a><a href="/home-appliances-storage">دپو لوازم خانه</a><a href="/bastebandi-lavazem-anbar">بسته‌بندی</a><a href="/haml-o-naghl-anbar">حمل‌ونقل</a><a href="/chideman-anbar">چیدمان</a><a href="/ejare-anbar-karaj">استان البرز</a><a href="/about">درباره ما</a><a href="/contact">تماس با ما</a>
     </nav>
   </header>
   ${breadcrumb(page)}
@@ -1297,17 +1304,17 @@ const header = (page, faqs) => {
 const footer = () => `<footer class="site-footer">
   <div class="container footer-grid">
     <div class="footer-about">
-      <a class="footer-brand" href="/" aria-label="دپو سازگار؛ صفحه اصلی"><img src="assets/images/brand-mark.svg" width="512" height="512" alt=""><span><strong>دپو سازگار</strong><small>فضای امن، انتخاب دقیق</small></span></a>
+      <a class="footer-brand" href="/" aria-label="دپو سازگار؛ صفحه اصلی"><img src="/assets/images/brand-mark.svg" width="512" height="512" alt=""><span><strong>دپو سازگار</strong><small>فضای امن، انتخاب دقیق</small></span></a>
       <p>راهنمای انتخاب و هماهنگی اجاره انبار و کانتینر برای لوازم خانه، دفتر و کالای مجاز در استان تهران و استان البرز.</p>
     </div>
-    <div><h2>دسترسی سریع</h2><a href="ejare-anbar-tehran">اجاره انبار تهران</a><a href="ejare-anbar-karaj">اجاره انبار کرج</a><a href="pricing">قیمت اجاره انبار</a><a href="home-appliances-storage">دپو لوازم خانه</a><a href="bastebandi-lavazem-anbar">بسته‌بندی</a><a href="haml-o-naghl-anbar">حمل‌ونقل</a><a href="tafavot-anbar-container-kanex">انبار، کانتینر و کانکس</a><a href="contact">تماس با ما</a></div>
-    <div><h2>مناطق</h2><a href="ejare-anbar-shomal-tehran">شمال تهران</a><a href="location/east-tehran">شرق تهران</a><a href="ejare-anbar-markaz-tehran">مرکز تهران</a><a href="location/west-tehran">غرب تهران</a><a href="location/south-tehran">جنوب تهران</a><a href="ejare-anbar-karaj">کرج و استان البرز</a></div>
+    <div><h2>دسترسی سریع</h2><a href="/ejare-anbar-tehran">اجاره انبار تهران</a><a href="/ejare-anbar-karaj">اجاره انبار کرج</a><a href="/pricing">قیمت اجاره انبار</a><a href="/home-appliances-storage">دپو لوازم خانه</a><a href="/bastebandi-lavazem-anbar">بسته‌بندی</a><a href="/haml-o-naghl-anbar">حمل‌ونقل</a><a href="/tafavot-anbar-container-kanex">انبار، کانتینر و کانکس</a><a href="/contact">تماس با ما</a></div>
+    <div><h2>مناطق</h2><a href="/ejare-anbar-shomal-tehran">شمال تهران</a><a href="/location/east-tehran">شرق تهران</a><a href="/ejare-anbar-markaz-tehran">مرکز تهران</a><a href="/location/west-tehran">غرب تهران</a><a href="/location/south-tehran">جنوب تهران</a><a href="/ejare-anbar-karaj">کرج و استان البرز</a></div>
     <div class="footer-phones"><h2>همه شماره‌های تماس</h2>${phoneLinks()}</div>
   </div>
   <div class="container footer-bottom">
     <p>© ۱۴۰۵ دپو سازگار؛ همه حقوق محفوظ است.</p>
     <p class="site-credit">طراحی و توسعه: <a href="https://github.com/amirwopi" target="_blank" rel="noopener noreferrer" translate="no">Amirwopi</a></p>
-    <a href="sitemap.xml">نقشه سایت</a>
+    <a href="/sitemap.xml">نقشه سایت</a>
   </div>
 </footer>
 <div class="mobile-contact-bar" aria-label="تماس سریع">
@@ -1321,7 +1328,7 @@ const footer = () => `<footer class="site-footer">
   </button>
 </div>
 ${bottomSheets()}
-<script src="assets/js/main.js?v=${assetVersion}" defer></script>
+<script src="/assets/js/main.js?v=${assetVersion}" defer></script>
 </body>
 </html>`;
 

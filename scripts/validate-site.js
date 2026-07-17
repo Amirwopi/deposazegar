@@ -125,7 +125,7 @@ async function validate() {
     const internalLinks = new Set(
       [...main.matchAll(/href="([^"]+)"/g)]
         .map((match) => match[1].split('#')[0])
-        .filter((reference) => reference && !/^(?:https?:|tel:|mailto:|\/|#|assets\/)/.test(reference) && !reference.includes('.'))
+        .filter((reference) => reference.startsWith('/') && !reference.startsWith('/assets/') && !reference.includes('.'))
     );
     auditRows.push({ file, wordCount, title, descriptionLength: [...metaDescription].length, h1Count, h2Count, faqCount, internalLinks: internalLinks.size });
 
@@ -135,8 +135,8 @@ async function validate() {
       fail(file, `meta description length is ${[...metaDescription].length}; expected 140–160 characters`);
     }
     if (!canonical) fail(file, 'missing canonical');
-    if (!/<link rel="stylesheet" href="assets\/css\/style\.css\?v=[a-f0-9]{10}">/.test(html)) fail(file, 'missing versioned production CSS reference');
-    if (!/<script src="assets\/js\/main\.js\?v=[a-f0-9]{10}" defer><\/script>/.test(html)) fail(file, 'missing versioned production JavaScript reference');
+    if (!/<link rel="stylesheet" href="\/assets\/css\/style\.css\?v=[a-f0-9]{10}">/.test(html)) fail(file, 'missing versioned production CSS reference');
+    if (!/<script src="\/assets\/js\/main\.js\?v=[a-f0-9]{10}" defer><\/script>/.test(html)) fail(file, 'missing versioned production JavaScript reference');
     if (/\.\.\/(?:data|scripts)|localhost|node_modules|tailwind\.config\.js|input\.css/i.test(html)) {
       fail(file, 'contains a development-only path or reference');
     }
