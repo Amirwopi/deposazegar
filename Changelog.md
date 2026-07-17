@@ -34,3 +34,19 @@
 - `LocalBusiness` schema from non-home/contact pages (was redundantly emitted on all 245 pages)
 - All hardcoded `old-slug.html` references in `generate-pages.js` (39 occurrences across 6 slugs)
 - Old flat sitemap generation logic
+
+## 2026-07-17 — GA4 Tracking Integration
+
+### Added
+- `ga4MeasurementId` constant (`G-S1LTRCP1GH`) in `generate-pages.js`
+- Google Analytics 4 gtag.js snippet injected into `<head>` of all 245 HTML pages
+- GA4 tracking covers all page types: home, service, location, district, local, guide, page
+
+### Changed
+- `<head>` template in `generate-pages.js` now includes async gtag.js loader + config script before `</head>`
+
+### Notes
+- GA4 property `properties/546001761` (Deposazegar) created 2026-07-17
+- Property config: industry `HOME_AND_GARDEN`, timezone `America/Los_Angeles`, currency `USD`
+- No custom dimensions or metrics configured yet
+- GA4 was previously only on the home page (manually added); now propagated to all pages via build system

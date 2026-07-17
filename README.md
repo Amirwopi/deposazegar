@@ -32,6 +32,7 @@ npm test
 - **Sitemap split**: `sitemap.xml` به‌صورت index با 4 child sitemap است (`sitemap-pages.xml`، `sitemap-services.xml`، `sitemap-locations.xml`، `sitemap-posts.xml`). فرمت `<lastmod>` از نوع W3C datetime با timezone تهران (`+03:30`) است و `<priority>` یا `<changefreq>` استفاده نمی‌شود.
 - **Schema markup**: `LocalBusiness` فقط در صفحه اصلی و تماس قرار دارد. `Organization`، `WebSite`، `Service`، `FAQPage` و `BreadcrumbList` در همه صفحات وجود دارد. `priceRange` در `LocalBusiness` و `Service` (صفحات خدماتی) گنجانده شده است.
 - **دایرکتوری `location/`**: صفحات منطقه‌ای با clean URL در زیردایرکتوری `location/` قرار می‌گیرند.
+- **Google Analytics 4**: کد ردیابی GA4 (`G-S1LTRCP1GH`) در `<head>` همه ۲۴۵ صفحه تزریق می‌شود. Property ID: `546001761`.
 
 ## ساختار پروژه
 
