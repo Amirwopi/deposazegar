@@ -27,7 +27,7 @@ const pageFilePath = (page) => {
   return clean ? `${clean}.html` : `${page.slug}.html`;
 };
 const pageCanonicalUrl = (page) => {
-  if (page.slug === 'index') return 'https://deposazegar.com';
+  if (page.slug === 'index') return 'https://deposazegar.com/';
   const clean = cleanUrlMap[page.slug];
   return clean ? `https://deposazegar.com/${clean}` : `https://deposazegar.com/${page.slug}.html`;
 };

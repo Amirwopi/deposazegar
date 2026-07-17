@@ -136,7 +136,7 @@ const escapeHtml = (value = '') => value
   .replaceAll('"', '&quot;');
 
 const canonicalUrl = (page) => {
-  if (page.slug === 'index') return baseSiteUrl;
+  if (page.slug === 'index') return baseSiteUrl + '/';
   const clean = cleanUrlMap[page.slug];
   return clean ? `${baseSiteUrl}/${clean}` : `${baseSiteUrl}/${page.slug}.html`;
 };
@@ -637,7 +637,7 @@ const locationContent = (page, profile) => `<section class="page-hero">
     ])}
     <p>پیش از امضا، فضای مشخص را ببینید و وضعیت کف، سقف، در، قفل، آثار رطوبت یا خوردگی و نحوه حفاظت مجموعه را بررسی کنید. درباره ساعات دسترسی، شیوه اعلام مراجعه، مسئولیت خسارت، بیمه، اقلام ممنوعه و روش تسویه پرسش روشن بپرسید. هر ویژگی مهم باید برای همان گزینه و به شکل قابل استناد تأیید شود، نه بر اساس یک توضیح کلی تبلیغاتی.</p>
     <p class="article-callout">${profile.cta} با این اطلاعات، مقایسه اندازه و مسیر از یک گفت‌وگوی کلی به تصمیمی قابل سنجش تبدیل می‌شود.</p>
-    ${relatedLinks([
+    ${relatedLinks(profile.links || [
       ['ejare-anbar-tehran.html', 'راهنمای جامع اجاره انبار در تهران'],
       ['container-storage', 'شناخت انبار کانتینری'],
       ['home-appliances-storage', 'دپو لوازم خانه و اثاثیه'],

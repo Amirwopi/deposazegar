@@ -1,5 +1,30 @@
 # Changelog
 
+## 2026-07-17 — GSC Coverage Report Fixes
+
+### Added
+- `/index.html` → `/` 301 redirect in `.htaccess` (using `%{THE_REQUEST}` to avoid loop with `DirectoryIndex`)
+- Location-specific `links` arrays in all 6 `locationProfiles` entries in `data/page-content.js`:
+  - West Tehran: links to سعادت‌آباد, چیتگر, regions 2/5/22, Tehran guide, container-storage, contact
+  - East Tehran: links to تهرانپارس, پاسداران, regions 4/8/13, Tehran guide, home-appliances, contact
+  - North Tehran: links to اقدسیه, ونک, پاسداران, regions 1/3, Tehran guide, container-storage, contact
+  - Central Tehran: links to regions 6/7/11/12, Tehran guide, home-appliances, contact
+  - South Tehran: links to regions 16/18/19/20, Tehran guide, container-storage, contact
+  - Karaj: links to عظیمیه کرج, Karaj regions 1/3/4/5, Tehran guide, container-storage, contact
+- `ejare-anbar-karaj.html` link added to `ejare-anbar-tehran` service profile `links` array (cross-linking to fix duplicate canonical)
+
+### Changed
+- `canonicalUrl()` in `generate-pages.js` line 139: now returns `baseSiteUrl + '/'` (with trailing slash) for index page — was returning `baseSiteUrl` without slash
+- `locationContent()` template in `generate-pages.js`: now uses `profile.links || [default links]` instead of hardcoded `relatedLinks` array — each location page renders its own unique set of internal links
+- `pageCanonicalUrl()` in `validate-site.js` line 30: updated to return `https://deposazegar.com/` (with trailing slash) for index page to match new canonical
+- Karaj location profile `audience` field expanded to include فردیس, مهرشهر, گوهردشت, جهانشهر, عظیمیه
+
+### Fixed
+- **`/index.html` duplicate canonical** (GSC: "Alternate page with proper canonical tag"): 301 redirect now resolves `/index.html` → `/`
+- **Home page canonical missing trailing slash**: canonical now `https://deposazegar.com/` instead of `https://deposazegar.com`
+- **`ejare-anbar-karaj.html` duplicate canonical** (GSC: "Duplicate, Google chose different canonical"): Karaj page now has unique location-specific links to Karaj district/neighborhood pages, differentiating it from Tehran page; Tehran service page now links to Karaj page
+- **Low internal linking on location pages** (GSC: "Discovered/Crawled - currently not indexed"): each location page now has 8 location-specific internal links instead of 5 identical generic links
+
 ## 2026-07-17 — Information Architecture Restructure
 
 ### Added

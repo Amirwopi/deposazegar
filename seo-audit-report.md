@@ -20,7 +20,7 @@
 | صفحه | واژه فارسی | طول توضیح متا | H1 | H2 | FAQ | لینک داخلی یکتا |
 |---|---:|---:|---:|---:|---:|---:|
 | index.html | 1628 | 149 | 1 | 13 | 5 | 124 |
-| ejare-anbar-tehran.html | 1042 | 149 | 1 | 7 | 5 | 10 |
+| ejare-anbar-tehran.html | 1043 | 149 | 1 | 7 | 5 | 10 |
 | container-storage.html | 1058 | 141 | 1 | 7 | 5 | 10 |
 | home-appliances-storage.html | 1045 | 154 | 1 | 7 | 5 | 10 |
 | bastebandi-lavazem-anbar.html | 1120 | 147 | 1 | 7 | 5 | 10 |
@@ -31,12 +31,12 @@
 | ejare-container-20-foot.html | 1051 | 150 | 1 | 7 | 5 | 5 |
 | ejare-container-30-foot.html | 1036 | 151 | 1 | 7 | 5 | 5 |
 | ejare-container-40-foot.html | 1037 | 151 | 1 | 7 | 5 | 5 |
-| location/west-tehran.html | 1013 | 153 | 1 | 7 | 5 | 5 |
-| location/east-tehran.html | 1013 | 149 | 1 | 7 | 5 | 5 |
-| ejare-anbar-shomal-tehran.html | 1013 | 150 | 1 | 7 | 5 | 5 |
-| ejare-anbar-markaz-tehran.html | 1011 | 151 | 1 | 7 | 5 | 5 |
-| location/south-tehran.html | 1011 | 150 | 1 | 7 | 5 | 5 |
-| ejare-anbar-karaj.html | 1039 | 148 | 1 | 7 | 5 | 5 |
+| location/west-tehran.html | 1019 | 153 | 1 | 7 | 5 | 9 |
+| location/east-tehran.html | 1021 | 149 | 1 | 7 | 5 | 9 |
+| ejare-anbar-shomal-tehran.html | 1019 | 150 | 1 | 7 | 5 | 9 |
+| ejare-anbar-markaz-tehran.html | 1016 | 151 | 1 | 7 | 5 | 8 |
+| location/south-tehran.html | 1014 | 150 | 1 | 7 | 5 | 8 |
+| ejare-anbar-karaj.html | 1046 | 148 | 1 | 7 | 5 | 9 |
 | ejare-anbar-6-metri.html | 993 | 142 | 1 | 7 | 5 | 5 |
 | ejare-anbar-10-metri.html | 995 | 145 | 1 | 7 | 5 | 5 |
 | ejare-anbar-12-metri.html | 1026 | 155 | 1 | 7 | 5 | 5 |
