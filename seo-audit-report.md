@@ -1,6 +1,6 @@
 # گزارش ممیزی SEO دپو سازگار
 
-تاریخ اجرا: 2026-07-09
+تاریخ اجرا: 2026-07-17
 
 وضعیت کلی: **پاس**
 
@@ -8,7 +8,7 @@
 
 - تعداد صفحات بررسی‌شده: 245
 - صفحات موجود در Sitemap: 245
-- Schemaهای الزامی: Organization، LocalBusiness، WebSite، Service، FAQPage، BreadcrumbList
+- Schemaهای الزامی: Organization، WebSite، Service، FAQPage، BreadcrumbList
 - تصاویر: WebP با JPG fallback و ابعاد ذاتی کنترل‌شده
 - شماره‌های تماس: ۹ شماره در Schema، CTA، صفحه تماس و فوتر
 - تماس: پنل کشویی شامل هر ۹ شماره و CTA مشاوره واتساپ
@@ -21,8 +21,8 @@
 |---|---:|---:|---:|---:|---:|---:|
 | index.html | 1628 | 149 | 1 | 13 | 5 | 124 |
 | ejare-anbar-tehran.html | 1042 | 149 | 1 | 7 | 5 | 10 |
-| ejare-anbar-containeri-tehran.html | 1058 | 141 | 1 | 7 | 5 | 10 |
-| depo-lavazem-khaneh.html | 1045 | 154 | 1 | 7 | 5 | 10 |
+| container-storage.html | 1058 | 141 | 1 | 7 | 5 | 10 |
+| home-appliances-storage.html | 1045 | 154 | 1 | 7 | 5 | 10 |
 | bastebandi-lavazem-anbar.html | 1120 | 147 | 1 | 7 | 5 | 10 |
 | haml-o-naghl-anbar.html | 1118 | 140 | 1 | 7 | 5 | 10 |
 | chideman-anbar.html | 1105 | 140 | 1 | 7 | 5 | 10 |
@@ -31,11 +31,11 @@
 | ejare-container-20-foot.html | 1051 | 150 | 1 | 7 | 5 | 5 |
 | ejare-container-30-foot.html | 1036 | 151 | 1 | 7 | 5 | 5 |
 | ejare-container-40-foot.html | 1037 | 151 | 1 | 7 | 5 | 5 |
-| ejare-anbar-gharb-tehran.html | 1013 | 153 | 1 | 7 | 5 | 5 |
-| ejare-anbar-shargh-tehran.html | 1013 | 149 | 1 | 7 | 5 | 5 |
+| location/west-tehran.html | 1013 | 153 | 1 | 7 | 5 | 5 |
+| location/east-tehran.html | 1013 | 149 | 1 | 7 | 5 | 5 |
 | ejare-anbar-shomal-tehran.html | 1013 | 150 | 1 | 7 | 5 | 5 |
 | ejare-anbar-markaz-tehran.html | 1011 | 151 | 1 | 7 | 5 | 5 |
-| ejare-anbar-jonoub-tehran.html | 1011 | 150 | 1 | 7 | 5 | 5 |
+| location/south-tehran.html | 1011 | 150 | 1 | 7 | 5 | 5 |
 | ejare-anbar-karaj.html | 1039 | 148 | 1 | 7 | 5 | 5 |
 | ejare-anbar-6-metri.html | 993 | 142 | 1 | 7 | 5 | 5 |
 | ejare-anbar-10-metri.html | 995 | 145 | 1 | 7 | 5 | 5 |
@@ -46,11 +46,11 @@
 | ejare-anbar-asbabkeshi.html | 1090 | 155 | 1 | 7 | 5 | 10 |
 | ejare-anbar-bazsazi-khaneh.html | 1071 | 150 | 1 | 7 | 5 | 10 |
 | ejare-anbar-jahizieh.html | 1075 | 156 | 1 | 7 | 5 | 10 |
-| ejare-anbar-vasayel-sherkat.html | 1061 | 150 | 1 | 7 | 5 | 10 |
+| commercial-storage.html | 1061 | 150 | 1 | 7 | 5 | 10 |
 | ejare-anbar-kootah-moddat.html | 1062 | 150 | 1 | 7 | 5 | 10 |
 | ejare-anbar-boland-moddat.html | 1043 | 149 | 1 | 7 | 5 | 10 |
 | ejare-anbar-arzan-tehran.html | 1045 | 154 | 1 | 7 | 5 | 10 |
-| gheymat-ejare-anbar-tehran.html | 1065 | 153 | 1 | 7 | 5 | 10 |
+| pricing.html | 1065 | 153 | 1 | 7 | 5 | 10 |
 | rahnamay-entekhab-metraje-anbar.html | 1058 | 142 | 1 | 7 | 5 | 10 |
 | tafavot-anbar-container-kanex.html | 1069 | 156 | 1 | 7 | 5 | 10 |
 | ejare-anbar-mantaghe-1-tehran.html | 1206 | 147 | 1 | 9 | 5 | 48 |
@@ -272,11 +272,11 @@
 - ۹۰۰ تا ۱۴۰۰ واژه برای صفحات محتوایی و حداقل ۷۰۰ واژه برای درباره/تماس
 - حداقل ۵ FAQ نمایشی و تطبیق کامل با FAQPage Schema
 - حداقل ۵ لینک داخلی یکتا در محتوای اصلی
-- Organization، LocalBusiness، WebSite، Service، FAQPage و BreadcrumbList
+- Organization، WebSite، Service، FAQPage و BreadcrumbList در همه صفحات؛ LocalBusiness فقط در صفحه اصلی و تماس
 - نبود آدرس پستی تأییدنشده در LocalBusiness
 - نبود لینک داخلی شکسته یا ارجاع به تصویر واترمارک‌دار
 - WebP/JPG، ابعاد واقعی، OG image و Apple Touch Icon
-- 245 URL canonical، lastmod و priority منطقی در Sitemap
+- 245 URL با canonical و lastmod (W3C datetime) در Sitemap split (index + 4 child)
 - شعب غرب، جنوب و شرق استان تهران و پوشش استان البرز در محتوا و Schema
 
 ## گزارش صفحات محلی و منطقه ای
@@ -481,6 +481,8 @@
 - Canonical هر صفحه روی نسخه اصلی دامنه com و URL همان صفحه تنظیم شده است.
 - robots.txt فقط مسیرهای عمومی را allow می کند و به Sitemap اصلی اشاره دارد.
 - .htaccess باید نسخه های http، www و دامنه ir را با 301 به https://deposazegar.com/ هدایت کند.
+- ۷ اسلاگ قدیمی فارسی با 301 به URLهای clean جدید هدایت می شوند (container-storage، home-appliances-storage، commercial-storage، pricing، location/west-tehran، location/east-tehran، location/south-tehran).
+- URLهای clean بدون پسوند .html سرو می شوند (mod_rewrite).
 - برای صفحات محلی از canonical متقابل یا noindex استفاده نشده است؛ هر صفحه محتوای مستقل و قابل ایندکس دارد.
 
 ## صفحات محله ای منتشرشده و اولویت دار
@@ -665,7 +667,7 @@
 
 ## ۲۰ صفحه اولویت دار برای مرحله سوم
 
-1. gheymat-ejare-anbar-tehran.html - تقویت با داده قیمت واقعی در صورت تأیید مالک
+1. pricing.html - تقویت با داده قیمت واقعی در صورت تأیید مالک
 2. ejare-anbar-saadat-abad.html - بررسی CTR و افزودن مثال های واقعی از مسیر حمل
 3. ejare-anbar-tehranpars.html - تقویت لینک داخلی از صفحات شرق تهران
 4. ejare-anbar-karaj-azimiyeh.html - افزودن اطلاعات دقیق تر پوشش البرز پس از داده Search Console
@@ -675,14 +677,14 @@
 8. rahnamay-entekhab-metraje-anbar.html - افزودن جدول ظرفیت با داده واقعی
 9. tafavot-anbar-container-kanex.html - تقویت برای کوئری های کانکس و کانتینر
 10. ejare-anbar-arzan-tehran.html - پایش حساسیت کلمه ارزان و جلوگیری از وعده قیمت غیرواقعی
-11. ejare-anbar-gharb-tehran.html - لینک بیشتر به محله های جدید غرب
-12. ejare-anbar-shargh-tehran.html - لینک بیشتر به تهرانپارس، نارمک، حکیمیه و رسالت
+11. location/west-tehran.html - لینک بیشتر به محله های جدید غرب
+12. location/east-tehran.html - لینک بیشتر به تهرانپارس، نارمک، حکیمیه و رسالت
 13. ejare-anbar-shomal-tehran.html - لینک بیشتر به محله های منطقه ۱ و ۳
 14. ejare-anbar-karaj.html - تقویت با مناطق و محله های کرج
-15. depo-lavazem-khaneh.html - افزودن سناریوهای جهیزیه و بازسازی
+15. home-appliances-storage.html - افزودن سناریوهای جهیزیه و بازسازی
 16. bastebandi-lavazem-anbar.html - افزودن تصویر یا جدول مواد بسته بندی
 17. haml-o-naghl-anbar.html - افزودن عوامل هزینه حمل بعد از دریافت داده واقعی
-18. ejare-anbar-containeri-tehran.html - لینک بیشتر به صفحه تفاوت انبار و کانتینر
+18. container-storage.html - لینک بیشتر به صفحه تفاوت انبار و کانتینر
 19. ejare-container-20-foot.html - تقویت برای کوئری ظرفیت وسایل منزل
 20. contact.html - افزودن ساعات پاسخ گویی در صورت تأیید
 

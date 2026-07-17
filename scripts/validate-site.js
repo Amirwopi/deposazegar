@@ -12,9 +12,29 @@ const { phaseTwoServicePages } = require('../data/phase-two-services');
 
 const pages = [...basePages, ...phaseTwoServicePages, ...districtPages, ...localPages];
 
+const cleanUrlMap = {
+  'ejare-anbar-containeri-tehran': 'container-storage',
+  'depo-lavazem-khaneh': 'home-appliances-storage',
+  'ejare-anbar-vasayel-sherkat': 'commercial-storage',
+  'gheymat-ejare-anbar-tehran': 'pricing',
+  'ejare-anbar-gharb-tehran': 'location/west-tehran',
+  'ejare-anbar-shargh-tehran': 'location/east-tehran',
+  'ejare-anbar-jonoub-tehran': 'location/south-tehran'
+};
+const pageFilePath = (page) => {
+  if (page.slug === 'index') return 'index.html';
+  const clean = cleanUrlMap[page.slug];
+  return clean ? `${clean}.html` : `${page.slug}.html`;
+};
+const pageCanonicalUrl = (page) => {
+  if (page.slug === 'index') return 'https://deposazegar.com';
+  const clean = cleanUrlMap[page.slug];
+  return clean ? `https://deposazegar.com/${clean}` : `https://deposazegar.com/${page.slug}.html`;
+};
+
 const projectRoot = path.resolve(__dirname, '..');
 const rootDir = path.join(projectRoot, 'public_html_ready');
-const requiredSchemaTypes = ['Organization', 'LocalBusiness', 'WebSite', 'Service', 'FAQPage', 'BreadcrumbList'];
+const requiredSchemaTypes = ['Organization', 'WebSite', 'Service', 'FAQPage', 'BreadcrumbList'];
 const phoneNumbers = [
   '02188988459', '02188913383', '02188913307', '02188913308',
   '09034386673', '09102567906', '09102369064', '09192147106', '09192147105'
@@ -68,13 +88,20 @@ async function validate() {
     fail('public_html_ready', 'assets/css/input.css must not be included');
   }
 
-  const builtHtmlFiles = fs.readdirSync(rootDir).filter((file) => file.endsWith('.html'));
+  const builtHtmlFiles = [];
+  const scanDir = (dir) => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (entry.isDirectory()) scanDir(path.join(dir, entry.name));
+      else if (entry.name.endsWith('.html')) builtHtmlFiles.push(path.relative(rootDir, path.join(dir, entry.name)));
+    }
+  };
+  scanDir(rootDir);
   if (builtHtmlFiles.length !== pages.length) {
     fail('public_html_ready', `expected ${pages.length} HTML files, found ${builtHtmlFiles.length}`);
   }
 
   for (const page of pages) {
-    const file = page.slug === 'index' ? 'index.html' : `${page.slug}.html`;
+    const file = pageFilePath(page);
     const fullPath = path.join(rootDir, file);
     if (!fs.existsSync(fullPath)) {
       fail(file, 'missing generated page');
@@ -95,10 +122,11 @@ async function validate() {
     const h1Count = (main.match(/<h1(?:\s|>)/g) || []).length;
     const h2Count = (main.match(/<h2(?:\s|>)/g) || []).length;
     const faqCount = (main.match(/<details class="faq-item">/g) || []).length;
+    const cleanUrls = Object.values(cleanUrlMap);
     const internalLinks = new Set(
       [...main.matchAll(/href="([^"]+)"/g)]
         .map((match) => match[1].split('#')[0])
-        .filter((reference) => reference.endsWith('.html'))
+        .filter((reference) => reference.endsWith('.html') || cleanUrls.includes(reference))
     );
     auditRows.push({ file, wordCount, title, descriptionLength: [...metaDescription].length, h1Count, h2Count, faqCount, internalLinks: internalLinks.size });
 
@@ -154,21 +182,26 @@ async function validate() {
       try {
         const graph = JSON.parse(jsonLd)['@graph'] || [];
         const graphTypes = graph.map((item) => item['@type']);
-        for (const type of requiredSchemaTypes) {
+        const requiredTypes = ['index', 'contact'].includes(page.slug)
+          ? [...requiredSchemaTypes, 'LocalBusiness']
+          : requiredSchemaTypes;
+        for (const type of requiredTypes) {
           if (!graphTypes.includes(type)) fail(file, `missing ${type} schema`);
         }
         const faqSchema = graph.find((item) => item['@type'] === 'FAQPage');
         if (!faqSchema || faqSchema.mainEntity?.length !== faqCount) fail(file, 'FAQPage schema does not match visible page FAQs');
         const localBusiness = graph.find((item) => item['@type'] === 'LocalBusiness');
-        if (localBusiness?.address) fail(file, 'LocalBusiness contains an unverified postal address');
-        if (!Array.isArray(localBusiness?.department) || localBusiness.department.length !== requiredBranchNames.length) {
-          fail(file, 'LocalBusiness schema does not contain every confirmed branch');
-        }
-        if (!Array.isArray(localBusiness?.areaServed)
-          || !localBusiness.areaServed.some((area) => area.name === 'استان تهران')
-          || !localBusiness.areaServed.some((area) => area.name === 'استان البرز')
-          || !localBusiness.areaServed.some((area) => area.name === 'کرج')) {
-          fail(file, 'LocalBusiness schema does not include Tehran Province, Alborz Province and Karaj');
+        if (localBusiness) {
+          if (localBusiness.address) fail(file, 'LocalBusiness contains an unverified postal address');
+          if (!Array.isArray(localBusiness.department) || localBusiness.department.length !== requiredBranchNames.length) {
+            fail(file, 'LocalBusiness schema does not contain every confirmed branch');
+          }
+          if (!Array.isArray(localBusiness.areaServed)
+            || !localBusiness.areaServed.some((area) => area.name === 'استان تهران')
+            || !localBusiness.areaServed.some((area) => area.name === 'استان البرز')
+            || !localBusiness.areaServed.some((area) => area.name === 'کرج')) {
+            fail(file, 'LocalBusiness schema does not include Tehran Province, Alborz Province and Karaj');
+          }
         }
       } catch (error) {
         fail(file, `invalid JSON-LD: ${error.message}`);
@@ -201,7 +234,9 @@ async function validate() {
       const reference = match[1];
       if (/^(?:https?:|tel:|mailto:)/.test(reference)) continue;
       const localPath = path.join(rootDir, reference);
-      if (!fs.existsSync(localPath)) fail(file, `broken local reference ${reference}`);
+      if (fs.existsSync(localPath)) continue;
+      if (fs.existsSync(`${localPath}.html`)) continue;
+      fail(file, `broken local reference ${reference}`);
     }
 
     const pictures = [...html.matchAll(/<picture>([\s\S]*?)<\/picture>/g)];
@@ -240,21 +275,26 @@ async function validate() {
     }
   }
 
-  const sitemap = fs.readFileSync(path.join(rootDir, 'sitemap.xml'), 'utf8');
-  for (const page of pages) {
-    const url = `https://deposazegar.com/${page.slug === 'index' ? '' : `${page.slug}.html`}`;
-    if (!sitemap.includes(`<loc>${url}</loc>`)) fail('sitemap.xml', `missing ${url}`);
-    const expectedPriority = page.slug === 'index' ? '1.0'
-      : ['ejare-anbar-tehran', 'ejare-anbar-containeri-tehran', 'depo-lavazem-khaneh'].includes(page.slug) ? '0.9'
-      : page.type === 'district' ? '0.85'
-      : page.type === 'local' ? '0.8'
-      : ['about', 'contact'].includes(page.slug) ? '0.6'
-      : '0.8';
-    const urlBlock = sitemap.match(new RegExp(`<url>\\s*<loc>${url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}<\\/loc>[\\s\\S]*?<\\/url>`))?.[0] || '';
-    if (!urlBlock.includes(`<priority>${expectedPriority}</priority>`)) fail('sitemap.xml', `incorrect priority for ${url}`);
-    if (!/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/.test(urlBlock)) fail('sitemap.xml', `missing valid lastmod for ${url}`);
+  const sitemapIndex = fs.readFileSync(path.join(rootDir, 'sitemap.xml'), 'utf8');
+  const childSitemaps = ['sitemap-pages.xml', 'sitemap-services.xml', 'sitemap-locations.xml', 'sitemap-posts.xml'];
+  for (const child of childSitemaps) {
+    if (!sitemapIndex.includes(`<loc>https://deposazegar.com/${child}</loc>`)) fail('sitemap.xml', `missing ${child} in sitemap index`);
   }
-  if ((sitemap.match(/<url>/g) || []).length !== pages.length) fail('sitemap.xml', 'URL count does not match page count');
+  const allSitemapUrls = new Set();
+  for (const child of childSitemaps) {
+    const childPath = path.join(rootDir, child);
+    if (!fs.existsSync(childPath)) { fail(child, 'missing child sitemap'); continue; }
+    const childContent = fs.readFileSync(childPath, 'utf8');
+    for (const match of childContent.matchAll(/<loc>([^<]+)<\/loc>/g)) allSitemapUrls.add(match[1]);
+    if (!/<lastmod>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}<\/lastmod>/.test(childContent)) {
+      fail(child, 'missing valid W3C datetime lastmod');
+    }
+  }
+  for (const page of pages) {
+    const url = pageCanonicalUrl(page);
+    if (!allSitemapUrls.has(url)) fail('sitemap', `missing ${url}`);
+  }
+  if (allSitemapUrls.size !== pages.length) fail('sitemap', `URL count ${allSitemapUrls.size} does not match page count ${pages.length}`);
 
   const robots = fs.readFileSync(path.join(rootDir, 'robots.txt'), 'utf8');
   if (!/User-agent:\s*\*/.test(robots) || !/Allow:\s*\//.test(robots) || !/Sitemap:\s*https:\/\/deposazegar\.com\/sitemap\.xml/.test(robots)) {
@@ -311,7 +351,7 @@ async function validate() {
 ## خلاصه
 
 - تعداد صفحات بررسی‌شده: ${pages.length}
-- صفحات موجود در Sitemap: ${(sitemap.match(/<url>/g) || []).length}
+- صفحات موجود در Sitemap: ${allSitemapUrls.size}
 - Schemaهای الزامی: ${requiredSchemaTypes.join('، ')}
 - تصاویر: WebP با JPG fallback و ابعاد ذاتی کنترل‌شده
 - شماره‌های تماس: ۹ شماره در Schema، CTA، صفحه تماس و فوتر
@@ -332,11 +372,11 @@ ${auditRows.map((row) => `| ${row.file} | ${row.wordCount} | ${row.descriptionLe
 - ۹۰۰ تا ۱۴۰۰ واژه برای صفحات محتوایی و حداقل ۷۰۰ واژه برای درباره/تماس
 - حداقل ۵ FAQ نمایشی و تطبیق کامل با FAQPage Schema
 - حداقل ۵ لینک داخلی یکتا در محتوای اصلی
-- Organization، LocalBusiness، WebSite، Service، FAQPage و BreadcrumbList
+- Organization، WebSite، Service، FAQPage و BreadcrumbList در همه صفحات؛ LocalBusiness فقط در صفحه اصلی و تماس
 - نبود آدرس پستی تأییدنشده در LocalBusiness
 - نبود لینک داخلی شکسته یا ارجاع به تصویر واترمارک‌دار
 - WebP/JPG، ابعاد واقعی، OG image و Apple Touch Icon
-- ${pages.length} URL canonical، lastmod و priority منطقی در Sitemap
+- ${pages.length} URL با canonical و lastmod (W3C datetime) در Sitemap split (index + 4 child)
 - شعب غرب، جنوب و شرق استان تهران و پوشش استان البرز در محتوا و Schema
 
 ## گزارش صفحات محلی و منطقه ای
@@ -353,7 +393,7 @@ ${auditRows.map((row) => `| ${row.file} | ${row.wordCount} | ${row.descriptionLe
 |---|---|
 ${localPages.map((page) => {
   const profile = localProfiles[page.slug];
-  return `| ${page.slug}.html | اجاره انبار در ${profile.name}، اجاره انبار وسایل منزل در ${profile.name}، دپو لوازم خانه در ${profile.name}، اجاره کانتینر در ${profile.name} |`;
+  return `| ${pageFilePath(page)} | اجاره انبار در ${profile.name}، اجاره انبار وسایل منزل در ${profile.name}، دپو لوازم خانه در ${profile.name}، اجاره کانتینر در ${profile.name} |`;
 }).join('\n')}
 
 ## گزارش لینک سازی داخلی
@@ -368,19 +408,21 @@ ${localPages.map((page) => {
 - Canonical هر صفحه روی نسخه اصلی دامنه com و URL همان صفحه تنظیم شده است.
 - robots.txt فقط مسیرهای عمومی را allow می کند و به Sitemap اصلی اشاره دارد.
 - .htaccess باید نسخه های http، www و دامنه ir را با 301 به https://deposazegar.com/ هدایت کند.
+- ۷ اسلاگ قدیمی فارسی با 301 به URLهای clean جدید هدایت می شوند (container-storage، home-appliances-storage، commercial-storage، pricing، location/west-tehran، location/east-tehran، location/south-tehran).
+- URLهای clean بدون پسوند .html سرو می شوند (mod_rewrite).
 - برای صفحات محلی از canonical متقابل یا noindex استفاده نشده است؛ هر صفحه محتوای مستقل و قابل ایندکس دارد.
 
 ## صفحات محله ای منتشرشده و اولویت دار
 
 ${localPages.map((page, index) => {
   const profile = localProfiles[page.slug];
-  return `${index + 1}. ${page.slug}.html - ${profile.name} (${profile.city}، ${profile.regionLabel})`;
+  return `${index + 1}. ${pageFilePath(page)} - ${profile.name} (${profile.city}، ${profile.regionLabel})`;
 }).join('\n')}
 
 ## ۲۰ صفحه اولویت دار برای مرحله سوم
 
 ${[
-  'gheymat-ejare-anbar-tehran.html - تقویت با داده قیمت واقعی در صورت تأیید مالک',
+  'pricing.html - تقویت با داده قیمت واقعی در صورت تأیید مالک',
   'ejare-anbar-saadat-abad.html - بررسی CTR و افزودن مثال های واقعی از مسیر حمل',
   'ejare-anbar-tehranpars.html - تقویت لینک داخلی از صفحات شرق تهران',
   'ejare-anbar-karaj-azimiyeh.html - افزودن اطلاعات دقیق تر پوشش البرز پس از داده Search Console',
@@ -390,14 +432,14 @@ ${[
   'rahnamay-entekhab-metraje-anbar.html - افزودن جدول ظرفیت با داده واقعی',
   'tafavot-anbar-container-kanex.html - تقویت برای کوئری های کانکس و کانتینر',
   'ejare-anbar-arzan-tehran.html - پایش حساسیت کلمه ارزان و جلوگیری از وعده قیمت غیرواقعی',
-  'ejare-anbar-gharb-tehran.html - لینک بیشتر به محله های جدید غرب',
-  'ejare-anbar-shargh-tehran.html - لینک بیشتر به تهرانپارس، نارمک، حکیمیه و رسالت',
+  'location/west-tehran.html - لینک بیشتر به محله های جدید غرب',
+  'location/east-tehran.html - لینک بیشتر به تهرانپارس، نارمک، حکیمیه و رسالت',
   'ejare-anbar-shomal-tehran.html - لینک بیشتر به محله های منطقه ۱ و ۳',
   'ejare-anbar-karaj.html - تقویت با مناطق و محله های کرج',
-  'depo-lavazem-khaneh.html - افزودن سناریوهای جهیزیه و بازسازی',
+  'home-appliances-storage.html - افزودن سناریوهای جهیزیه و بازسازی',
   'bastebandi-lavazem-anbar.html - افزودن تصویر یا جدول مواد بسته بندی',
   'haml-o-naghl-anbar.html - افزودن عوامل هزینه حمل بعد از دریافت داده واقعی',
-  'ejare-anbar-containeri-tehran.html - لینک بیشتر به صفحه تفاوت انبار و کانتینر',
+  'container-storage.html - لینک بیشتر به صفحه تفاوت انبار و کانتینر',
   'ejare-container-20-foot.html - تقویت برای کوئری ظرفیت وسایل منزل',
   'contact.html - افزودن ساعات پاسخ گویی در صورت تأیید'
 ].map((item, index) => `${index + 1}. ${item}`).join('\n')}

@@ -89,7 +89,7 @@ const phaseTwoServiceProfiles = {
     process: 'تفکیک وسایل حساس، زمان بندی خروج اثاثیه، بسته بندی قابل تنفس، برآورد متراژ و هماهنگی حمل قبل از شروع کار ساختمانی',
     benefits: 'فضای خلوت تر برای نیروهای اجرایی، محافظت بهتر از مبلمان و فرش، کاهش جابه جایی های داخل خانه و بازگشت منظم وسایل پس از پایان کار',
     cautions: 'وسایل برقی باید خشک و تمیز شوند، روی مبلمان پوشش مناسب قرار گیرد و اقلام ارزشمند یا مدارک مهم جداگانه نگهداری شوند',
-    links: [['depo-lavazem-khaneh.html', 'دپو لوازم خانه'], ['bastebandi-lavazem-anbar.html', 'بسته بندی برای انبار'], ['ejare-anbar-12-metri.html', 'انبار ۱۲ متری'], ['ejare-anbar-20-metri.html', 'انبار ۲۰ متری'], ['ejare-anbar-shomal-tehran.html', 'شمال تهران'], ['contact.html', 'هماهنگی بازسازی']],
+    links: [['home-appliances-storage', 'دپو لوازم خانه'], ['bastebandi-lavazem-anbar.html', 'بسته بندی برای انبار'], ['ejare-anbar-12-metri.html', 'انبار ۱۲ متری'], ['ejare-anbar-20-metri.html', 'انبار ۲۰ متری'], ['ejare-anbar-shomal-tehran.html', 'شمال تهران'], ['contact.html', 'هماهنگی بازسازی']],
     cta: 'برای بازسازی خانه، زمان شروع کار، نوع وسایل حساس و مدت تقریبی نگهداری را آماده کنید.'
   },
   'ejare-anbar-jahizieh': {
@@ -99,7 +99,7 @@ const phaseTwoServiceProfiles = {
     process: 'فهرست برداری، جدا کردن لوازم شکستنی و برقی، انتخاب کارتن مناسب، ثبت عکس، برآورد متراژ و چیدمان بدون فشار روی اقلام نو',
     benefits: 'حفظ نظم وسایل نو، کاهش رفت وآمد میان خانه اقوام، جلوگیری از باز شدن بی دلیل بسته ها و امکان تحویل مرحله ای هنگام چیدمان',
     cautions: 'کارتن های کارخانه ای را بدون بررسی فشار و رطوبت رها نکنید و برای لوازم برقی، شرایط نگهداری و ضمانت را جداگانه کنترل کنید',
-    links: [['depo-lavazem-khaneh.html', 'دپو لوازم خانه'], ['ejare-anbar-10-metri.html', 'انبار ۱۰ متری'], ['ejare-anbar-12-metri.html', 'انبار ۱۲ متری'], ['bastebandi-lavazem-anbar.html', 'بسته بندی جهیزیه'], ['rahnamay-entekhab-metraje-anbar.html', 'انتخاب متراژ'], ['contact.html', 'مشاوره جهیزیه']],
+    links: [['home-appliances-storage', 'دپو لوازم خانه'], ['ejare-anbar-10-metri.html', 'انبار ۱۰ متری'], ['ejare-anbar-12-metri.html', 'انبار ۱۲ متری'], ['bastebandi-lavazem-anbar.html', 'بسته بندی جهیزیه'], ['rahnamay-entekhab-metraje-anbar.html', 'انتخاب متراژ'], ['contact.html', 'مشاوره جهیزیه']],
     cta: 'برای جهیزیه، فهرست وسایل نو، لوازم برقی بزرگ و تاریخ احتمالی چیدمان خانه را اعلام کنید.'
   },
   'ejare-anbar-vasayel-sherkat': {
@@ -119,7 +119,7 @@ const phaseTwoServiceProfiles = {
     process: 'تعیین تاریخ شروع، تخمین تاریخ خروج، بررسی حجم وسایل، انتخاب متراژ و روشن کردن حداقل مدت و شرایط تمدید',
     benefits: 'انعطاف زمانی، جلوگیری از حمل چندباره، پرداخت متناسب با نیاز کوتاه و امکان تصمیم گیری بهتر تا آماده شدن مقصد بعدی',
     cautions: 'اگر تاریخ پایان نامعلوم است، هزینه تمدید را جدی بگیرید و وسایل مورد نیاز روزمره را نزدیک در یا خارج از انبار نگه دارید',
-    links: [['ejare-anbar-asbabkeshi.html', 'انبار اسباب کشی'], ['ejare-anbar-bazsazi-khaneh.html', 'انبار بازسازی'], ['ejare-anbar-6-metri.html', 'انبار ۶ متری'], ['ejare-anbar-10-metri.html', 'انبار ۱۰ متری'], ['gheymat-ejare-anbar-tehran.html', 'قیمت اجاره انبار'], ['contact.html', 'استعلام کوتاه مدت']],
+    links: [['ejare-anbar-asbabkeshi.html', 'انبار اسباب کشی'], ['ejare-anbar-bazsazi-khaneh.html', 'انبار بازسازی'], ['ejare-anbar-6-metri.html', 'انبار ۶ متری'], ['ejare-anbar-10-metri.html', 'انبار ۱۰ متری'], ['pricing', 'قیمت اجاره انبار'], ['contact.html', 'استعلام کوتاه مدت']],
     cta: 'برای اجاره کوتاه مدت، تاریخ شروع، حداقل مدت مورد نیاز و احتمال تمدید را شفاف اعلام کنید.'
   },
   'ejare-anbar-boland-moddat': {
@@ -129,7 +129,7 @@ const phaseTwoServiceProfiles = {
     process: 'برآورد دقیق حجم، بسته بندی مقاوم، ثبت فهرست، انتخاب فضا با شرایط محیطی مناسب و بررسی هزینه کل دوره',
     benefits: 'پایداری بیشتر چیدمان، کاهش هزینه رفت وآمد، امکان انتخاب متراژ اقتصادی تر و نظم بهتر برای مراجعه های محدود',
     cautions: 'رطوبت، تهویه، فشار چیدمان، افزایش هزینه تمدید و شرایط تخلیه را برای دوره طولانی جدی تر بررسی کنید',
-    links: [['ejare-anbar-jahizieh.html', 'انبار جهیزیه'], ['ejare-anbar-vasayel-sherkat.html', 'انبار شرکت'], ['ejare-container-20-foot.html', 'کانتینر ۲۰ فوت'], ['ejare-container-40-foot.html', 'کانتینر ۴۰ فوت'], ['chideman-anbar.html', 'چیدمان بلندمدت'], ['contact.html', 'استعلام بلندمدت']],
+    links: [['ejare-anbar-jahizieh.html', 'انبار جهیزیه'], ['commercial-storage', 'انبار شرکت'], ['ejare-container-20-foot.html', 'کانتینر ۲۰ فوت'], ['ejare-container-40-foot.html', 'کانتینر ۴۰ فوت'], ['chideman-anbar.html', 'چیدمان بلندمدت'], ['contact.html', 'استعلام بلندمدت']],
     cta: 'برای قرارداد بلندمدت، مدت تقریبی، اقلام حساس و تعداد دفعات مراجعه را پیش از انتخاب متراژ مشخص کنید.'
   },
   'ejare-anbar-arzan-tehran': {
@@ -139,7 +139,7 @@ const phaseTwoServiceProfiles = {
     process: 'تخمین حجم واقعی، مقایسه متراژهای نزدیک، محاسبه هزینه حمل، بررسی امکان چیدمان فشرده و کنترل شرایط قرارداد',
     benefits: 'پرداخت کمتر برای فضای اضافه، کاهش سفر دوم باربری، انتخاب اقتصادی تر در دوره کوتاه و تصمیم گیری شفاف درباره هزینه کل',
     cautions: 'ارزان بودن نباید جایگزین بررسی قفل، سقف، کف، دسترسی، اقلام ممنوعه و مسئولیت طرفین شود',
-    links: [['gheymat-ejare-anbar-tehran.html', 'قیمت اجاره انبار'], ['rahnamay-entekhab-metraje-anbar.html', 'انتخاب متراژ'], ['ejare-anbar-6-metri.html', 'انبار ۶ متری'], ['ejare-anbar-10-metri.html', 'انبار ۱۰ متری'], ['ejare-anbar-jonoub-tehran.html', 'جنوب تهران'], ['contact.html', 'استعلام اقتصادی']],
+    links: [['pricing', 'قیمت اجاره انبار'], ['rahnamay-entekhab-metraje-anbar.html', 'انتخاب متراژ'], ['ejare-anbar-6-metri.html', 'انبار ۶ متری'], ['ejare-anbar-10-metri.html', 'انبار ۱۰ متری'], ['location/south-tehran', 'جنوب تهران'], ['contact.html', 'استعلام اقتصادی']],
     cta: 'برای انتخاب اقتصادی، حجم وسایل و مدت واقعی را بگویید تا متراژ اضافه اجاره نکنید.'
   },
   'gheymat-ejare-anbar-tehran': {
@@ -171,7 +171,7 @@ const phaseTwoServiceProfiles = {
     process: 'بررسی نوع بار، نیاز به فضای مستقل، مدت نگهداری، امنیت، دسترسی، هزینه حمل و امکان استفاده پروژه ای',
     benefits: 'انتخاب درست تر نوع فضا، کاهش هزینه اشتباه، شناخت محدودیت های هر گزینه و جلوگیری از اجاره فضایی نامتناسب',
     cautions: 'کانکس همیشه جایگزین انبار نیست و کانتینر نیز برای همه وسایل مناسب نیست؛ شرایط واقعی فضا باید دیده و ثبت شود',
-    links: [['ejare-anbar-containeri-tehran.html', 'انبار کانتینری'], ['ejare-container-10-foot.html', 'کانتینر ۱۰ فوت'], ['ejare-container-20-foot.html', 'کانتینر ۲۰ فوت'], ['ejare-container-40-foot.html', 'کانتینر ۴۰ فوت'], ['ejare-anbar-tehran.html', 'انبار در تهران'], ['contact.html', 'مشاوره انتخاب نوع فضا']],
+    links: [['container-storage', 'انبار کانتینری'], ['ejare-container-10-foot.html', 'کانتینر ۱۰ فوت'], ['ejare-container-20-foot.html', 'کانتینر ۲۰ فوت'], ['ejare-container-40-foot.html', 'کانتینر ۴۰ فوت'], ['ejare-anbar-tehran.html', 'انبار در تهران'], ['contact.html', 'مشاوره انتخاب نوع فضا']],
     cta: 'برای انتخاب میان انبار، کانتینر و کانکس، نوع وسایل، مدت و شیوه دسترسی مورد نیاز را توضیح دهید.',
     article: true
   }

@@ -17,6 +17,25 @@ Options -Indexes
   RewriteCond %{HTTP_HOST} ^www\.deposazegar\.com$ [NC,OR]
   RewriteCond %{HTTP_HOST} ^(?:www\.)?deposazegar\.ir$ [NC]
   RewriteRule ^ https://deposazegar.com%{REQUEST_URI} [R=301,L,NE]
+
+  # -------------------------------
+  # 301 redirects: old Persian slugs → new clean URLs
+  # -------------------------------
+  RewriteRule ^ejare-anbar-containeri-tehran\.html$ /container-storage [R=301,L,NE]
+  RewriteRule ^depo-lavazem-khaneh\.html$ /home-appliances-storage [R=301,L,NE]
+  RewriteRule ^ejare-anbar-vasayel-sherkat\.html$ /commercial-storage [R=301,L,NE]
+  RewriteRule ^gheymat-ejare-anbar-tehran\.html$ /pricing [R=301,L,NE]
+  RewriteRule ^ejare-anbar-gharb-tehran\.html$ /location/west-tehran [R=301,L,NE]
+  RewriteRule ^ejare-anbar-shargh-tehran\.html$ /location/east-tehran [R=301,L,NE]
+  RewriteRule ^ejare-anbar-jonoub-tehran\.html$ /location/south-tehran [R=301,L,NE]
+
+  # -------------------------------
+  # Clean URL rewrite: serve .html without extension
+  # -------------------------------
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.+)/?$ $1.html [L]
 </IfModule>
 
 # -------------------------------
