@@ -19,6 +19,13 @@ Options -Indexes
   RewriteRule ^ https://deposazegar.com%{REQUEST_URI} [R=301,L,NE]
 
   # -------------------------------
+  # Redirect /index.html → / (only direct requests, not DirectoryIndex)
+  # Prevents duplicate-content from index.html and root URL
+  # -------------------------------
+  RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.html\ HTTP/
+  RewriteRule ^index\.html$ / [R=301,L,NE]
+
+  # -------------------------------
   # 301 redirects: old Persian slugs → new clean URLs
   # -------------------------------
   RewriteRule ^ejare-anbar-containeri-tehran\.html$ /container-storage [R=301,L,NE]
