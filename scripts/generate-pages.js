@@ -27,6 +27,7 @@ const serviceProfiles = { ...baseServiceProfiles, ...phaseTwoServiceProfiles };
 const projectRoot = path.join(__dirname, '..');
 const outputDir = path.join(projectRoot, 'public_html_ready');
 const baseSiteUrl = 'https://deposazegar.com';
+const criticalCss = `:root{--ink:#0f172a;--forest:#0f2742;--green:#1d6fa5;--paper:#f8fafc;--line:#d7e1ea;--white:#fff}*,:before,:after{box-sizing:border-box}html{background:var(--paper)}body{margin:0;overflow-x:hidden;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,sans-serif;font-size:16px;line-height:1.85;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;padding-bottom:calc(4.4rem + env(safe-area-inset-bottom))}img{display:block;max-width:100%;height:auto}a{color:inherit;text-decoration:none}.container{width:min(100% - 2rem,1180px);margin-inline:auto}.site-header{position:sticky;top:0;z-index:40;border-bottom:1px solid rgb(215 225 234 / 82%);background:rgb(248 250 252 / 92%);backdrop-filter:blur(16px)}.header-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:4.75rem}.brand{display:flex;align-items:center;gap:.75rem;font-weight:900}.brand img{width:2.65rem;height:2.65rem}.brand-copy{display:grid;line-height:1.35}.brand-copy small{color:#475569;font-size:.78rem}.desktop-nav{display:none}.header-phone,.menu-button{border:1px solid var(--line);background:#fff;border-radius:.85rem;padding:.65rem .9rem;font:inherit}.home-hero{position:relative;display:grid;min-height:min(760px,calc(100svh - 4.75rem));overflow:hidden;place-items:center;background:var(--forest)}.home-hero-media,.home-hero-media picture{position:absolute;inset:0}.home-hero-media:after{position:absolute;inset:0;background:linear-gradient(90deg,rgb(8 27 48 / 96%),rgb(8 27 48 / 78%) 62%,rgb(8 27 48 / 48%)),linear-gradient(0deg,rgb(8 27 48 / 74%),transparent 40%);content:""}.home-hero-image{width:100%;height:100%;object-fit:cover}.home-hero-content{position:relative;z-index:1;padding-block:5rem;color:#fff}.eyebrow{color:#f59e0b;font-size:.78rem;font-weight:900}.home-hero h1{max-width:52rem;margin:.75rem 0 0;color:#fff;font-size:clamp(2.4rem,8vw,5.8rem);font-weight:900;line-height:1.35;letter-spacing:0}.home-hero-content>p{max-width:42rem;margin:1.25rem 0 0;color:rgb(255 255 255 / 84%)}.hero-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.75rem}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:2.9rem;border:1px solid transparent;border-radius:.85rem;padding:.65rem 1rem;font-weight:900}.btn-primary{background:#f59e0b;color:#0f2742}.btn-secondary{border-color:var(--line);background:#fff;color:var(--forest)}@media (min-width:1024px){.desktop-nav{display:flex;align-items:center;gap:.2rem}.desktop-nav a{padding:.65rem .7rem;color:#334155;font-weight:800}.menu-button{display:none}}`;
 const assetVersion = crypto.createHash('sha256')
   .update(fs.readFileSync(path.join(outputDir, 'assets', 'css', 'style.css')))
   .update(fs.readFileSync(path.join(projectRoot, 'assets', 'js', 'main.js')))
@@ -98,13 +99,16 @@ const imageMeta = {
   container40: ['container-40-foot-storage', 1216, 1280],
   support: ['support-team', 1280, 1235],
   packing: ['packing-service', 1280, 853],
+  packingCard: ['packing-service-card', 720, 480],
   packingDetail: ['packing-service-detail', 1280, 853],
   packingBoxes: ['packing-service-boxes', 1024, 1024],
   packingMaterials: ['packing-service-materials', 1280, 853],
   transport: ['transport-service', 960, 1280],
+  transportCard: ['transport-service-card', 720, 960],
   transportDetail: ['transport-service-detail', 1280, 958],
   transportLoading: ['transport-service-loading', 960, 1280],
   arrangement: ['arrangement-service', 1280, 719],
+  arrangementCard: ['arrangement-service-card', 720, 405],
   arrangementDetail: ['arrangement-service-detail', 1280, 960],
   arrangementWarehouse: ['arrangement-service-warehouse', 1280, 1040],
   warehouseIntro: ['warehouse-intro', 960, 1280],
@@ -839,15 +843,15 @@ const homeContent = (page) => `<section class="home-hero">
     </div>
     <div class="prep-service-grid">
       <a class="prep-service-card" href="bastebandi-lavazem-anbar.html">
-        ${picture('packing', 'بسته‌بندی اصولی وسایل پیش از دپو', 'prep-service-image')}
+        ${picture('packingCard', 'بسته‌بندی اصولی وسایل پیش از دپو', 'prep-service-image')}
         <div><span>۰۱</span><h3>بسته‌بندی</h3><p>انتخاب کارتن مناسب، ضربه‌گیر، پوشش قابل تنفس و برچسب‌گذاری باعث می‌شود بار هنگام حمل و نگهداری قابل کنترل‌تر بماند.</p><b>راهنمای بسته‌بندی ←</b></div>
       </a>
       <a class="prep-service-card" href="haml-o-naghl-anbar.html">
-        ${picture('transport', 'حمل‌ونقل وسایل تا انبار دپو سازگار', 'prep-service-image')}
+        ${picture('transportCard', 'حمل‌ونقل وسایل تا انبار دپو سازگار', 'prep-service-image')}
         <div><span>۰۲</span><h3>حمل‌ونقل</h3><p>نوع خودرو، طبقه مبدأ، آسانسور، زمان توقف و مسیر شعبه باید پیش از حرکت مشخص شود تا سفر اضافه و آسیب کمتر شود.</p><b>هماهنگی حمل ←</b></div>
       </a>
       <a class="prep-service-card" href="chideman-anbar.html">
-        ${picture('arrangement', 'چیدمان وسایل در انبار و کانتینر', 'prep-service-image')}
+        ${picture('arrangementCard', 'چیدمان وسایل در انبار و کانتینر', 'prep-service-image')}
         <div><span>۰۳</span><h3>چیدمان</h3><p>وسایل سنگین پایین، اقلام حساس جدا، کارتن‌های هم‌اندازه در ستون و مسیر دسترسی نزدیک در، فضا را کاربردی‌تر می‌کند.</p><b>راهنمای چیدمان ←</b></div>
       </a>
     </div>
@@ -1228,8 +1232,9 @@ const header = (page, faqs) => {
   <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96">
   <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-  <link rel="preload" href="assets/fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=${assetVersion}">
+  <style>${criticalCss}</style>
+  <link rel="preload" href="assets/css/style.css?v=${assetVersion}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="assets/css/style.css?v=${assetVersion}"></noscript>
   ${page.slug === 'index' ? '<link rel="preload" href="assets/images/home-storage-intro.webp" as="image" type="image/webp" fetchpriority="high">' : ''}
   <script type="application/ld+json">${structuredData}</script>
 </head>

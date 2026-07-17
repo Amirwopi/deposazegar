@@ -42,6 +42,8 @@ const legacyImages = [
   'storage-loading-area'
 ];
 
+const webpQuality = 70;
+
 async function processAssets() {
   for (const [filename, sourceName] of managedImages) {
     const input = path.join(imageNewDir, sourceName);
@@ -53,7 +55,25 @@ async function processAssets() {
       .jpeg({ quality: 86, progressive: true, mozjpeg: true })
       .toFile(path.join(imagesDir, `${filename}.jpg`));
     await base.clone()
-      .webp({ quality: 82, smartSubsample: true, effort: 5 })
+      .webp({ quality: webpQuality, smartSubsample: true, effort: 6 })
+      .toFile(path.join(imagesDir, `${filename}.webp`));
+  }
+
+  const displayVariants = [
+    ['packing-service-card', 'packing-service.jpg', 720, 480],
+    ['transport-service-card', 'transport-service.jpg', 720, 960],
+    ['arrangement-service-card', 'arrangement-service.jpg', 720, 405]
+  ];
+
+  for (const [filename, sourceName, width, height] of displayVariants) {
+    const input = path.join(imagesDir, sourceName);
+    const resized = sharp(input, { autoOrient: true })
+      .resize(width, height, { fit: 'cover', position: 'centre' });
+    await resized.clone()
+      .jpeg({ quality: 82, progressive: true, mozjpeg: true })
+      .toFile(path.join(imagesDir, `${filename}.jpg`));
+    await resized.clone()
+      .webp({ quality: webpQuality, smartSubsample: true, effort: 6 })
       .toFile(path.join(imagesDir, `${filename}.webp`));
   }
 
@@ -61,7 +81,7 @@ async function processAssets() {
     const input = path.join(imagesDir, `${filename}.jpg`);
     if (!fs.existsSync(input)) continue;
     await sharp(input, { autoOrient: true })
-      .webp({ quality: 82, smartSubsample: true, effort: 5 })
+      .webp({ quality: webpQuality, smartSubsample: true, effort: 6 })
       .toFile(path.join(imagesDir, `${filename}.webp`));
   }
 
