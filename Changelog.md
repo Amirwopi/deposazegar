@@ -1,5 +1,26 @@
 # Changelog
 
+## 2026-07-17 — Phase 2: Clean URLs & Dynamic Meta Tags
+
+### Added
+- **Blanket 301 redirect** in `.htaccess`: any direct `*.html` request is 301-redirected to its clean URL (using `%{THE_REQUEST}` to avoid interfering with internal `mod_rewrite`)
+- **Dynamic meta tag templates** for local/district pages:
+  - Title: `اجاره انبار در [name] [city] + قیمت کانتینر و اتاقک | دپو سازگار`
+  - Description: `اجاره انبار وسایل منزل یا کالا در محدوده [name]؟ کانتینرهای اختصاصی دپو سازگار در نزدیک‌ترین شعبه با امنیت ۲۴ ساعته و نگهبانی. همین حالا تماس بگیرید.` (140–160 chars for all 217 location pages)
+
+### Changed
+- **All internal links** across `generate-pages.js`, `data/page-content.js`, `data/phase-two-services.js`, and `data/local-seo.js` (parentHref values) updated to clean URLs — zero `.html` extensions in any `href`, canonical, or sitemap `<loc>`
+- `canonicalUrl()` and `pageHref()` in `generate-pages.js`: return clean URLs (no `.html`) for all 245 pages
+- `pageCanonicalUrl()` in `validate-site.js`: returns clean URLs (no `.html`)
+- Internal link filter in `validate-site.js`: detects clean internal paths (no protocol, no leading slash, no dot, no `assets/` prefix) instead of matching `.html` endings
+- Report text in `validate-site.js`: all `.html` references updated to clean URLs
+- README.md: updated Clean URL section to reflect all 245 pages now use clean URLs, added blanket 301 and dynamic meta tag documentation
+
+### Verified
+- 245 pages generated, all validation passing
+- Zero `.html` in internal links, canonicals, or sitemaps in `public_html_ready/`
+- Meta description lengths: 146–158 chars for all 217 location pages (within 140–160 target)
+
 ## 2026-07-17 — GSC Coverage Report Fixes
 
 ### Added

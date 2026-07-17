@@ -26,8 +26,9 @@ npm test
 
 ## ساختار URL و SEO
 
-- **Clean URL**: ۷ صفحه کلیدی با URL کوتاه انگلیسی سرو می‌شوند (مانند `/container-storage`، `/pricing`، `/location/west-tehran`). سایر صفحات با اسلاگ فارسی و پسوند `.html` باقی مانده‌اند.
-- **301 Redirect**: اسلاگ‌های قدیمی فارسی با 301 به URLهای clean جدید هدایت می‌شوند (در `.htaccess`).
+- **Clean URL**: همه ۲۴۵ صفحه با URL بدون پسوند `.html` سرو می‌شوند (مانند `/container-storage`، `/pricing`، `/location/west-tehran`، `/ejare-anbar-tehran`). فایل‌ها روی دیسک با `.html` ذخیره می‌شوند اما `mod_rewrite` آن‌ها را بدون پسوند سرو می‌کند.
+- **Blanket 301 redirect**: هر درخواست مستقیم برای `*.html` با 301 به URL بدون پسوند هدایت می‌شود (در `.htaccess` با `%{THE_REQUEST}` برای جلوگیری از تداخل با `mod_rewrite` داخلی).
+- **301 Redirect اسلاگ‌های قدیمی**: ۷ اسلاگ قدیمی فارسی با 301 به URLهای clean جدید هدایت می‌شوند (در `.htaccess`).
 - **`/index.html` → `/` redirect**: درخواست مستقیم `/index.html` با 301 به ریشه `/` هدایت می‌شود (در `.htaccess` با `%{THE_REQUEST}` برای جلوگیری از حلقه با `DirectoryIndex`). این رفع مشکل duplicate-canonical در GSC است.
 - **Canonical trailing slash**: canonical صفحه اصلی `https://deposazegar.com/` (با اسلش انتهایی) است، نه `https://deposazegar.com` بدون اسلش.
 - **mod_rewrite**: URLهای clean بدون پسوند `.html` سرو می‌شوند.
@@ -35,8 +36,9 @@ npm test
 - **Schema markup**: `LocalBusiness` فقط در صفحه اصلی و تماس قرار دارد. `Organization`، `WebSite`، `Service`، `FAQPage` و `BreadcrumbList` در همه صفحات وجود دارد. `priceRange` در `LocalBusiness` و `Service` (صفحات خدماتی) گنجانده شده است.
 - **دایرکتوری `location/`**: صفحات منطقه‌ای با clean URL در زیردایرکتوری `location/` قرار می‌گیرند.
 - **لینک‌سازی داخلی اختصاصی هر منطقه**: هر یک از ۶ صفحه منطقه (غرب/شرق/شمال/مرکز/جنوب تهران + کرج) آرایه `links` مخصوص خود را دارد که به صفحات محله و منطقه همان جهت اشاره می‌کند. این باعث می‌شود هر صفحه منطقه لینک‌های یکتا داشته باشد و Google آن‌ها را به‌عنوان صفحات متمایز شناسایی کند.
-- **Cross-link تهران ↔ کرج**: صفحه خدماتی `ejare-anbar-tehran` به صفحه `ejare-anbar-karaj.html` لینک می‌دهد تا canonical تکراری رفع شود.
+- **Cross-link تهران ↔ کرج**: صفحه خدماتی `ejare-anbar-tehran` به صفحه `ejare-anbar-karaj` لینک می‌دهد تا canonical تکراری رفع شود.
 - **Google Analytics 4**: کد ردیابی GA4 (`G-S1LTRCP1GH`) در `<head>` همه ۲۴۵ صفحه تزریق می‌شود. Property ID: `546001761`.
+- **متادیتای پویای صفحات محلی**: عنوان و توضیحات متای صفحات محله و منطقه به‌صورت پویا از داده پروفایل تولید می‌شود. الگوی عنوان: `اجاره انبار در [نام محله] [شهر] + قیمت کانتینر و اتاقک | دپو سازگار`. توضیحات متا بین ۱۴۰ تا ۱۶۰ کاراکتر با اشاره به محدوده، امنیت ۲۴ ساعته و CTA تماس.
 
 ## ساختار پروژه
 
