@@ -819,7 +819,7 @@ const infoPageContent = (page, profile) => `<section class="page-hero">
 </article>`;
 
 const homeContent = (page) => `<section class="home-hero">
-  <div class="home-hero-media" aria-hidden="true">${picture('hero', '', 'home-hero-image', { eager: true })}</div>
+  <div class="home-hero-media" aria-hidden="true">${picture('hero', 'انبار شخصی برای دپو لوازم خانه در تهران', 'home-hero-image', { eager: true })}</div>
   <div class="container home-hero-content">
     <span class="eyebrow eyebrow-light">فضای اضافه، بدون اجاره ملک اضافه</span>
     <h1>${escapeHtml(page.h1)}</h1>
@@ -1274,7 +1274,7 @@ const header = (page, faqs) => {
   <header class="site-header">
     <div class="container header-row">
       <a class="brand" href="/" aria-label="دپو سازگار؛ صفحه اصلی">
-        <img src="/assets/images/brand-mark.svg" width="512" height="512" alt="">
+        <img src="/assets/images/brand-mark.svg" width="512" height="512" alt="لوگوی دپو سازگار">
         <span class="brand-copy"><strong>دپو سازگار</strong><small>فضای امن، انتخاب دقیق</small></span>
       </a>
       <nav class="desktop-nav" aria-label="ناوبری اصلی">
@@ -1304,7 +1304,7 @@ const header = (page, faqs) => {
 const footer = () => `<footer class="site-footer">
   <div class="container footer-grid">
     <div class="footer-about">
-      <a class="footer-brand" href="/" aria-label="دپو سازگار؛ صفحه اصلی"><img src="/assets/images/brand-mark.svg" width="512" height="512" alt=""><span><strong>دپو سازگار</strong><small>فضای امن، انتخاب دقیق</small></span></a>
+      <a class="footer-brand" href="/" aria-label="دپو سازگار؛ صفحه اصلی"><img src="/assets/images/brand-mark.svg" width="512" height="512" alt="لوگوی دپو سازگار"><span><strong>دپو سازگار</strong><small>فضای امن، انتخاب دقیق</small></span></a>
       <p>راهنمای انتخاب و هماهنگی اجاره انبار و کانتینر برای لوازم خانه، دفتر و کالای مجاز در استان تهران و استان البرز.</p>
     </div>
     <div><h2>دسترسی سریع</h2><a href="/ejare-anbar-tehran">اجاره انبار تهران</a><a href="/ejare-anbar-karaj">اجاره انبار کرج</a><a href="/pricing">قیمت اجاره انبار</a><a href="/home-appliances-storage">دپو لوازم خانه</a><a href="/bastebandi-lavazem-anbar">بسته‌بندی</a><a href="/haml-o-naghl-anbar">حمل‌ونقل</a><a href="/tafavot-anbar-container-kanex">انبار، کانتینر و کانکس</a><a href="/contact">تماس با ما</a></div>

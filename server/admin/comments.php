@@ -337,7 +337,7 @@ $statusLabels = ['pending' => 'در انتظار', 'approved' => 'منتشرشد
 <?php if (!$isConfigured): ?>
   <main class="auth-shell">
     <section class="auth-brand">
-      <img src="/assets/images/brand-mark.svg" width="512" height="512" alt="">
+      <img src="/assets/images/brand-mark.svg" width="512" height="512" alt="لوگوی دپو سازگار">
       <span class="auth-kicker">راه‌اندازی یک‌باره</span>
       <h1>حساب مدیر نظرها را بسازید</h1>
       <p>رمز عبور فقط به‌صورت Hash ذخیره می‌شود. پس از ساخت حساب، کد راه‌اندازی خودکار حذف خواهد شد.</p>
@@ -365,7 +365,7 @@ $statusLabels = ['pending' => 'در انتظار', 'approved' => 'منتشرشد
 <?php elseif (!$isAuthenticated): ?>
   <main class="auth-shell login-shell">
     <section class="auth-brand">
-      <img src="/assets/images/brand-mark.svg" width="512" height="512" alt="">
+      <img src="/assets/images/brand-mark.svg" width="512" height="512" alt="لوگوی دپو سازگار">
       <span class="auth-kicker">پنل خصوصی دپو سازگار</span>
       <h1>مدیریت نظرهای کاربران</h1>
       <p>نظرهای تازه را بررسی، منتشر، رد یا حذف کنید. این صفحه در نتایج جست‌وجو ایندکس نمی‌شود.</p>
@@ -386,7 +386,7 @@ $statusLabels = ['pending' => 'در انتظار', 'approved' => 'منتشرشد
   </main>
 <?php else: ?>
   <header class="admin-header">
-    <a class="admin-brand" href="/"><img src="/assets/images/brand-mark.svg" width="512" height="512" alt=""><span><strong>دپو سازگار</strong><small>مدیریت نظرها</small></span></a>
+    <a class="admin-brand" href="/"><img src="/assets/images/brand-mark.svg" width="512" height="512" alt="لوگوی دپو سازگار"><span><strong>دپو سازگار</strong><small>مدیریت نظرها</small></span></a>
     <div class="admin-account">
       <span>مدیر: <?= admin_escape($_SESSION['admin_username'] ?? '') ?></span>
       <form method="post" action="comments.php">

@@ -190,21 +190,29 @@ for (const [name, slug, cityKey, regionNumber, nearby, audience, access, example
   };
 }
 
-const localPages = Object.entries(localProfiles).map(([slug, profile]) => ({
-  slug,
-  title: `اجاره انبار در ${profile.name} ${profile.city} + قیمت کانتینر و اتاقک | دپو سازگار`,
-  description: `اجاره انبار وسایل منزل یا کالا در محدوده ${profile.name}؟ کانتینرهای اختصاصی دپو سازگار در نزدیک‌ترین شعبه با امنیت ۲۴ ساعته و نگهبانی. همین حالا تماس بگیرید.`,
-  h1: `اجاره انبار در ${profile.name}`,
-  type: 'local'
-}));
+const localPages = Object.entries(localProfiles).map(([slug, profile]) => {
+  const base = `اجاره انبار در ${profile.name} ${profile.city}`;
+  const full = `${base} + قیمت کانتینر و اتاقک | دپو سازگار`;
+  return {
+    slug,
+    title: full.length > 60 ? `${base} | دپو سازگار` : full,
+    description: `اجاره انبار وسایل منزل یا کالا در محدوده ${profile.name}؟ کانتینرهای اختصاصی دپو سازگار در نزدیک‌ترین شعبه با امنیت ۲۴ ساعته و نگهبانی. همین حالا تماس بگیرید.`,
+    h1: `اجاره انبار در ${profile.name}`,
+    type: 'local'
+  };
+});
 
-const districtPages = Object.entries(districtProfiles).map(([slug, profile]) => ({
-  slug,
-  title: `اجاره انبار در ${profile.label} + قیمت کانتینر و اتاقک | دپو سازگار`,
-  description: `اجاره انبار وسایل منزل یا کالا در محدوده ${profile.label}؟ کانتینرهای اختصاصی دپو سازگار در نزدیک‌ترین شعبه با امنیت ۲۴ ساعته و نگهبانی. همین حالا تماس بگیرید.`,
-  h1: `اجاره انبار در ${profile.label}`,
-  type: 'district'
-}));
+const districtPages = Object.entries(districtProfiles).map(([slug, profile]) => {
+  const base = `اجاره انبار در ${profile.label}`;
+  const full = `${base} + قیمت کانتینر و اتاقک | دپو سازگار`;
+  return {
+    slug,
+    title: full.length > 60 ? `${base} | دپو سازگار` : full,
+    description: `اجاره انبار وسایل منزل یا کالا در محدوده ${profile.label}؟ کانتینرهای اختصاصی دپو سازگار در نزدیک‌ترین شعبه با امنیت ۲۴ ساعته و نگهبانی. همین حالا تماس بگیرید.`,
+    h1: `اجاره انبار در ${profile.label}`,
+    type: 'district'
+  };
+});
 
 const localSlugByShortSlug = Object.fromEntries(
   Object.entries(localProfiles).map(([pageSlug, profile]) => [pageSlug.replace(/^ejare-anbar-karaj-|^ejare-anbar-/, ''), pageSlug])
