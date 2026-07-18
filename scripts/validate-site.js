@@ -166,7 +166,7 @@ async function validate() {
     if (!/class="mobile-contact-bar"/.test(html) || !/data-sheet-open="phone-sheet"/.test(html) || !/data-sheet-open="locations-sheet"/.test(html)) {
       fail(file, 'mobile contact and locations actions are missing');
     }
-    if (!/https:\/\/wa\.me\/989102567906/.test(html)) fail(file, 'WhatsApp consultation CTA is missing');
+    if (!/https:\/\/api\.whatsapp\.com\/send\/\?phone=989102567906/.test(html)) fail(file, 'WhatsApp consultation CTA is missing');
     if (!/href="https:\/\/github\.com\/amirwopi"[^>]*>Amirwopi<\/a>/.test(html)) fail(file, 'Amirwopi copyright link is missing');
 
     for (const phone of phoneNumbers) {

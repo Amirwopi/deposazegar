@@ -171,7 +171,7 @@ const phoneSheetButton = (label, className = 'btn btn-primary', ariaLabel = labe
   `<button class="${className}" type="button" data-sheet-open="phone-sheet" aria-haspopup="dialog" aria-controls="phone-sheet" aria-expanded="false" aria-label="${escapeHtml(ariaLabel)}">${escapeHtml(label)}</button>`;
 
 const whatsappButton = (label = 'مشاوره واتساپ', className = 'btn btn-secondary') =>
-  `<a class="${className}" href="https://wa.me/${whatsappNumber[0]}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(label)}">${escapeHtml(label)}</a>`;
+  `<a class="${className}" href="https://api.whatsapp.com/send/?phone=${whatsappNumber[0]}&amp;text&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(label)}">${escapeHtml(label)}</a>`;
 
 const serviceImageKey = (slug) => ({
   'ejare-anbar-tehran': 'warehouse',
@@ -428,7 +428,9 @@ const localSizesLinks = () => [
   ['/ejare-anbar-12-metri', 'اجاره انبار ۱۲ متری'],
   ['/ejare-anbar-20-metri', 'اجاره انبار ۲۰ متری'],
   ['/ejare-container-10-foot', 'اجاره کانتینر ۱۰ فوت'],
+  ['/ejare-container-15-foot', 'اجاره کانتینر ۱۵ فوت'],
   ['/ejare-container-20-foot', 'اجاره کانتینر ۲۰ فوت'],
+  ['/ejare-container-30-foot', 'اجاره کانتینر ۳۰ فوت'],
   ['/ejare-container-40-foot', 'اجاره کانتینر ۴۰ فوت']
 ];
 

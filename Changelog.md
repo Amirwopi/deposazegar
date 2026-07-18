@@ -29,6 +29,14 @@
 - **Orphan internal links**: Verified resolved — no real orphans (homepage linked from 241 pages via `/`)
 - **IndexNow**: Added key file `7e011271f48ceca10963307f87c64a7b.txt` and `scripts/submit-indexnow.js` for post-deployment URL submission
 
+### P3 — Internal Linking Fixes (commit pending)
+- **WhatsApp 302 → 200**: Changed `whatsappButton()` in `generate-pages.js` from `wa.me` (302 redirect) to `api.whatsapp.com/send/?phone=...` (direct 200); updated `validate-site.js` regex to match
+- **`localSizesLinks()` expansion**: Added 15-foot and 30-foot container links to all local/district pages (was missing); `ejare-container-15-foot` now has 213 inlinks, `ejare-container-30-foot` has 212
+- **`boland-moddat` cross-links**: Added `ejare-anbar-boland-moddat` link to `asbabkeshi`, `commercial-storage`, and `kootah-moddat` service pages; `boland-moddat` now has 4 inlinks (was 1)
+- **Bidirectional `nearby` links**: Added reverse-nearby pass in `data/local-seo.js` so if page A lists B as nearby, B also links back to A; all phase-two local pages now have 5–8 inlinks (was 1)
+- **5 Karaj phase-two pages**: Added `chaharbagh`, `kalak`, `rajai-shahr`, `shahin-vila`, `shahrak-vahdat` to nearby arrays of geographically close phase-one Karaj pages (`mehrshahr`, `baghestan`, `gohardasht`, `golshahr`, `fardis`); all 5 now have 2 inlinks (was 1)
+- **Final sweep**: 0 pages with <2 incoming internal links (was 8 pages)
+
 ### Post-Deployment Steps
 1. Deploy `public_html_ready/` to live site
 2. Run `node scripts/submit-indexnow.js` to submit all 245 URLs to IndexNow
