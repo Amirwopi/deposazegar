@@ -68,7 +68,15 @@ async function copyAssets() {
     { encoding: 'utf8', mode: 0o600 }
   );
 
-  console.log('Copied hosting assets, comment API/admin, protected setup token, robots.txt and .htaccess.');
+  // IndexNow key file — must be accessible at site root for IndexNow verification
+  const indexNowKey = '7e011271f48ceca10963307f87c64a7b';
+  fs.writeFileSync(
+    path.join(outputDir, `${indexNowKey}.txt`),
+    indexNowKey,
+    'utf8'
+  );
+
+  console.log('Copied hosting assets, comment API/admin, protected setup token, robots.txt, .htaccess and IndexNow key.');
 }
 
 copyAssets().catch((error) => {
