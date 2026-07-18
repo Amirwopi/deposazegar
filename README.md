@@ -79,3 +79,14 @@ npm start
 نام فایل CSS و JavaScript در HTML با Hash محتوای Build نسخه‌گذاری می‌شود تا پس از انتشار، Cache قدیمی باعث نمایش ناقص رابط یا اجرای کد قبلی نشود. صفحات خدمات آماده‌سازی شامل بسته‌بندی، حمل‌ونقل و چیدمان از `data/pages.json` و `data/page-content.js` تولید می‌شوند و در Sitemap دامنه `deposazegar.com` قرار می‌گیرند.
 
 راهنمای انتشار روی هاست در [README-hosting.md](README-hosting.md) قرار دارد.
+
+## IndexNow
+
+برای اطلاع‌رسانی سریع موتورهای جستجو (Bing، Yandex، Naver) از تغییرات:
+
+```bash
+node scripts/submit-indexnow.js          # ارسال همه URL‌ها
+node scripts/submit-indexnow.js --dry-run # فقط نمایش URL‌ها بدون ارسال
+```
+
+> کلید IndexNow در فایل `public_html_ready/7e011271f48ceca10963307f87c64a7b.txt` قرار دارد. این اسکریپت باید پس از انتشار اجرا شود تا کلید از طریق URL `https://deposazegar.com/<key>.txt` در دسترس باشد.

@@ -1,5 +1,39 @@
 # Changelog
 
+## 2026-07-18 — Ahrefs Site Audit Fixes (P1/P2/P3)
+
+### P1 — Critical 404 Fixes (commit `2b4259f`)
+- Added `absPath()` helper to `generate-pages.js` for absolute path generation
+- Converted all internal links from relative to absolute `/`-prefixed paths across `picture()`, `pageHref()`, `localSizesLinks()`, `relatedLinks()`, `directoryLinkList()`, `breadcrumbTrail()`, nav links, HTML template preloads, brand image, script tag, and content function inline hrefs
+- Fixed 47 broken `href` attributes (missing closing quotes)
+- Fixed `data/local-seo.js` `parentHref` values to absolute paths
+- Updated `scripts/validate-site.js` regexes to match `/assets/...` absolute paths
+- Build verified: 245 pages, 5 sitemaps, 0 warnings (was 5521 broken local reference warnings)
+
+### P2 — Warning Fixes (commit `a148e91`)
+- **Alt text**: Added non-empty alt text to all 975 `img` tags across 245 pages (was 494 empty)
+  - `brand-mark.svg` logos: `alt="لوگوی دپو سازگار"`
+  - Homepage hero: `alt="انبار شخصی برای دپو لوازم خانه در تهران"`
+  - `server/admin/comments.php`: 3 logo images fixed
+  - `data/local-seo.js`: alt text for local page images
+- **Long titles**: Shortened 4 titles in `data/pages.json` (71→48, 67→53, 66→52, 66→52 chars) by removing redundant `| دپو سازگار` suffix; refactored `data/local-seo.js` title templates with conditional length logic (drops `+ قیمت کانتینر و اتاقک` when > 60 chars)
+- **3XX redirects**: Verified resolved — 0 internal links point to `.html` URLs; sitemaps use clean URLs
+
+### P3 — Notice Fixes (commit `720898e`)
+- **JSON-LD schema validation**:
+  - `Organization`/`LocalBusiness` `telephone`: array → string (Schema.org spec requires `Text`, not array)
+  - Removed `SearchAction` from `WebSite` schema (site has no search page)
+  - All 9 phone numbers remain in `contactPoint` array
+- **Validator**: Phone appearance threshold 4 → 3 (telephone field no longer holds all numbers)
+- **HTTP→HTTPS links**: Verified resolved — 0 `http://` internal links found
+- **Orphan internal links**: Verified resolved — no real orphans (homepage linked from 241 pages via `/`)
+- **IndexNow**: Added key file `7e011271f48ceca10963307f87c64a7b.txt` and `scripts/submit-indexnow.js` for post-deployment URL submission
+
+### Post-Deployment Steps
+1. Deploy `public_html_ready/` to live site
+2. Run `node scripts/submit-indexnow.js` to submit all 245 URLs to IndexNow
+3. Trigger Ahrefs re-crawl to verify 100% health score
+
 ## 2026-07-17 — Phase 2: Clean URLs & Dynamic Meta Tags
 
 ### Added
