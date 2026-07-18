@@ -171,7 +171,7 @@ async function validate() {
 
     for (const phone of phoneNumbers) {
       const appearances = (html.match(new RegExp(phone, 'g')) || []).length;
-      if (appearances < 4) fail(file, `phone ${phone} is not present in schema, CTA and footer`);
+      if (appearances < 3) fail(file, `phone ${phone} is not present in schema, CTA and footer`);
     }
 
     const jsonLd = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1];

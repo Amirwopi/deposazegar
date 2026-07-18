@@ -1128,7 +1128,7 @@ const schemaGraph = (page, faqs) => {
         name: 'دپو سازگار',
         url: baseSiteUrl,
         logo: { '@type': 'ImageObject', url: `${baseSiteUrl}/assets/images/brand-mark.svg`, width: 512, height: 512 },
-        telephone: phones.map(([raw]) => raw),
+        telephone: phones[0][0],
         areaServed: servedAreas,
         keywords: 'اجاره انبار استان تهران، اجاره انبار استان البرز، اجاره انبار تهران، اجاره انبار کرج، انبار کانتینری، دپو لوازم خانه',
         contactPoint: phones.map(([raw], index) => ({
@@ -1147,7 +1147,7 @@ const schemaGraph = (page, faqs) => {
         image: `${baseSiteUrl}/assets/images/og-cover.jpg`,
         logo: `${baseSiteUrl}/assets/images/brand-mark.svg`,
         additionalType: 'https://schema.org/SelfStorage',
-        telephone: phones.map(([raw]) => raw),
+        telephone: phones[0][0],
         description: 'خدمات مشاوره و هماهنگی اجاره انبار، انبار کانتینری و دپوی لوازم در استان تهران و استان البرز',
         areaServed: servedAreas,
         keywords: 'اجاره انبار استان تهران، اجاره انبار استان البرز، اجاره انبار تهران، اجاره انبار کرج، دپو لوازم خانه',
@@ -1169,12 +1169,7 @@ const schemaGraph = (page, faqs) => {
         url: baseSiteUrl,
         name: 'دپو سازگار',
         inLanguage: 'fa-IR',
-        publisher: { '@id': `${baseSiteUrl}/#organization` },
-        potentialAction: {
-          '@type': 'SearchAction',
-          target: `${baseSiteUrl}/?s={search_term_string}`,
-          'query-input': 'required name=search_term_string'
-        }
+        publisher: { '@id': `${baseSiteUrl}/#organization` }
       },
       {
         '@type': 'Service',
